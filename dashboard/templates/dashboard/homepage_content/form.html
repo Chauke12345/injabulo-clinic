@@ -1,0 +1,282 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page_title }} | Injabulo Clinic</title>
+
+    <style>
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            padding: 30px;
+            font-family: Arial, sans-serif;
+            background: #F7F2E9;
+            color: #292929;
+        }
+
+        .container {
+            max-width: 1050px;
+            margin: 20px auto;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        h1 { color: #206F74; margin: 0; }
+
+        .muted {
+            color: #777;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .panel {
+            background: white;
+            padding: 28px;
+            margin-bottom: 20px;
+            border: 1px solid #e9e4dc;
+            border-radius: 10px;
+        }
+
+        .panel h2 {
+            color: #206F74;
+            font-size: 19px;
+            margin: 0 0 18px;
+        }
+
+        .field {
+            margin-bottom: 17px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            font-size: 13px;
+            margin-bottom: 7px;
+        }
+
+        input[type=text], textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #d8d8d8;
+            border-radius: 6px;
+            font: inherit;
+            background: #fff;
+        }
+
+        textarea {
+            resize: vertical;
+            line-height: 1.5;
+        }
+
+        input:focus, textarea:focus {
+            outline: 2px solid #278B91;
+            border-color: #278B91;
+        }
+
+        .help {
+            color: #777;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        .errorlist {
+            color: #a33b3b;
+            font-size: 13px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 18px;
+        }
+
+        .actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 25px;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 13px 20px;
+            border: 0;
+            border-radius: 6px;
+            background: #278B91;
+            color: white;
+            text-decoration: none;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .button:hover { background: #206F74; }
+
+        .cancel {
+            background: #eae7e0;
+            color: #292929;
+        }
+
+        .message {
+            padding: 13px 16px;
+            background: #e6f3ed;
+            border: 1px solid #b9dfcb;
+            color: #236345;
+            border-radius: 6px;
+            margin-bottom: 18px;
+        }
+
+        .section-note {
+            color: #777;
+            font-size: 13px;
+            margin: -8px 0 20px;
+        }
+
+        @media(max-width: 700px) {
+            body { padding: 15px; }
+            .panel { padding: 20px; }
+            .grid { grid-template-columns: 1fr; }
+            .header { align-items: flex-start; flex-direction: column; }
+        }
+    </style>
+</head>
+
+<body>
+<div class="container">
+
+    <div class="header">
+        <div>
+            <h1>{{ page_title }}</h1>
+            <p class="muted">
+                Update the information displayed on the public Injabulo Clinic homepage.
+            </p>
+        </div>
+
+        <a href="{% url 'dashboard:home' %}" class="button cancel">
+            Back to Dashboard
+        </a>
+    </div>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="message">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+
+    <form method="post">
+        {% csrf_token %}
+
+        {% if form.non_field_errors %}
+            {{ form.non_field_errors }}
+        {% endif %}
+
+        <!-- HERO SECTION -->
+        <section class="panel">
+            <h2>1. Homepage Hero Section</h2>
+            <p class="section-note">
+                The main welcome message visitors see when opening the website.
+            </p>
+
+            {% for field in form %}
+                {% if field.name == "hero_label" or field.name == "hero_heading_line_1" or field.name == "hero_heading_line_2" or field.name == "hero_heading_line_3" or field.name == "hero_description" %}
+                    <div class="field">
+                        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        {{ field }}
+                        {{ field.errors }}
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </section>
+
+        <!-- ABOUT SECTION -->
+        <section class="panel">
+            <h2>2. About Injabulo Clinic</h2>
+            <p class="section-note">
+                Edit the clinic introduction and professional nurse information.
+            </p>
+
+            {% for field in form %}
+                {% if field.name == "about_label" or field.name == "about_heading" or field.name == "about_paragraph_1" or field.name == "about_paragraph_2" or field.name == "nurse_name" or field.name == "nurse_title" %}
+                    <div class="field">
+                        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        {{ field }}
+                        {{ field.errors }}
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </section>
+
+        <!-- MISSION AND VISION -->
+        <section class="panel">
+            <h2>3. Mission and Vision</h2>
+
+            {% for field in form %}
+                {% if field.name == "mission_heading" or field.name == "mission_text" or field.name == "vision_heading" or field.name == "vision_text" %}
+                    <div class="field">
+                        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        {{ field }}
+                        {{ field.errors }}
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </section>
+
+        <!-- CORE VALUES -->
+        <section class="panel">
+            <h2>4. Our Core Values</h2>
+            <p class="section-note">
+                Update the four values displayed on the homepage.
+            </p>
+
+            <div class="grid">
+                {% for field in form %}
+                    {% if field.name|slice:":8" == "value_1_" or field.name|slice:":8" == "value_2_" or field.name|slice:":8" == "value_3_" or field.name|slice:":8" == "value_4_" %}
+                        <div class="field">
+                            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                            {{ field }}
+                            {{ field.errors }}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </section>
+
+        <!-- SERVICES INTRODUCTION -->
+        <section class="panel">
+            <h2>5. Services Section Introduction</h2>
+            <p class="section-note">
+                The service cards themselves are managed under Services Management.
+            </p>
+
+            {% for field in form %}
+                {% if field.name == "services_label" or field.name == "services_heading" or field.name == "services_description" %}
+                    <div class="field">
+                        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        {{ field }}
+                        {{ field.errors }}
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </section>
+
+        <div class="actions">
+            <button type="submit" class="button">
+                {{ button_label }}
+            </button>
+
+            <a href="{% url 'dashboard:home' %}" class="button cancel">
+                Cancel
+            </a>
+        </div>
+    </form>
+
+</div>
+</body>
+</html>

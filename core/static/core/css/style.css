@@ -1,0 +1,2323 @@
+﻿@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap');
+
+:root {
+    --turquoise: #278B91;
+    --coral: #E64B43;
+    --ivory: #F7F2E9;
+    --green: #285D3A;
+    --charcoal: #292929;
+    --white: #FFFFFF;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'DM Sans', Arial, sans-serif;
+    background: var(--ivory);
+    color: var(--charcoal);
+    line-height: 1.6;
+}
+
+a {
+    text-decoration: none;
+}
+
+/* NAVIGATION */
+
+.site-header {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.88);
+    border-bottom: 1px solid rgba(39, 139, 145, 0.12);
+}
+
+.nav-container {
+    max-width: 1250px;
+    min-height: 105px;
+    margin: auto;
+    padding: 15px 35px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+}
+
+.logo img {
+    width: 155px;
+    height: auto;
+    display: block;
+}
+
+.main-nav {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+}
+
+.main-nav a {
+    color: var(--charcoal);
+    font-size: 14px;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.main-nav a:hover {
+    color: var(--turquoise);
+}
+
+.nav-button,
+.primary-button {
+    background: var(--turquoise);
+    color: var(--white);
+    padding: 14px 24px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: 700;
+    display: inline-block;
+    transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.nav-button:hover,
+.primary-button:hover {
+    background: var(--green);
+    transform: translateY(-2px);
+}
+
+/* HERO SECTION */
+
+.hero {
+    max-width: 1250px;
+    min-height: 650px;
+    margin: auto;
+    padding: 85px 55px;
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    align-items: center;
+    gap: 65px;
+}
+
+.hero-content {
+    max-width: 620px;
+}
+
+.hero-label {
+    color: var(--coral);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    display: inline-block;
+    margin-bottom: 24px;
+}
+
+.hero h1 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(48px, 6vw, 76px);
+    line-height: 1.12;
+    font-weight: 600;
+    letter-spacing: -2px;
+    margin-bottom: 25px;
+}
+
+.hero h1 span {
+    color: var(--turquoise);
+}
+
+.hero-content > p {
+    color: #686868;
+    font-size: 17px;
+    max-width: 490px;
+    line-height: 1.9;
+    margin-bottom: 32px;
+}
+
+.hero-actions {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    flex-wrap: wrap;
+}
+
+.secondary-button {
+    color: var(--turquoise);
+    border: 1px solid var(--turquoise);
+    padding: 13px 23px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: 700;
+    transition: all 0.3s ease;
+}
+
+.secondary-button:hover {
+    background: var(--turquoise);
+    color: var(--white);
+}
+
+/* HERO DECORATION */
+
+.hero-decoration {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-circle {
+    width: min(380px, 100%);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: var(--turquoise);
+    border: 14px solid rgba(255, 255, 255, 0.65);
+    outline: 1px solid rgba(39, 139, 145, 0.25);
+    outline-offset: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: var(--white);
+    gap: 12px;
+    text-align: center;
+}
+
+.hero-circle span {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 3px;
+}
+
+.hero-circle strong {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 55px;
+    font-weight: 500;
+    font-style: italic;
+}
+
+/* MOBILE RESPONSIVENESS */
+
+@media (max-width: 900px) {
+    .nav-container {
+        flex-wrap: wrap;
+        justify-content: center;
+        padding: 20px;
+    }
+
+    .main-nav {
+        order: 3;
+        width: 100%;
+        justify-content: center;
+        gap: 20px;
+        flex-wrap: wrap;
+    }
+
+    .hero {
+        grid-template-columns: 1fr;
+        text-align: center;
+        padding: 65px 25px;
+        gap: 55px;
+    }
+
+    .hero-content {
+        margin: auto;
+    }
+
+    .hero-content > p {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .hero-actions {
+        justify-content: center;
+    }
+
+    .hero-circle {
+        max-width: 300px;
+    }
+}
+
+@media (max-width: 480px) {
+    .nav-container {
+        gap: 15px;
+    }
+
+    .logo img {
+        width: 125px;
+    }
+
+    .main-nav {
+        gap: 14px;
+    }
+
+    .main-nav a {
+        font-size: 12px;
+    }
+
+    .nav-button {
+        padding: 11px 16px;
+    }
+
+    .hero h1 {
+        font-size: 46px;
+    }
+
+    .hero-circle strong {
+        font-size: 43px;
+    }
+}
+
+/* ABOUT INJABULO CLINIC */
+
+.about-section {
+    max-width: 1250px;
+    margin: 30px auto 0;
+    padding: 100px 55px;
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    align-items: center;
+    gap: 85px;
+}
+
+.about-visual {
+    min-height: 450px;
+    padding: 25px;
+    background: #E9E2D5;
+    border-radius: 180px 180px 12px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.about-visual-inner {
+    width: 100%;
+    min-height: 400px;
+    padding: 40px 25px;
+    background: var(--turquoise);
+    border-radius: 160px 160px 8px 8px;
+    color: var(--white);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.about-small-label,
+.about-bottom-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 3px;
+}
+
+.about-symbol {
+    width: 65px;
+    height: 65px;
+    margin: 35px 0 20px;
+    border: 1px solid rgba(255,255,255,0.7);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 38px;
+    font-weight: 300;
+}
+
+.about-visual-inner h3 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 37px;
+    line-height: 1.3;
+    font-weight: 500;
+    margin-bottom: 30px;
+}
+
+.about-content .section-label {
+    display: block;
+    color: var(--coral);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    margin-bottom: 20px;
+}
+
+.about-content h2 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(38px, 4vw, 53px);
+    line-height: 1.2;
+    font-weight: 600;
+    margin-bottom: 25px;
+}
+
+.about-content h2 span {
+    color: var(--turquoise);
+}
+
+.about-content p {
+    color: #686868;
+    font-size: 15px;
+    line-height: 1.9;
+    margin-bottom: 20px;
+}
+
+.about-signature {
+    display: flex;
+    flex-direction: column;
+    border-left: 3px solid var(--coral);
+    padding-left: 17px;
+    margin: 30px 0;
+}
+
+.about-signature strong {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.about-signature span {
+    color: #777;
+    font-size: 13px;
+}
+
+.about-link {
+    color: var(--turquoise);
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.about-link span {
+    color: var(--coral);
+    margin-left: 8px;
+    font-size: 19px;
+}
+
+@media (max-width: 900px) {
+    .about-section {
+        grid-template-columns: 1fr;
+        padding: 70px 25px;
+        gap: 45px;
+    }
+
+    .about-visual {
+        max-width: 480px;
+        width: 100%;
+        margin: auto;
+    }
+
+    .about-content {
+        text-align: center;
+    }
+
+    .about-signature {
+        width: fit-content;
+        margin: 30px auto;
+        text-align: left;
+    }
+}
+
+@media (max-width: 480px) {
+    .about-section {
+        padding: 55px 20px;
+    }
+
+    .about-visual {
+        min-height: 370px;
+    }
+
+    .about-visual-inner {
+        min-height: 330px;
+    }
+
+    .about-visual-inner h3 {
+        font-size: 31px;
+    }
+}
+
+
+/* OUR SERVICES */
+
+.services-section {
+    padding: 100px 55px;
+    background: #FFFFFF;
+}
+
+.services-heading {
+    max-width: 700px;
+    margin: 0 auto 55px;
+    text-align: center;
+}
+
+.section-label {
+    color: var(--coral);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 3px;
+}
+
+.services-heading h2 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(38px, 4vw, 52px);
+    margin: 15px 0;
+}
+
+.services-heading h2 span {
+    color: var(--turquoise);
+}
+
+.services-heading p {
+    color: #777777;
+    font-size: 15px;
+}
+
+.services-grid {
+    max-width: 1250px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 26px;
+}
+
+.service-card {
+    background: var(--ivory);
+    padding: 35px 25px;
+    min-height: 235px;
+    border-radius: 8px;
+    border: 1px solid rgba(39, 139, 145, 0.12);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.service-card:hover {
+    transform: translateY(-7px);
+    box-shadow: 0 15px 35px rgba(39, 139, 145, 0.12);
+}
+
+.service-icon {
+    width: 48px;
+    height: 48px;
+    background: rgba(39, 139, 145, 0.12);
+    color: var(--turquoise);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 25px;
+    margin-bottom: 22px;
+}
+
+.service-card h3 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 20px;
+    margin-bottom: 12px;
+    color: var(--charcoal);
+}
+
+.service-card p {
+    color: #737373;
+    font-size: 13px;
+    line-height: 1.8;
+}
+
+@media (max-width: 1000px) {
+    .services-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .services-section {
+        padding: 70px 20px;
+    }
+
+    .services-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .service-card {
+        min-height: auto;
+    }
+}
+
+
+/* INJABULO CLINIC CONTACT PAGE */
+.contact-page .about-content {
+    max-width: 900px;
+    margin: 65px auto 0;
+    padding: 40px;
+    background: var(--warm-ivory, #F7F2E9);
+    border-radius: 14px;
+}
+
+.contact-page .about-content h2 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 28px;
+    font-weight: 500;
+    color: var(--charcoal, #292929);
+    margin: 0 0 18px;
+}
+
+.contact-page .about-content p {
+    font-size: 15px;
+    line-height: 1.8;
+    color: #737373;
+    margin-bottom: 12px;
+}
+
+.contact-page .about-content h2:not(:first-child) {
+    margin-top: 35px;
+}
+
+.contact-page .service-card h2 {
+    font-size: 21px;
+    color: var(--charcoal, #292929);
+}
+
+.contact-page .service-card a {
+    color: var(--turquoise, #278B91);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.contact-page .service-card a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 600px) {
+    .contact-page .about-content {
+        margin: 35px 0 0;
+        padding: 25px 20px;
+    }
+
+    .contact-page .about-content h2 {
+        font-size: 24px;
+    }
+}
+
+/* GOOGLE MAPS DIRECTIONS BUTTON */
+.contact-page .directions-button {
+    display: inline-block;
+    margin-top: 12px;
+    padding: 11px 20px;
+    background: var(--turquoise, #278B91);
+    color: #FFFFFF !important;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 6px;
+    transition: all 0.25s ease;
+}
+
+.contact-page .directions-button:hover {
+    background: #206F74;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(39, 139, 145, 0.2);
+}
+
+/* CONTACT PAGE - CONSISTENT CARD ALIGNMENT */
+.contact-page .services-grid {
+    align-items: stretch;
+}
+
+.contact-page .service-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    min-height: 240px;
+}
+
+.contact-page .service-card h2 {
+    margin-bottom: 14px;
+}
+
+.contact-page .service-card p {
+    margin-bottom: 12px;
+}
+
+.contact-page .service-card .directions-button {
+    margin-top: auto;
+}
+
+.contact-page .about-content {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+
+/* INJABULO CLINIC APPOINTMENT PAGE */
+
+.appointment-page .site-header {
+    position: relative;
+}
+
+.appointment-page .main-nav a.active {
+    color: var(--turquoise);
+}
+
+.appointment-main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 85px 30px 90px;
+}
+
+.appointment-intro {
+    max-width: 720px;
+    margin: 0 auto 45px;
+    text-align: center;
+}
+
+.appointment-eyebrow {
+    color: var(--coral);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    margin-bottom: 18px;
+}
+
+.appointment-intro h1 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(36px, 5vw, 52px);
+    font-weight: 600;
+    line-height: 1.2;
+    margin-bottom: 20px;
+    color: var(--charcoal);
+}
+
+.appointment-intro > p:last-child {
+    color: #686868;
+    font-size: 16px;
+    line-height: 1.9;
+}
+
+.appointment-card {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 48px;
+    background: var(--white);
+    border: 1px solid rgba(39, 139, 145, 0.12);
+    border-radius: 12px;
+    box-shadow: 0 15px 45px rgba(41, 41, 41, 0.07);
+}
+
+.appointment-card-heading {
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.appointment-card-heading h2 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 29px;
+    font-weight: 500;
+    margin-bottom: 8px;
+}
+
+.appointment-card-heading p {
+    color: #777777;
+    font-size: 14px;
+}
+
+.appointment-card label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.appointment-card select {
+    width: 100%;
+    min-height: 54px;
+    padding: 12px 15px;
+    border: 1px solid #D8DEDE;
+    border-radius: 6px;
+    background: #FFFFFF;
+    color: var(--charcoal);
+    font-family: 'DM Sans', Arial, sans-serif;
+    font-size: 14px;
+    outline: none;
+    margin-bottom: 22px;
+}
+
+.appointment-card select:focus {
+    border-color: var(--turquoise);
+    box-shadow: 0 0 0 3px rgba(39, 139, 145, 0.12);
+}
+
+.appointment-whatsapp-button {
+    width: 100%;
+    min-height: 54px;
+    padding: 14px 22px;
+    border: none;
+    border-radius: 6px;
+    background: var(--turquoise);
+    color: var(--white);
+    font-family: 'DM Sans', Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.appointment-whatsapp-button:hover {
+    background: var(--green);
+    transform: translateY(-2px);
+}
+
+.appointment-note {
+    margin-top: 20px;
+    color: #777777;
+    font-size: 12px;
+    line-height: 1.7;
+    text-align: center;
+}
+
+.appointment-contact {
+    margin-top: 38px;
+    text-align: center;
+    font-size: 14px;
+    color: #686868;
+}
+
+.appointment-contact a {
+    color: var(--turquoise);
+    font-weight: 700;
+}
+
+.appointment-contact a:hover {
+    color: var(--green);
+}
+
+@media (max-width: 768px) {
+    .appointment-main {
+        padding: 55px 20px 65px;
+    }
+
+    .appointment-card {
+        padding: 32px 24px;
+    }
+
+    .appointment-page .nav-container {
+        flex-direction: column;
+        padding: 15px 20px;
+        gap: 18px;
+    }
+
+    .appointment-page .main-nav {
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 15px 22px;
+    }
+}
+
+@media (max-width: 480px) {
+    .appointment-main {
+        padding: 42px 15px 55px;
+    }
+
+    .appointment-card {
+        padding: 28px 20px;
+    }
+
+    .appointment-card-heading h2 {
+        font-size: 25px;
+    }
+
+    .appointment-contact span {
+        display: none;
+    }
+
+    .appointment-contact a {
+        display: block;
+        margin-top: 8px;
+    }
+}
+
+
+/* INJABULO CLINIC GALLERY PAGE */
+
+.gallery-page .main-nav a.active {
+    color: var(--turquoise);
+}
+
+.gallery-main {
+    max-width: 1250px;
+    margin: auto;
+    padding: 75px 35px 90px;
+}
+
+.gallery-intro {
+    max-width: 720px;
+    margin: 0 auto 55px;
+    text-align: center;
+}
+
+.gallery-eyebrow {
+    color: var(--coral);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    margin-bottom: 18px;
+}
+
+.gallery-intro h1 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(38px, 5vw, 55px);
+    font-weight: 600;
+    margin-bottom: 18px;
+}
+
+.gallery-intro > p:last-child {
+    color: #686868;
+    font-size: 16px;
+    line-height: 1.8;
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 28px;
+}
+
+.gallery-card {
+    overflow: hidden;
+    background: var(--white);
+    border-radius: 10px;
+    border: 1px solid rgba(39, 139, 145, 0.12);
+    box-shadow: 0 8px 25px rgba(41, 41, 41, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.gallery-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(41, 41, 41, 0.10);
+}
+
+.gallery-image {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    background: #EDEBE5;
+}
+
+.gallery-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.gallery-card-content {
+    padding: 22px;
+}
+
+.gallery-category {
+    color: var(--turquoise);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+}
+
+.gallery-card-content h2 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 21px;
+    font-weight: 500;
+    margin: 10px 0;
+}
+
+.gallery-card-content p,
+.gallery-card-content small {
+    color: #777777;
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+.gallery-empty {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 65px 30px;
+    background: var(--white);
+    border-radius: 12px;
+    text-align: center;
+}
+
+.gallery-empty h2 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 30px;
+    margin-bottom: 15px;
+}
+
+.gallery-empty p {
+    color: #777777;
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+.gallery-footer {
+    padding: 28px 20px;
+    text-align: center;
+    background: var(--white);
+    color: #777777;
+    font-size: 13px;
+}
+
+@media (max-width: 900px) {
+    .gallery-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 600px) {
+    .gallery-main {
+        padding: 50px 18px 65px;
+    }
+
+    .gallery-grid {
+        grid-template-columns: 1fr;
+        gap: 22px;
+    }
+
+    .gallery-intro {
+        margin-bottom: 35px;
+    }
+}
+
+
+/* MISSION, VISION AND VALUES */
+
+.mission-values-section {
+    background: #F7F2E9;
+    padding: 85px 55px;
+    margin-top: 35px;
+}
+
+.mission-values-heading {
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto 45px;
+}
+
+.mission-values-heading h2 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(32px, 4vw, 45px);
+    font-weight: 600;
+    color: #292929;
+    margin-top: 15px;
+}
+
+.mission-values-heading h2 span {
+    color: var(--turquoise);
+}
+
+.mission-values-grid {
+    max-width: 1150px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+}
+
+.mission-value-card {
+    background: #FFFFFF;
+    padding: 38px 30px;
+    border-radius: 12px;
+    border-bottom: 4px solid var(--turquoise);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.04);
+}
+
+.mission-value-number {
+    display: block;
+    color: var(--coral);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin-bottom: 22px;
+}
+
+.mission-value-card h3 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 25px;
+    color: #292929;
+    margin-bottom: 18px;
+}
+
+.mission-value-card p,
+.mission-value-card li {
+    color: #686868;
+    font-size: 14px;
+    line-height: 1.9;
+}
+
+.mission-value-card ul {
+    padding-left: 18px;
+    margin: 0;
+}
+
+.mission-value-card li {
+    margin-bottom: 10px;
+}
+
+.mission-value-card li strong {
+    color: #292929;
+}
+
+@media (max-width: 900px) {
+    .mission-values-section {
+        padding: 65px 25px;
+    }
+
+    .mission-values-grid {
+        grid-template-columns: 1fr;
+        max-width: 600px;
+    }
+}
+
+@media (max-width: 480px) {
+    .mission-values-section {
+        padding: 55px 20px;
+    }
+
+    .mission-value-card {
+        padding: 30px 24px;
+    }
+}
+
+
+/* DISCREET ADMIN LOCK LINK */
+.main-nav .admin-login-link {
+    font-size: 11px;
+    font-weight: 500;
+    color: #777777;
+    opacity: 0.75;
+    white-space: nowrap;
+}
+
+.main-nav .admin-login-link:hover {
+    color: var(--turquoise);
+    opacity: 1;
+}
+
+.admin-login-link span {
+    font-size: 12px;
+    margin-right: 3px;
+}
+
+
+/* DISCREET BOTTOM-CORNER ADMIN ACCESS */
+.admin-lock-access {
+    position: fixed;
+    right: 16px;
+    bottom: 12px;
+    z-index: 9999;
+    color: #777;
+    font-size: 14px;
+    opacity: 0.22;
+    text-decoration: none;
+    line-height: 1;
+    padding: 5px;
+    transition: opacity 0.2s ease, color 0.2s ease;
+}
+
+.admin-lock-access:hover {
+    opacity: 0.8;
+    color: var(--turquoise);
+}
+
+
+
+/* CONTACT PAGE NAVIGATION BUTTONS */
+.contact-page .directions-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    margin-top: 12px;
+}
+
+.contact-page .directions-actions .directions-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 12px 18px;
+    border-radius: 7px;
+    font-size: 13px;
+    line-height: 1.3;
+    white-space: nowrap;
+}
+
+.contact-page .directions-actions .waze-button {
+    background: #263238;
+}
+
+.contact-page .directions-actions .waze-button:hover {
+    background: #111b20;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.16);
+}
+
+@media (max-width: 600px) {
+    .contact-page .directions-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .contact-page .directions-actions .directions-button {
+        width: 100%;
+    }
+}
+
+
+/* INJABULO CLINIC - CONTACT PAGE ENHANCEMENTS */
+.contact-page .contact-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    align-items: stretch;
+}
+
+.contact-page .contact-card {
+    align-items: center;
+    text-align: center;
+    justify-content: flex-start;
+    min-width: 0;
+    padding: 30px 20px;
+}
+
+.contact-page .contact-card h2 {
+    margin-bottom: 16px;
+}
+
+.contact-page .contact-card .contact-icon {
+    width: 58px;
+    height: 58px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 18px;
+    border-radius: 50%;
+    background: #e5f3f1;
+    color: #278B91;
+}
+
+.contact-page .contact-icon svg {
+    width: 27px;
+    height: 27px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.contact-page .whatsapp-icon {
+    background: #e4f5e9 !important;
+    color: #168b50 !important;
+}
+
+.contact-page .contact-detail {
+    margin: 13px 0 0;
+    font-size: 13px;
+    overflow-wrap: anywhere;
+    color: #555;
+}
+
+.contact-page .directions-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    margin-top: auto;
+    padding-top: 14px;
+}
+
+.contact-page .directions-actions .directions-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 11px 14px;
+    border-radius: 7px;
+    font-size: 12px;
+    line-height: 1.3;
+    white-space: normal;
+    text-align: center;
+}
+
+.contact-page .directions-actions .waze-button {
+    background: #263238;
+}
+
+.contact-page .directions-actions .waze-button:hover {
+    background: #111b20;
+}
+
+.contact-page .contact-card > .directions-button {
+    margin-top: 0;
+    border-radius: 7px;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 11px 20px;
+}
+
+.contact-page .clinic-map-section {
+    max-width: 1250px;
+    margin: 65px auto 45px;
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+
+.contact-page .clinic-map-heading {
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.contact-page .clinic-map-heading h2 {
+    color: var(--charcoal, #292929);
+    margin: 8px 0;
+}
+
+.contact-page .clinic-map-heading p {
+    color: #666;
+}
+
+.contact-page .clinic-map-frame {
+    width: 100%;
+    height: 380px;
+    overflow: hidden;
+    border-radius: 16px;
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.10);
+    background: #edf3f2;
+}
+
+.contact-page .clinic-map-frame iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    display: block;
+}
+
+@media (max-width: 1000px) {
+    .contact-page .contact-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 600px) {
+    .contact-page .contact-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .contact-page .directions-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .contact-page .directions-actions .directions-button {
+        width: 100%;
+    }
+
+    .contact-page .clinic-map-section {
+        margin-top: 45px;
+        padding: 0 15px;
+    }
+
+    .contact-page .clinic-map-frame {
+        height: 280px;
+        border-radius: 12px;
+    }
+}
+
+
+/* INJABULO CLINIC SOCIAL MEDIA LINKS */
+.clinic-social-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 14px;
+}
+.social-follow-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    min-width: 145px;
+    padding: 13px 18px;
+    border-radius: 8px;
+    color: #fff !important;
+    text-decoration: none;
+    font-weight: 700;
+    transition: transform .2s ease, opacity .2s ease;
+}
+.social-follow-link:hover {
+    transform: translateY(-3px);
+    opacity: .9;
+}
+.social-letter {
+    font-size: 23px;
+    font-weight: 800;
+    line-height: 1;
+}
+.facebook-link { background: #1877F2; }
+.instagram-link { background: linear-gradient(45deg, #feda75, #fa7e1e, #d62976, #962fbf, #4f5bd5); }
+.tiktok-link { background: #111; }
+.social-follow-link small {
+    font-size: 10px;
+    font-weight: 500;
+}
+.social-placeholder {
+    opacity: .85;
+    cursor: default;
+}
+@media (max-width: 600px) {
+    .clinic-social-links {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .social-follow-link {
+        width: 100%;
+        box-sizing: border-box;
+    }
+}
+
+
+/* INJABULO CLINIC SOCIAL MEDIA FOOTER */
+.clinic-social-footer {
+    background: #102f35;
+    color: #fff;
+    padding: 42px 20px;
+    text-align: center;
+}
+.clinic-social-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+.clinic-social-inner h2 {
+    color: #fff;
+    margin: 0 0 10px;
+}
+.clinic-social-inner p {
+    color: #d8e7e5;
+    margin: 0 0 22px;
+    line-height: 1.6;
+}
+.clinic-social-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 14px;
+}
+.social-follow-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    min-width: 145px;
+    padding: 13px 18px;
+    border-radius: 8px;
+    color: #fff !important;
+    text-decoration: none;
+    font-weight: 700;
+    transition: transform .2s ease, opacity .2s ease;
+}
+.social-follow-link:hover {
+    transform: translateY(-3px);
+    opacity: .9;
+}
+.social-letter {
+    font-size: 23px;
+    font-weight: 800;
+    line-height: 1;
+}
+.facebook-link { background: #1877F2; }
+.instagram-link {
+    background: linear-gradient(45deg, #feda75, #fa7e1e, #d62976, #962fbf, #4f5bd5);
+}
+.tiktok-link { background: #111; }
+
+@media (max-width: 600px) {
+    .clinic-social-links {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .social-follow-link {
+        width: 100%;
+        box-sizing: border-box;
+    }
+}
+
+
+
+/* INJABULO CLINIC - PREMIUM ROTATING GALLERY */
+.featured-gallery-section {
+    padding: 75px 24px;
+    background: #f4f8f6;
+}
+
+.featured-gallery-heading {
+    max-width: 760px;
+    margin: 0 auto 35px;
+    text-align: center;
+}
+
+.featured-gallery-heading h2 {
+    margin: 12px 0;
+    color: #263c3b;
+    font-size: clamp(28px, 4vw, 40px);
+}
+
+.featured-gallery-heading h2 span {
+    color: #278b91;
+}
+
+.featured-gallery-heading p {
+    color: #64716f;
+    line-height: 1.7;
+}
+
+.featured-gallery-slider {
+    position: relative;
+    max-width: 1120px;
+    height: 520px;
+    margin: 0 auto;
+    overflow: hidden;
+    border-radius: 18px;
+    background: #173c3d;
+    box-shadow: 0 14px 40px rgba(0, 0, 0, .13);
+}
+
+.featured-gallery-track,
+.featured-gallery-slide {
+    width: 100%;
+    height: 100%;
+}
+
+.featured-gallery-slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .8s ease, visibility .8s ease;
+}
+
+.featured-gallery-slide.active {
+    opacity: 1;
+    visibility: visible;
+    z-index: 1;
+}
+
+.featured-gallery-slide img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+}
+
+.featured-gallery-caption {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 75px 55px 55px;
+    color: #fff;
+    background: linear-gradient(transparent, rgba(0, 0, 0, .82));
+}
+
+.featured-gallery-caption span {
+    color: #bce9df;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+}
+
+.featured-gallery-caption h3 {
+    margin: 9px 0;
+    color: #fff;
+    font-size: clamp(23px, 3vw, 34px);
+}
+
+.featured-gallery-caption p {
+    max-width: 650px;
+    margin: 0;
+    color: #f1f1f1;
+    line-height: 1.6;
+}
+
+.featured-gallery-arrow {
+    position: absolute;
+    top: 50%;
+    z-index: 3;
+    transform: translateY(-50%);
+    width: 46px;
+    height: 46px;
+    border: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, .92);
+    color: #173c3d;
+    font-size: 20px;
+    cursor: pointer;
+    transition: background .2s ease, transform .2s ease;
+}
+
+.featured-gallery-arrow:hover {
+    background: #fff;
+    transform: translateY(-50%) scale(1.08);
+}
+
+.featured-gallery-arrow.previous { left: 20px; }
+.featured-gallery-arrow.next { right: 20px; }
+
+.featured-gallery-dots {
+    position: absolute;
+    z-index: 4;
+    bottom: 20px;
+    right: 28px;
+    display: flex;
+    gap: 9px;
+}
+
+.featured-gallery-dot {
+    width: 10px;
+    height: 10px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, .55);
+    cursor: pointer;
+}
+
+.featured-gallery-dot.active {
+    background: #fff;
+    transform: scale(1.3);
+}
+
+.featured-gallery-action {
+    text-align: center;
+    margin-top: 30px;
+}
+
+@media (max-width: 700px) {
+    .featured-gallery-section {
+        padding: 50px 16px;
+    }
+
+    .featured-gallery-slider {
+        height: 380px;
+        border-radius: 12px;
+    }
+
+    .featured-gallery-caption {
+        padding: 65px 22px 45px;
+    }
+
+    .featured-gallery-arrow {
+        width: 38px;
+        height: 38px;
+    }
+
+    .featured-gallery-arrow.previous { left: 10px; }
+    .featured-gallery-arrow.next { right: 10px; }
+
+    .featured-gallery-dots {
+        right: 18px;
+        bottom: 17px;
+    }
+}
+
+
+
+/* COMPACT INJABULO HOMEPAGE PHOTO CAROUSEL */
+.featured-gallery-section {
+    padding: 45px 20px;
+}
+
+.featured-gallery-heading {
+    margin-bottom: 24px;
+}
+
+.featured-gallery-slider {
+    max-width: 850px;
+    height: 340px;
+    border-radius: 14px;
+}
+
+.featured-gallery-caption {
+    padding: 55px 35px 42px;
+}
+
+.featured-gallery-caption h3 {
+    font-size: 26px;
+}
+
+.featured-gallery-caption p {
+    font-size: 14px;
+}
+
+.featured-gallery-arrow {
+    width: 40px;
+    height: 40px;
+}
+
+.featured-gallery-action {
+    margin-top: 20px;
+}
+
+@media (max-width: 700px) {
+    .featured-gallery-section {
+        padding: 38px 15px;
+    }
+
+    .featured-gallery-slider {
+        height: 260px;
+    }
+
+    .featured-gallery-caption {
+        padding: 45px 20px 38px;
+    }
+
+    .featured-gallery-caption h3 {
+        font-size: 20px;
+    }
+
+    .featured-gallery-caption p {
+        font-size: 12px;
+    }
+}
+
+
+
+/* INJABULO CLINIC - HERO GLASS ANNOUNCEMENT BANNER */
+.hero-glass-banner {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    max-width: 760px;
+    margin: 30px 0 0;
+    padding: 20px 24px 20px 27px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,.85);
+    border-radius: 16px;
+    background: rgba(255,255,255,.58);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    box-shadow: 0 10px 35px rgba(26,83,78,.09);
+}
+
+.hero-banner-accent {
+    position: absolute;
+    left: 0;
+    top: 15%;
+    bottom: 15%;
+    width: 4px;
+    border-radius: 0 5px 5px 0;
+    background: #278b91;
+}
+
+.hero-banner-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.hero-banner-label {
+    display: block;
+    margin-bottom: 7px;
+    color: #278b91;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 2px;
+}
+
+.hero-banner-message {
+    display: none;
+    animation: heroBannerFade .6s ease;
+}
+
+.hero-banner-message.active {
+    display: block;
+}
+
+.hero-banner-message h3 {
+    margin: 0 0 5px;
+    color: #174c4b;
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 19px;
+}
+
+.hero-banner-message p {
+    margin: 0;
+    color: #586966;
+    font-size: 13px;
+    line-height: 1.55;
+}
+
+.hero-banner-indicator {
+    display: flex;
+    flex-shrink: 0;
+    gap: 6px;
+}
+
+.hero-banner-indicator span {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: rgba(39,139,145,.25);
+}
+
+.hero-banner-indicator span.active {
+    width: 20px;
+    border-radius: 8px;
+    background: #278b91;
+}
+
+@keyframes heroBannerFade {
+    from { opacity: 0; transform: translateY(5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 1000px) {
+    .hero-glass-banner {
+        margin: 25px auto 0;
+        text-align: left;
+    }
+}
+
+@media (max-width: 600px) {
+    .hero-glass-banner {
+        padding: 17px 15px 17px 20px;
+        gap: 10px;
+    }
+
+    .hero-banner-message h3 {
+        font-size: 16px;
+    }
+
+    .hero-banner-message p {
+        font-size: 12px;
+    }
+}
+
+
+/* HERO BANNER POSITION */
+.hero-glass-banner {
+    grid-column: 1 / -1;
+    width: min(760px, 100%);
+    box-sizing: border-box;
+    justify-self: start;
+    z-index: 2;
+}
+
+@media (max-width: 1000px) {
+    .hero-glass-banner {
+        justify-self: center;
+    }
+}
+
+
+/* INJABULO CLINIC - PREMIUM HERO BACKGROUND */
+.hero {
+    position: relative;
+    isolation: isolate;
+    background-image:
+        linear-gradient(
+            90deg,
+            rgba(255,255,255,0.22),
+            rgba(255,255,255,0.08)
+        ),
+        url("../images/injabulo-hero-background.jpeg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 22px;
+    overflow: hidden;
+}
+
+/* Keep hero content above the background */
+.hero-content,
+.hero-decoration,
+.hero-glass-banner {
+    position: relative;
+    z-index: 1;
+}
+
+/* CLEAR FROSTED GLASS ANNOUNCEMENT PANEL */
+.hero-glass-banner {
+    background: rgba(255,255,255,0.68);
+    backdrop-filter: blur(22px) saturate(140%);
+    -webkit-backdrop-filter: blur(22px) saturate(140%);
+    border: 1px solid rgba(255,255,255,0.9);
+    box-shadow: 0 12px 35px rgba(35,75,75,0.13);
+    border-radius: 18px;
+}
+
+.hero-banner-message h3 {
+    color: #174c4b;
+}
+
+.hero-banner-message p {
+    color: #455f5b;
+}
+
+@media (max-width: 700px) {
+    .hero {
+        border-radius: 14px;
+        background-position: center;
+    }
+}
+
+
+/* INJABULO CLINIC - SCREEN FIT HERO */
+.hero {
+    height: clamp(520px, calc(100svh - 130px), 680px);
+    min-height: unset;
+    box-sizing: border-box;
+    padding: 45px 55px 110px;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Keep the announcement panel visible inside the hero */
+.hero-glass-banner {
+    position: absolute;
+    left: 55px;
+    bottom: 22px;
+    width: min(760px, calc(100% - 110px));
+    max-width: 760px;
+    margin: 0;
+    box-sizing: border-box;
+    z-index: 5;
+}
+
+/* Balance the heading and circular design */
+.hero-content {
+    max-width: 600px;
+}
+
+.hero-decoration {
+    align-self: center;
+}
+
+/* Tablet and mobile layout */
+@media (max-width: 1000px) {
+    .hero {
+        height: auto;
+        min-height: 850px;
+        padding: 55px 30px 125px;
+        gap: 35px;
+    }
+
+    .hero-glass-banner {
+        left: 30px;
+        bottom: 22px;
+        width: calc(100% - 60px);
+    }
+}
+
+@media (max-width: 600px) {
+    .hero {
+        min-height: 900px;
+        padding: 40px 22px 145px;
+        border-radius: 14px;
+    }
+
+    .hero-glass-banner {
+        left: 15px;
+        bottom: 18px;
+        width: calc(100% - 30px);
+        padding: 16px;
+    }
+
+    .hero-decoration {
+        transform: scale(.85);
+        transform-origin: center;
+    }
+}
+
+
+/* INJABULO CLINIC - FULL SCREEN HERO */
+.hero {
+    width: 100%;
+    max-width: none;
+    height: calc(100svh - 85px);
+    min-height: 600px;
+    max-height: none;
+    margin: 0;
+    padding: 45px clamp(30px, 7vw, 110px) 115px;
+    box-sizing: border-box;
+    border-radius: 0;
+    background-size: cover;
+    background-position: center center;
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(320px, .9fr);
+    align-items: center;
+    column-gap: 35px;
+    overflow: hidden;
+}
+
+.hero-content {
+    width: 100%;
+    max-width: 650px;
+    z-index: 2;
+}
+
+.hero-decoration {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+}
+
+.hero-glass-banner {
+    position: absolute;
+    left: clamp(30px, 7vw, 110px);
+    bottom: 22px;
+    width: min(760px, calc(100% - 60px));
+    margin: 0;
+    z-index: 5;
+}
+
+/* TABLET */
+@media (max-width: 1000px) {
+    .hero {
+        height: auto;
+        min-height: calc(100svh - 75px);
+        grid-template-columns: 1fr;
+        padding: 45px 35px 135px;
+        row-gap: 20px;
+    }
+
+    .hero-content {
+        margin: auto;
+        text-align: center;
+    }
+
+    .hero-decoration {
+        transform: scale(.82);
+    }
+
+    .hero-glass-banner {
+        left: 30px;
+        bottom: 20px;
+        width: calc(100% - 60px);
+    }
+}
+
+/* MOBILE */
+@media (max-width: 600px) {
+    .hero {
+        min-height: calc(100svh - 70px);
+        padding: 35px 20px 155px;
+        row-gap: 10px;
+    }
+
+    .hero-content {
+        text-align: left;
+    }
+
+    .hero-decoration {
+        transform: scale(.68);
+        margin-top: -20px;
+        margin-bottom: -35px;
+    }
+
+    .hero-glass-banner {
+        left: 15px;
+        bottom: 18px;
+        width: calc(100% - 30px);
+    }
+}
+
+
+/* INJABULO CLINIC - RESPONSIVE MOBILE NAVIGATION */
+.mobile-menu-toggle {
+    display: none;
+    width: 44px;
+    height: 44px;
+    padding: 10px;
+    border: 1px solid rgba(39,139,145,.25);
+    border-radius: 8px;
+    background: rgba(255,255,255,.9);
+    cursor: pointer;
+}
+
+.mobile-menu-toggle span {
+    display: block;
+    height: 2px;
+    width: 100%;
+    margin: 5px 0;
+    border-radius: 2px;
+    background: #174c4b;
+}
+
+@media (max-width: 900px) {
+    .site-header {
+        position: relative;
+        z-index: 1000;
+    }
+
+    .nav-container {
+        min-height: 76px;
+        padding: 10px 18px;
+        gap: 12px;
+        flex-wrap: wrap;
+    }
+
+    .logo img {
+        width: 125px;
+        max-width: 42vw;
+    }
+
+    .mobile-menu-toggle {
+        display: block;
+        margin-left: auto;
+        flex-shrink: 0;
+    }
+
+    .main-nav {
+        display: none;
+        order: 5;
+        flex: 0 0 100%;
+        width: 100%;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+        padding: 8px 0 12px;
+        background: rgba(255,255,255,.98);
+    }
+
+    .main-nav.mobile-nav-open {
+        display: flex;
+    }
+
+    .main-nav a {
+        display: block;
+        padding: 13px 12px;
+        border-bottom: 1px solid rgba(39,139,145,.10);
+        font-size: 15px;
+    }
+
+    .main-nav .nav-button {
+        margin-top: 8px;
+        text-align: center;
+        border-radius: 7px;
+    }
+
+    .nav-container > .nav-button {
+        display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .nav-container {
+        padding: 9px 14px;
+    }
+
+    .logo img {
+        width: 112px;
+    }
+}
+
+/* =====================================================
+   INJABULO CLINIC - CONTACT PAGE FINAL DESIGN
+   Scoped to contact-page to protect other pages
+===================================================== */
+
+.contact-page {
+    background: #fbfaf7;
+}
+
+.contact-page .services-section {
+    padding: 75px 35px 85px;
+}
+
+.contact-page .services-heading {
+    max-width: 780px;
+    margin: 0 auto 48px;
+}
+
+.contact-page .services-heading h1 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(34px, 4vw, 48px);
+    color: #292929;
+    margin: 14px 0;
+}
+
+.contact-page .contact-grid {
+    max-width: 1050px;
+    margin: 0 auto;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
+}
+
+.contact-page .contact-card {
+    min-height: 245px;
+    padding: 32px;
+    background: #ffffff;
+    border: 1px solid rgba(39, 139, 145, 0.16);
+    border-radius: 14px;
+    box-shadow: 0 8px 25px rgba(25, 60, 60, 0.06);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    transition: transform .25s ease, box-shadow .25s ease;
+}
+
+.contact-page .contact-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 14px 32px rgba(25, 60, 60, 0.11);
+}
+
+.contact-page .contact-card h2 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 23px;
+    color: #263f40;
+    margin: 0 0 17px;
+}
+
+.contact-page .contact-card > p {
+    color: #686868;
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+.contact-page .contact-icon {
+    margin-bottom: 17px;
+}
+
+.contact-page .contact-detail {
+    overflow-wrap: anywhere;
+}
+
+.contact-page .clinic-map-section {
+    max-width: 1250px;
+    margin: 75px auto 55px;
+    padding: 0 25px;
+}
+
+.contact-page .clinic-map-heading {
+    margin-bottom: 30px;
+}
+
+.contact-page .clinic-map-heading h2 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(30px, 3.5vw, 42px);
+    color: #263f40;
+}
+
+.contact-page .clinic-map-frame {
+    height: 440px;
+    border-radius: 18px;
+    overflow: hidden;
+    border: 1px solid rgba(39, 139, 145, 0.15);
+    box-shadow: 0 14px 35px rgba(25, 60, 60, 0.10);
+}
+
+.contact-page .about-content {
+    max-width: 1050px;
+    margin: 55px auto 20px;
+    padding: 42px;
+    background: #f0f6f3;
+    border: 1px solid rgba(39, 139, 145, 0.13);
+    border-radius: 16px;
+    box-shadow: 0 8px 25px rgba(25, 60, 60, 0.05);
+}
+
+.contact-page .about-content h2 {
+    color: #206f74;
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 25px;
+    margin: 0 0 12px;
+}
+
+.contact-page .about-content p {
+    color: #555;
+    line-height: 1.8;
+    margin-bottom: 22px;
+}
+
+.contact-page .clinic-social-footer {
+    margin-top: 0;
+    padding: 55px 20px;
+    background: #102f35;
+    color: #ffffff;
+}
+
+.contact-page .clinic-social-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.contact-page .clinic-social-inner h2 {
+    color: #ffffff;
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 29px;
+}
+
+.contact-page .clinic-social-inner p {
+    color: #d8e7e5;
+}
+
+.contact-page .clinic-social-links {
+    margin-top: 25px;
+}
+
+@media (max-width: 900px) {
+    .contact-page .services-section {
+        padding: 55px 25px 70px;
+    }
+
+    .contact-page .contact-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .contact-page .clinic-map-frame {
+        height: 360px;
+    }
+}
+
+@media (max-width: 600px) {
+    .contact-page .services-section {
+        padding: 45px 18px 60px;
+    }
+
+    .contact-page .contact-grid {
+        grid-template-columns: 1fr;
+        gap: 18px;
+    }
+
+    .contact-page .contact-card {
+        min-height: 220px;
+        padding: 26px 20px;
+    }
+
+    .contact-page .clinic-map-section {
+        margin: 45px auto;
+        padding: 0 16px;
+    }
+
+    .contact-page .clinic-map-frame {
+        height: 290px;
+        border-radius: 12px;
+    }
+
+    .contact-page .about-content {
+        margin: 35px 18px;
+        padding: 27px 22px;
+    }
+
+    .contact-page .clinic-social-footer {
+        padding: 42px 20px;
+    }
+}
+
+/* END CONTACT PAGE FINAL DESIGN */

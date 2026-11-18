@@ -1,0 +1,828 @@
+﻿{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appointment Management | Injabulo Clinic</title>
+
+    <style>
+        :root {
+            --teal: #278B91;
+            --green: #206F74;
+            --ivory: #F7F2E9;
+            --white: #FFFFFF;
+            --dark: #292929;
+            --muted: #777777;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: var(--ivory);
+            color: var(--dark);
+        }
+
+        .layout {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 250px;
+            flex-shrink: 0;
+            background: white;
+            padding: 30px 20px;
+            border-right: 1px solid #e9e4dc;
+        }
+
+        .brand {
+            color: var(--teal);
+            font-size: 21px;
+            font-weight: bold;
+            margin-bottom: 40px;
+        }
+
+        .sidebar a {
+            display: block;
+            text-decoration: none;
+            color: var(--dark);
+            padding: 14px;
+            margin-bottom: 8px;
+            border-radius: 7px;
+            font-size: 14px;
+        }
+
+        .sidebar a.active,
+        .sidebar a:hover {
+            background: var(--teal);
+            color: white;
+        }
+
+        .main {
+            flex: 1;
+            min-width: 0;
+            padding: 35px;
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            font-size: 27px;
+            margin: 0 0 8px;
+        }
+
+        .muted {
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .back-link {
+            color: white;
+            background: var(--teal);
+            padding: 12px 18px;
+            border-radius: 6px;
+            text-decoration: none;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(5, minmax(0, 1fr));
+            gap: 16px;
+            margin-bottom: 28px;
+        }
+
+        .stat-card,
+        .panel {
+            background: white;
+            padding: 22px;
+            border: 1px solid #e9e4dc;
+            border-radius: 10px;
+        }
+
+        .stat-card span {
+            display: block;
+            color: var(--muted);
+            font-size: 13px;
+            margin-bottom: 12px;
+        }
+
+        .stat-card strong {
+            font-size: 28px;
+            color: var(--teal);
+        }
+
+        .panel {
+            margin-bottom: 25px;
+        }
+
+        .panel h2 {
+            font-size: 19px;
+            margin-top: 0;
+        }
+
+        .filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        input,
+        select {
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .filters input {
+            flex: 1;
+            min-width: 180px;
+        }
+
+        button {
+            background: var(--teal);
+            color: white;
+            border: 0;
+            padding: 12px 18px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .table-wrap {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 850px;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 15px 12px;
+            border-bottom: 1px solid #eee;
+            font-size: 13px;
+            vertical-align: top;
+        }
+
+        th {
+            color: var(--muted);
+            background: #faf9f6;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 6px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        .pending {
+            background: #fff1d6;
+            color: #986500;
+        }
+
+        .confirmed {
+            background: #dff3e5;
+            color: #176b3a;
+        }
+
+        .rescheduled {
+            background: #e5edff;
+            color: #3156a3;
+        }
+
+        .declined {
+            background: #fce4e4;
+            color: #a52828;
+        }
+
+        .completed {
+            background: #e1f2f0;
+            color: #176b63;
+        }
+
+        .update-form {
+            min-width: 190px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .update-form input,
+        .update-form select {
+            width: 100%;
+        }
+
+        .action-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 7px;
+            min-width: 150px;
+        }
+
+        .action-links a {
+            display: inline-block;
+            padding: 8px 10px;
+            border-radius: 5px;
+            text-decoration: none;
+            color: white;
+            background: var(--teal);
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .action-links .whatsapp {
+            background: #218838;
+        }
+
+        .action-links .call {
+            background: #206F74;
+        }
+
+        .contacted-label {
+            color: #176b3a;
+            font-weight: bold;
+        }
+
+        .contact-form button {
+            padding: 8px 10px;
+            font-size: 12px;
+        }
+
+        .message {
+            background: #e5f4e9;
+            color: #176b3a;
+            padding: 14px;
+            border-radius: 7px;
+            margin-bottom: 18px;
+        }
+
+        .empty {
+            text-align: center;
+            padding: 35px;
+            color: var(--muted);
+        }
+
+        /* Modern appointment dashboard enhancements */
+
+        body {
+            background: #f4f6f5;
+        }
+
+        .main {
+            padding: 38px;
+        }
+
+        .topbar {
+            margin-bottom: 32px;
+        }
+
+        h1 {
+            font-size: 29px;
+            letter-spacing: -0.6px;
+        }
+
+        .muted {
+            line-height: 1.6;
+        }
+
+        .stat-card {
+            border: 1px solid #e8eeeb;
+            border-radius: 13px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(30, 70, 65, 0.035);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 22px rgba(30, 70, 65, 0.08);
+        }
+
+        .stat-card strong {
+            font-size: 32px;
+        }
+
+        .panel {
+            border: 1px solid #e8eeeb;
+            border-radius: 13px;
+            padding: 27px;
+            box-shadow: 0 5px 20px rgba(30, 70, 65, 0.035);
+        }
+
+        .panel h2 {
+            font-size: 20px;
+            margin-bottom: 22px;
+        }
+
+        .filters {
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .filters input,
+        .filters select {
+            background: #fff;
+            border: 1px solid #dce5e1;
+            border-radius: 8px;
+            min-height: 44px;
+        }
+
+        button,
+        .back-link {
+            border-radius: 8px;
+            transition: background 0.2s ease, transform 0.2s ease;
+        }
+
+        button:hover,
+        .back-link:hover {
+            background: var(--green);
+            transform: translateY(-1px);
+        }
+
+        .table-wrap {
+            border: 1px solid #edf0ed;
+            border-radius: 10px;
+            background: white;
+        }
+
+        table {
+            min-width: 1150px;
+        }
+
+        th {
+            padding: 17px 13px;
+            background: #f3f7f5;
+            color: #52635e;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.45px;
+            white-space: nowrap;
+        }
+
+        td {
+            padding: 19px 13px;
+            border-bottom: 1px solid #edf0ed;
+            line-height: 1.55;
+            font-size: 13px;
+        }
+
+        tbody tr {
+            transition: background 0.15s ease;
+        }
+
+        tbody tr:hover {
+            background: #f8fbf9;
+        }
+
+        td strong {
+            color: #263d39;
+            font-size: 14px;
+        }
+
+        td a:not(.action-links a) {
+            color: var(--teal);
+            font-weight: 600;
+        }
+
+        .status {
+            padding: 7px 12px;
+            font-size: 11px;
+            letter-spacing: 0.2px;
+        }
+
+        .action-links {
+            min-width: 175px;
+            gap: 8px;
+        }
+
+        .action-links a {
+            padding: 9px 12px;
+            border-radius: 7px;
+            font-size: 12px;
+        }
+
+        .action-links a:hover {
+            opacity: 0.85;
+            transform: translateY(-1px);
+        }
+
+        .update-form {
+            min-width: 175px;
+            padding: 13px;
+            border: 1px solid #edf0ed;
+            border-radius: 9px;
+            background: #fafcfb;
+        }
+
+        .update-form label {
+            color: #64736e;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .update-form input,
+        .update-form select {
+            padding: 10px;
+            border: 1px solid #dce5e1;
+            border-radius: 7px;
+            background: white;
+        }
+
+        .update-form button {
+            margin-top: 4px;
+            min-height: 40px;
+        }
+
+        .contacted-label {
+            display: inline-block;
+            padding: 6px 10px;
+            background: #e5f4e9;
+            border-radius: 20px;
+            font-size: 12px;
+        }
+
+        .contact-form button {
+            background: #eaf3ef;
+            color: #206f50;
+            border: 1px solid #d4e9dc;
+        }
+
+        .contact-form button:hover {
+            background: #d8eddf;
+        }
+
+        .empty {
+            padding: 55px;
+            font-size: 14px;
+        }
+
+        @media(max-width: 1000px) {
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media(max-width: 650px) {
+            .layout {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                padding: 18px;
+            }
+
+            .brand {
+                margin-bottom: 15px;
+            }
+
+            .sidebar a {
+                display: inline-block;
+                padding: 10px;
+            }
+
+            .main {
+                padding: 22px 14px;
+            }
+
+            .stats {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="layout">
+
+    <aside class="sidebar">
+        <div class="brand">INJABULO CLINIC</div>
+
+        <nav>
+            <a href="{% url 'dashboard:home' %}">Dashboard</a>
+            <a href="{% url 'dashboard:service_list' %}">Services</a>
+            <a href="{% url 'dashboard:gallery_list' %}">Gallery</a>
+            <a href="{% url 'dashboard:event_list' %}">Events</a>
+            <a href="{% url 'dashboard:homepage_content_edit' %}">Homepage Content</a>
+            <a href="{% url 'dashboard:appointment_list' %}" class="active">Appointments</a>
+
+            <a href="/admin/">Administration</a>
+
+            <form method="post" action="{% url 'dashboard:logout' %}">
+                {% csrf_token %}
+                <button type="submit" style="width:100%; margin-top:20px;">
+                    Sign Out
+                </button>
+            </form>
+        </nav>
+    </aside>
+
+    <main class="main">
+
+        <header class="topbar">
+            <div>
+                <h1>Appointment Management</h1>
+                <p class="muted">Manage patient appointment requests.</p>
+            </div>
+
+            <a href="{% url 'dashboard:home' %}" class="back-link">
+                Back to Dashboard
+            </a>
+        </header>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="message">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+
+        <section class="stats">
+
+            <article class="stat-card">
+                <span>Total Requests</span>
+                <strong>{{ total_appointments }}</strong>
+            </article>
+
+            <article class="stat-card">
+                <span>Pending</span>
+                <strong>{{ pending_appointments }}</strong>
+            </article>
+
+            <article class="stat-card">
+                <span>Confirmed</span>
+                <strong>{{ confirmed_appointments }}</strong>
+            </article>
+
+            <article class="stat-card">
+                <span>Rescheduled</span>
+                <strong>{{ rescheduled_appointments }}</strong>
+            </article>
+
+            <article class="stat-card">
+                <span>Completed</span>
+                <strong>{{ completed_appointments }}</strong>
+            </article>
+
+        </section>
+
+        <section class="panel">
+
+            <h2>{% if upcoming_only %}Upcoming Appointments{% else %}Patient Appointment Requests{% endif %}</h2>
+
+            <form method="get" class="filters">
+
+                <input
+                    type="search"
+                    name="q"
+                    placeholder="Search patient, phone or service..."
+                    value="{{ search }}"
+                >
+
+                <select name="status">
+                    <option value="">All statuses</option>
+
+                    <option value="pending"
+                        {% if selected_status == "pending" %}selected{% endif %}>
+                        Pending
+                    </option>
+
+                    <option value="confirmed"
+                        {% if selected_status == "confirmed" %}selected{% endif %}>
+                        Confirmed
+                    </option>
+
+                    <option value="rescheduled"
+                        {% if selected_status == "rescheduled" %}selected{% endif %}>
+                        Rescheduled
+                    </option>
+
+                    <option value="declined"
+                        {% if selected_status == "declined" %}selected{% endif %}>
+                        Declined
+                    </option>
+
+                    <option value="completed"
+                        {% if selected_status == "completed" %}selected{% endif %}>
+                        Completed
+                    </option>
+                </select>
+
+                <button type="submit">Search</button>
+
+                <button type="submit" name="upcoming" value="1">Upcoming Appointments</button>
+
+                <a href="{% url 'dashboard:appointment_list' %}"
+                   style="padding:12px; color:var(--teal);">
+                    Clear
+                </a>
+
+            </form>
+
+            <div class="table-wrap">
+
+                <table>
+
+                    <thead>
+                        <tr>
+                            <th>Reference</th>
+                            <th>Patient</th>
+                            <th>Contact</th>
+                            <th>Communication</th>
+                            <th>Actions</th>
+                            <th>Service</th>
+                            <th>Preferred Date</th>
+                            <th>Preferred Time</th>
+                            <th>Clinic Confirmed Schedule</th>
+                            <th>Status</th>
+                            <th>Update Appointment</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        {% for appointment in appointments %}
+
+                        <tr>
+
+                            <td>#{{ appointment.pk }}</td>
+
+                            <td>
+                                <strong>{{ appointment.patient_name }}</strong>
+                                <br>
+                                <small>{{ appointment.created_at|date:"d M Y H:i" }}</small>
+
+                            </td>
+
+                            <td>
+                                <a href="tel:{{ appointment.contact_number }}">
+                                    {{ appointment.contact_number }}
+                                </a>
+                            </td>
+
+                            <td>
+                                {% if appointment.communication_status == "contacted" %}
+                                    <span class="contacted-label">Contacted</span>
+                                    {% if appointment.contacted_at %}
+                                        <br>
+                                        <small>{{ appointment.contacted_at|date:"d M Y H:i" }}</small>
+                                    {% endif %}
+                                {% else %}
+                                    <span class="muted">Not contacted</span>
+                                    <form method="post"
+                                          action="{% url 'dashboard:appointment_mark_contacted' appointment.pk %}"
+                                          class="contact-form"
+                                          style="margin-top:8px;">
+                                        {% csrf_token %}
+                                        <button type="submit">Mark as Contacted</button>
+                                    </form>
+                                {% endif %}
+                            </td>
+
+                            <td>
+                                <div class="action-links">
+                                    {% if appointment.whatsapp_url %}
+                                        <a class="whatsapp"
+                                           href="{{ appointment.whatsapp_url }}"
+                                           target="_blank"
+                                           rel="noopener noreferrer">
+                                            WhatsApp
+                                        </a>
+                                    {% endif %}
+
+                                    <a class="call"
+                                       href="tel:{{ appointment.contact_number }}">
+                                        Call
+                                    </a>
+
+                                    <a href="{% url 'dashboard:appointment_detail' appointment.pk %}">
+                                        View Details
+                                    </a>
+                                </div>
+                            </td>
+
+                            <td>{{ appointment.service.title }}</td>
+
+                            <td>{{ appointment.preferred_date|date:"d M Y" }}</td>
+
+                            <td>
+                                {% if appointment.preferred_time %}
+                                    {{ appointment.preferred_time|time:"H:i" }}
+                                {% else %}
+                                    Not specified
+                                {% endif %}
+                            </td>
+
+                            <td>
+                                {% if appointment.confirmed_date %}
+                                    <strong>{{ appointment.confirmed_date|date:"d M Y" }}</strong>
+                                    {% if appointment.confirmed_time %}
+                                        <br>{{ appointment.confirmed_time|time:"H:i" }}
+                                    {% endif %}
+                                    {% if appointment.status == "rescheduled" %}
+                                        <br><small>Rescheduled by clinic</small>
+                                    {% endif %}
+                                {% else %}
+                                    <span class="muted">Awaiting confirmation</span>
+                                {% endif %}
+                            </td>
+
+                            <td>
+                                <span class="status {{ appointment.status }}">
+                                    {{ appointment.get_status_display }}
+                                </span>
+
+                                {% if appointment.confirmed_date %}
+                                    <br>
+                                    <small>
+                                        Confirmed:
+                                        {{ appointment.confirmed_date|date:"d M Y" }}
+                                    </small>
+                                {% endif %}
+                            </td>
+
+                            <td>
+
+                                <form method="post"
+                                      action="{% url 'dashboard:appointment_update' appointment.pk %}"
+                                      class="update-form">
+
+                                    {% csrf_token %}
+
+                                    <select name="status" required>
+                                        {% for value, label in appointment.Status.choices %}
+                                            <option value="{{ value }}"
+                                                {% if appointment.status == value %}selected{% endif %}>
+                                                {{ label }}
+                                            </option>
+                                        {% endfor %}
+                                    </select>
+
+                                    <label>Confirmed date</label>
+
+                                    <input
+                                        type="date"
+                                        name="confirmed_date"
+                                        value="{% if appointment.confirmed_date %}{{ appointment.confirmed_date|date:'Y-m-d' }}{% endif %}"
+                                    >
+
+                                    <label>Confirmed time</label>
+
+                                    <input
+                                        type="time"
+                                        name="confirmed_time"
+                                        value="{% if appointment.confirmed_time %}{{ appointment.confirmed_time|time:'H:i' }}{% endif %}"
+                                    >
+
+                                    <button type="submit">Save Changes</button>
+
+                                </form>
+
+                            </td>
+
+                        </tr>
+
+                        {% empty %}
+
+                        <tr>
+                            <td colspan="11" class="empty">
+                                No appointment requests found.
+                            </td>
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+</body>
+</html>
+
+

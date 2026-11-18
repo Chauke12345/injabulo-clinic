@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Event | Injabulo Clinic</title>
+    <style>
+        * { box-sizing: border-box; }
+        body { margin: 0; padding: 30px; font-family: Arial, sans-serif; background: #F7F2E9; color: #292929; }
+        .container { max-width: 600px; margin: 60px auto; }
+        .panel { background: white; padding: 30px; border: 1px solid #e9e4dc; border-radius: 10px; text-align: center; }
+        h1 { color: #a33b3b; }
+        .muted { color: #777; font-size: 14px; line-height: 1.6; }
+        .preview { max-width: 100%; max-height: 240px; object-fit: contain; border-radius: 8px; margin: 15px auto; }
+        .actions { display: flex; justify-content: center; gap: 10px; margin-top: 25px; flex-wrap: wrap; }
+        .button { padding: 12px 18px; border: 0; border-radius: 6px; background: #a33b3b; color: white; text-decoration: none; cursor: pointer; font-size: 14px; }
+        .cancel { background: #eae7e0; color: #292929; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="panel">
+        <h1>Delete Clinic Event?</h1>
+        <p class="muted">You are about to permanently delete this event:</p>
+        <h3>{{ event.title }}</h3>
+        {% if event.image %}
+            <img class="preview" src="{{ event.image.url }}" alt="{{ event.title }}">
+        {% endif %}
+        <p class="muted">This action cannot be undone.</p>
+
+        <div class="actions">
+            <form method="post">
+                {% csrf_token %}
+                <button type="submit" class="button">Yes, Delete Event</button>
+            </form>
+            <a href="{% url 'dashboard:event_list' %}" class="button cancel">Cancel</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

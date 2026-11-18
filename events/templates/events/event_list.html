@@ -1,0 +1,82 @@
+﻿{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Events & Announcements | Injabulo Clinic</title>
+    <link rel="stylesheet" href="{% static 'core/css/style.css' %}">
+</head>
+<body class="gallery-page">
+
+    <header class="site-header">
+        <div class="nav-container">
+            <a href="{% url 'home' %}" class="logo">
+                <img src="{% static 'core/images/injabulo-clinic-logo.png' %}" alt="Injabulo Clinic">
+            </a>
+
+            <nav class="main-nav">
+                <a href="{% url 'home' %}">Home</a>
+                <a href="{% url 'home' %}#about">About Us</a>
+                <a href="{% url 'services:service_list' %}">Services</a>
+                <a href="{% url 'gallery:gallery_list' %}">Gallery</a>
+                <a href="{% url 'events:event_list' %}" class="active">Events</a>
+                <a href="{% url 'contact' %}">Contact</a>
+                <a href="{% url 'appointment' %}" class="nav-button">Book an Appointment</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="gallery-main">
+        <section class="gallery-intro">
+            <p class="gallery-eyebrow">STAY CONNECTED WITH INJABULO CLINIC</p>
+            <h1>Events & Announcements</h1>
+            <p>Discover our health awareness campaigns, community outreach activities, wellness programmes and clinic announcements.</p>
+        </section>
+
+        {% if events %}
+            <section class="gallery-grid">
+                {% for event in events %}
+                    <article class="gallery-card">
+                        {% if event.image %}
+                            <div class="gallery-image">
+                                <img src="{{ event.image.url }}" alt="{{ event.title }}">
+                            </div>
+                        {% endif %}
+
+                        <div class="gallery-card-content">
+                            <span class="gallery-category">{{ event.get_category_display }}</span>
+                            <h2>{{ event.title }}</h2>
+
+                            {% if event.event_date %}
+                                <small>{{ event.event_date|date:"d F Y" }}</small>
+                            {% endif %}
+
+                            {% if event.event_time %}
+                                <p>{{ event.event_time|time:"H:i" }}</p>
+                            {% endif %}
+
+                            {% if event.location %}
+                                <p>{{ event.location }}</p>
+                            {% endif %}
+
+                            <p>{{ event.short_description }}</p>
+                            <p>{{ event.description|linebreaksbr }}</p>
+                        </div>
+                    </article>
+                {% endfor %}
+            </section>
+        {% else %}
+            <section class="gallery-empty">
+                <h2>Stay Tuned for Upcoming Events</h2>
+                <p>We look forward to sharing our upcoming health awareness campaigns, community activities and clinic announcements with you.</p>
+            </section>
+        {% endif %}
+    </main>
+
+    <footer class="gallery-footer">
+        <p>Injabulo Clinic | Your Health, Your Beauty, Our Care</p>
+    </footer>
+
+</body>
+</html>

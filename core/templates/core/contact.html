@@ -1,0 +1,212 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | Injabulo Clinic</title>
+    <link rel="stylesheet" href="{% static 'core/css/style.css' %}">
+    <meta name="theme-color" content="#0f766e">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="Injabulo Clinic">
+    <link rel="manifest" href="{% static 'core/manifest.webmanifest' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'core/images/favicon-32.png' %}">
+    <link rel="shortcut icon" href="{% static 'core/images/favicon.ico' %}">
+    <link rel="apple-touch-icon" href="{% static 'core/images/apple-touch-icon.png' %}">
+</head>
+<body class="contact-page">
+
+<header class="site-header">
+    <div class="nav-container">
+        <a href="/" class="logo">
+            <img src="{% static 'core/images/injabulo-clinic-logo.png' %}" alt="Injabulo Clinic">
+        </a>
+
+            <button class="mobile-menu-toggle"
+                    type="button"
+                    aria-label="Open navigation menu"
+                    aria-expanded="false"
+                    aria-controls="clinic-main-nav">
+                <span></span><span></span><span></span>
+            </button>
+
+        <nav class="main-nav" id="clinic-main-nav">
+            <a href="/">Home</a>
+            <a href="/#about">About Us</a>
+            <a href="{% url 'services:service_list' %}">Services</a>
+            <a href="{% url 'gallery:gallery_list' %}">Gallery</a>
+            <a href="{% url 'events:event_list' %}">Events</a>
+            <a href="{% url 'contact' %}">Contact</a>
+            <a href="{% url 'appointment' %}" class="nav-button">Book an Appointment</a>
+        </nav>
+    </div>
+</header>
+
+<main>
+    <section class="services-section">
+        <div class="services-heading">
+            <p class="hero-label">WE ARE HERE FOR YOU</p>
+            <h1>Contact Injabulo Clinic</h1>
+            <p>We welcome your enquiries. Get in touch with our clinic for information or appointment requests.</p>
+        </div>
+
+        <div class="services-grid contact-grid">
+
+            <article class="service-card contact-card">
+                <h2>Visit Our Clinic</h2>
+                <p>18 Stapelberg Ave, East Lynne, Pretoria, 0186</p>
+                <div class="directions-actions">
+                    <a href="https://www.google.com/maps/search/?api=1&amp;query=18+Stapelberg+Ave%2C+East+Lynne%2C+Pretoria%2C+0186"
+                       target="_blank" rel="noopener noreferrer" class="directions-button maps-button">
+                        Get Directions
+                    </a>
+                    <a href="https://waze.com/ul?q=18%20Stapelberg%20Ave%2C%20East%20Lynne%2C%20Pretoria%2C%200186&amp;navigate=yes"
+                       target="_blank" rel="noopener noreferrer" class="directions-button waze-button">
+                        Navigate with Waze
+                    </a>
+                </div>
+            </article>
+
+            <article class="service-card contact-card">
+                <h2>Call Us</h2>
+                <div class="contact-icon phone-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.8 19.8 0 0 1 11.19 18a19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.09 3.18 2 2 0 0 1 4.08 1h3a2 2 0 0 1 2 1.72c.12.96.35 1.9.69 2.8a2 2 0 0 1-.45 2.11L8.05 8.9a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.84.57 2.8.69A2 2 0 0 1 22 16.92z"/>
+                    </svg>
+                </div>
+                <a href="tel:+27128001903" class="directions-button">Call Now</a>
+                <p class="contact-detail">012 800 1903</p>
+            </article>
+
+            <article class="service-card contact-card">
+                <h2>WhatsApp</h2>
+                <div class="contact-icon whatsapp-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M20.5 11.8a8.5 8.5 0 0 1-12.6 7.4L3 20.5l1.3-4.7A8.5 8.5 0 1 1 20.5 11.8z"/>
+                        <path d="M9 8.5c.3-.5.6-.5.9-.5h.4c.2 0 .4.1.5.4l.7 1.7c.1.2.1.4-.1.6l-.6.7c-.2.2-.2.4-.1.6.5.9 1.2 1.6 2.1 2.1.2.1.4.1.6-.1l.7-.8c.2-.2.4-.2.6-.1l1.6.8c.2.1.4.3.4.5 0 .3-.2 1-.6 1.3-.4.4-1 .6-1.6.5-1-.2-2.3-.8-3.5-1.8-1.1-.9-2-2.1-2.4-3.2-.3-.9 0-1.9.4-2.7z"/>
+                    </svg>
+                </div>
+                <a href="https://wa.me/27793996635?text=Hello%20Injabulo%20Clinic%2C%20I%20would%20like%20to%20make%20an%20enquiry."
+                   target="_blank" rel="noopener noreferrer" class="directions-button">WhatsApp Us</a>
+                <p class="contact-detail">079 399 6635</p>
+            </article>
+
+            <article class="service-card contact-card">
+                <h2>Email Us</h2>
+                <div class="contact-icon email-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                        <rect x="2" y="4" width="20" height="16" rx="2"/>
+                        <path d="m22 7-10 7L2 7"/>
+                    </svg>
+                </div>
+                <a href="mailto:injabuloclinics@gmail.com?subject=Enquiry%20-%20Injabulo%20Clinic"
+                   class="directions-button">Send Email</a>
+                <p class="contact-detail">injabuloclinics@gmail.com</p>
+            </article>
+
+        </div>
+
+        <section class="clinic-map-section">
+            <div class="clinic-map-heading">
+                <p class="hero-label">FIND YOUR WAY TO US</p>
+                <h2>Find Injabulo Clinic</h2>
+                <p>Visit us at 18 Stapelberg Ave, East Lynne, Pretoria, 0186.</p>
+            </div>
+            <div class="clinic-map-frame">
+                <iframe
+                    src="https://www.google.com/maps?q=18+Stapelberg+Ave,+East+Lynne,+Pretoria,+0186&output=embed"
+                    title="Map showing the location of Injabulo Clinic"
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"
+                    allowfullscreen>
+                </iframe>
+            </div>
+        </section>
+
+        <div class="about-content">
+            <h2>Operating Hours</h2>
+            <p>Monday to Saturday: 08:00 - 17:00</p>
+
+            <h2>Professional Nurse</h2>
+            <p>Sr H.G. Fankomo</p>
+
+            <div class="hero-actions">
+                <a href="{% url 'appointment' %}" class="nav-button">
+                    Request an Appointment
+                </a>
+            </div>
+        </div>
+    </section>
+</main>
+
+<script>
+if ("serviceWorker" in navigator) {
+    window.addEventListener("load", function () {
+        navigator.serviceWorker.register("/service-worker.js")
+            .then(function (registration) {
+                console.log("Injabulo Clinic service worker registered:", registration.scope);
+            })
+            .catch(function (error) {
+                console.error("Service worker registration failed:", error);
+            });
+    });
+}
+</script>
+
+<footer class="clinic-social-footer">
+    <div class="clinic-social-inner">
+        <h2>Stay Connected with Injabulo Clinic</h2>
+        <p>Follow us for clinic updates, health information and announcements.</p>
+
+        <div class="clinic-social-links">
+            <a href="https://www.facebook.com/61567617202327/"
+               class="social-follow-link facebook-link"
+               target="_blank" rel="noopener noreferrer"
+               aria-label="Follow Injabulo Clinics on Facebook">
+                <span class="social-letter">f</span> Facebook
+            </a>
+
+            <a href="https://www.instagram.com/injabuloclinic/"
+               class="social-follow-link instagram-link"
+               target="_blank" rel="noopener noreferrer"
+               aria-label="Follow Injabulo Clinic on Instagram">
+                <span class="social-letter">?</span> Instagram
+            </a>
+
+            <a href="https://www.tiktok.com/@injabulo.clinic"
+               class="social-follow-link tiktok-link"
+               target="_blank" rel="noopener noreferrer"
+               aria-label="Follow Injabulo Clinic on TikTok">
+                <span class="social-letter">?</span> TikTok
+            </a>
+        </div>
+    </div>
+</footer>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const toggle = document.querySelector(".mobile-menu-toggle");
+    const nav = document.getElementById("clinic-main-nav");
+    if (!toggle || !nav) return;
+
+    toggle.addEventListener("click", function () {
+        const isOpen = toggle.getAttribute("aria-expanded") === "true";
+        toggle.setAttribute("aria-expanded", String(!isOpen));
+        toggle.setAttribute("aria-label", isOpen ? "Open navigation menu" : "Close navigation menu");
+        nav.classList.toggle("mobile-nav-open", !isOpen);
+    });
+
+    nav.querySelectorAll("a").forEach(function (link) {
+        link.addEventListener("click", function () {
+            toggle.setAttribute("aria-expanded", "false");
+            toggle.setAttribute("aria-label", "Open navigation menu");
+            nav.classList.remove("mobile-nav-open");
+        });
+    });
+});
+</script>
+
+</body>
+</html>

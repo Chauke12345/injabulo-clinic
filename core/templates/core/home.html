@@ -1,0 +1,677 @@
+﻿{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Injabulo Clinic | Your Health, Your Beauty, Our Care</title>
+
+    <link rel="stylesheet" href="{% static 'core/css/style.css' %}">
+    <meta name="theme-color" content="#0f766e">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="Injabulo Clinic">
+
+    <link rel="manifest" href="{% static 'core/manifest.webmanifest' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'core/images/favicon-32.png' %}">
+    <link rel="shortcut icon" href="{% static 'core/images/favicon.ico' %}">
+    <link rel="apple-touch-icon" href="{% static 'core/images/apple-touch-icon.png' %}">
+
+    <style>
+        .home-health-videos {
+            padding: 65px 24px;
+            background: #f4f8f6;
+        }
+        .home-health-videos-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .home-health-videos-heading {
+            text-align: center;
+            max-width: 720px;
+            margin: 0 auto 35px;
+        }
+        .home-health-videos-heading h2 {
+            margin: 12px 0;
+        }
+        .home-health-video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 24px;
+        }
+        .home-health-video-card {
+            overflow: hidden;
+            background: white;
+            border-radius: 14px;
+            box-shadow: 0 5px 22px rgba(0,0,0,.07);
+        }
+        .home-health-video-card video {
+            display: block;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            background: #142b2a;
+        }
+        .home-health-video-card img {
+            display: block;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            object-fit: cover;
+        }
+        .home-health-video-content {
+            padding: 20px;
+        }
+        .home-health-video-content span {
+            color: #0f766e;
+            font-size: .82rem;
+            font-weight: 700;
+        }
+        .home-health-video-content h3 {
+            margin: 9px 0;
+        }
+        .home-health-video-content p {
+            line-height: 1.6;
+        }
+        .home-health-videos-action {
+            text-align: center;
+            margin-top: 32px;
+        }
+        .home-health-videos-empty {
+            text-align: center;
+            padding: 25px;
+        }
+    
+        /* PUBLIC TEAM, BLOG AND TESTIMONIAL SECTIONS */
+        .public-content-section {
+            padding: 75px 24px;
+            background: #f7f2e9;
+        }
+        .public-content-section.alt {
+            background: #f4f8f6;
+        }
+        .public-content-inner {
+            max-width: 1200px;
+            margin: auto;
+        }
+        .public-content-heading {
+            text-align: center;
+            max-width: 720px;
+            margin: 0 auto 38px;
+        }
+        .public-content-heading h2 {
+            color: #206f74;
+            font-size: clamp(28px, 4vw, 38px);
+            margin: 12px 0;
+        }
+        .public-content-heading p {
+            color: #666;
+            line-height: 1.7;
+        }
+        .public-content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 25px;
+        }
+        .public-content-card {
+            background: white;
+            border: 1px solid #e9e4dc;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 5px 22px rgba(0,0,0,.06);
+        }
+        .public-content-card img {
+            display: block;
+            width: 100%;
+            height: 240px;
+            object-fit: cover;
+        }
+        .public-content-card-body {
+            padding: 23px;
+        }
+        .public-content-card h3 {
+            color: #206f74;
+            margin: 8px 0 12px;
+        }
+        .public-content-card p {
+            color: #666;
+            line-height: 1.7;
+        }
+        .public-content-meta {
+            color: #278b91;
+            font-size: 13px;
+            font-weight: 700;
+        }
+        .public-content-action {
+            display: inline-block;
+            margin-top: 12px;
+            color: #206f74;
+            font-weight: 700;
+            text-decoration: none;
+        }
+        .testimonial-quote {
+            font-size: 16px;
+            line-height: 1.8;
+            color: #444;
+        }
+        .testimonial-stars {
+            color: #c18b25;
+            letter-spacing: 3px;
+            font-size: 18px;
+        }
+        @media(max-width: 600px) {
+            .public-content-section {
+                padding: 35px 18px;
+            }
+
+            .public-content-heading {
+                margin-bottom: 24px;
+            }
+
+            .public-content-grid {
+                gap: 18px;
+            }
+
+            .public-content-card-body {
+                padding: 18px;
+            }
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <!-- NAVIGATION -->
+    <header class="site-header">
+        <div class="nav-container">
+
+            <a href="/" class="logo">
+                <img src="{% static 'core/images/injabulo-clinic-logo.png' %}"
+                     alt="Injabulo Clinic">
+            </a>
+
+            <button class="mobile-menu-toggle"
+                    type="button"
+                    aria-label="Open navigation menu"
+                    aria-expanded="false"
+                    aria-controls="clinic-main-nav">
+                <span></span><span></span><span></span>
+            </button>
+
+
+            <nav class="main-nav" id="clinic-main-nav">
+                <a href="#home">Home</a>
+                <a href="#about">About Us</a>
+                <a href="{% url 'team:team_list' %}">Our Team</a>
+                <a href="{% url 'blog:post_list' %}">Health Blog</a>
+                
+                <a href="{% url 'services:service_list' %}">Services</a>
+                <a href="{% url 'corporate:corporate_wellness' %}">Corporate Wellness</a>
+                <a href="{% url 'gallery:gallery_list' %}">Gallery</a>
+                <a href="{% url 'events:event_list' %}">Events</a>
+                <a href="{% url 'videos:video_library' %}">Health Videos</a>
+                <a href="{% url 'contact' %}">Contact</a>
+            </nav>
+
+            <a href="{% url 'appointment' %}"
+               class="nav-button">
+                Book an Appointment
+            </a>
+
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <main>
+
+        <section class="hero" id="home">
+
+            <div class="hero-content">
+
+                <span class="hero-label">{{ homepage_content.hero_label }}</span>
+
+                <h1>
+                    {{ homepage_content.hero_heading_line_1 }}<br>
+                    {{ homepage_content.hero_heading_line_2 }}<br>
+                    <span>{{ homepage_content.hero_heading_line_3 }}</span>
+                </h1>
+
+                <p>
+                    {{ homepage_content.hero_description }}
+                </p>
+
+                <div class="hero-actions">
+                    <a href="{% url 'appointment' %}"
+                       class="primary-button">
+                        Request an Appointment
+                    </a>
+
+                    <a href="#services" class="secondary-button">
+                        Explore Our Services
+                    </a>
+                    <button id="install-app-button"
+                            type="button"
+                            hidden
+                            style="padding:13px 22px; border:0; border-radius:8px; background:#0f766e; color:white; font-weight:700; cursor:pointer;">
+                        Install Injabulo Clinic
+                    </button>
+                </div>
+
+            </div>
+
+            <div class="hero-decoration">
+                <div class="hero-circle">
+                    <span>YOUR HEALTH</span>
+                    <strong>Matters</strong>
+                    <span>OUR PRIORITY</span>
+                </div>
+            </div>
+        <div class="hero-glass-banner" id="hero-glass-banner">
+                <div class="hero-banner-accent"></div>
+                <div class="hero-banner-content">
+                    <span class="hero-banner-label">INJABULO CLINIC</span>
+
+                    <div class="hero-banner-message active">
+                        <h3>Professional Care You Can Trust</h3>
+                        <p>Quality nursing care delivered with compassion, dignity and respect.</p>
+                    </div>
+
+                    <div class="hero-banner-message">
+                        <h3>Your Family's Health Matters</h3>
+                        <p>Supporting individuals, families and communities through accessible healthcare.</p>
+                    </div>
+
+                    <div class="hero-banner-message">
+                        <h3>Care That Puts You First</h3>
+                        <p>Your wellbeing is our priority. Experience personalised attention at Injabulo Clinic.</p>
+                    </div>
+
+                    <div class="hero-banner-message">
+                        <h3>Your Next Step Starts Here</h3>
+                        <p>Request your appointment online and let our team assist you.</p>
+                    </div>
+                </div>
+
+                <div class="hero-banner-indicator" aria-hidden="true">
+                    <span class="active"></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+
+                    </div>
+
+        </section>
+
+            
+            
+
+        <!-- ABOUT INJABULO CLINIC -->        <section class="about-section" id="about">
+            <div class="about-visual">
+                <div class="about-visual-inner">
+                    <span class="about-small-label">CARE WITH COMPASSION</span>
+                    <div class="about-symbol">+</div>
+                    <h3>Your wellbeing<br>comes first.</h3>
+                    <span class="about-bottom-label">INJABULO CLINIC</span>
+                </div>
+            </div>
+
+            <div class="about-content">
+                <span class="section-label">{{ homepage_content.about_label }}</span>
+
+                <h2>{{ homepage_content.about_heading }}</h2>
+
+                <p>
+                    {{ homepage_content.about_paragraph_1 }}
+                </p>
+
+                <p>
+                    {{ homepage_content.about_paragraph_2 }}
+                </p>
+
+                <div class="about-signature">
+                    <strong>{{ homepage_content.nurse_name }}</strong>
+                    <span>{{ homepage_content.nurse_title }}</span>
+                </div>
+
+                <a href="#services" class="about-link">
+                    Discover our services <span>?</span>
+                </a>
+            </div>
+        </section>
+
+        
+<!-- MISSION, VISION AND VALUES -->
+        <section class="mission-values-section">
+            <div class="mission-values-heading">
+                <span class="section-label">WHAT GUIDES US</span>
+                <h2>Our Mission, Vision & <span>Values</span></h2>
+            </div>
+
+            <div class="mission-values-grid">
+
+                <article class="mission-value-card">
+                    <span class="mission-value-number">01</span>
+                    <h3>{{ homepage_content.mission_heading }}</h3>
+                    <p>
+                        {{ homepage_content.mission_text }}
+                    </p>
+                </article>
+
+                <article class="mission-value-card">
+                    <span class="mission-value-number">02</span>
+                    <h3>{{ homepage_content.vision_heading }}</h3>
+                    <p>
+                        {{ homepage_content.vision_text }}
+                    </p>
+                </article>
+
+                <article class="mission-value-card">
+                    <span class="mission-value-number">03</span>
+                    <h3>Our Values</h3>
+                    <ul>
+                        <li><strong>{{ homepage_content.value_1_heading }}:</strong> {{ homepage_content.value_1_description }}</li>
+                        <li><strong>{{ homepage_content.value_2_heading }}:</strong> {{ homepage_content.value_2_description }}</li>
+                        <li><strong>{{ homepage_content.value_3_heading }}:</strong> {{ homepage_content.value_3_description }}</li>
+                        <li><strong>{{ homepage_content.value_4_heading }}:</strong> {{ homepage_content.value_4_description }}</li>
+                    </ul>
+                </article>
+
+            </div>
+        </section>
+        <!-- SERVICES INTRODUCTION -->
+        <section class="services-section" id="services">
+            <div class="services-heading">
+                <span class="section-label">OUR SERVICES</span>
+                <h2>Healthcare Designed Around You</h2>
+                <p>
+                    Discover our range of professional healthcare services
+                    delivered with compassion, dignity and care.
+                </p>
+            </div>
+
+            <div class="services-grid">
+                {% for service in homepage_services %}
+                    <article class="service-card">
+                        <div class="service-icon">+</div>
+                        <h3>{{ service.title }}</h3>
+                        <p>{{ service.short_description }}</p>
+                        <a href="{% url 'services:service_detail' service.slug %}"
+                           class="about-link">
+                            Learn More →
+                        </a>
+                    </article>
+                {% empty %}
+                    <p>Our services are being updated. Please contact the clinic for assistance.</p>
+                {% endfor %}
+            </div>
+
+            <div class="hero-actions" style="justify-content:center; margin-top:40px;">
+                <a href="{% url 'services:service_list' %}"
+                   class="primary-button">
+                    Explore All Services
+                </a>
+            </div>
+        </section>
+
+
+        
+
+<section class="public-content-section alt">
+            <div class="public-content-inner">
+                <div class="public-content-heading">
+                    <span class="section-label">YOUR FEEDBACK MATTERS</span>
+                    <h2>What Our Patients Say</h2>
+                    <p>Discover genuine patient experiences and share your own feedback through our Google Business Profile.</p>
+
+                    <div style="display:flex;justify-content:center;gap:15px;flex-wrap:wrap;margin-top:25px;">
+                        <a class="primary-button"
+                           href="https://www.google.com/maps/search/?api=1&amp;query=Injabulo%20Clinic&amp;query_place_id=ChIJlSpUn3Pfvx4R-TRKGDxwt0o"
+                           target="_blank" rel="noopener noreferrer">
+                            Read Our Google Reviews
+                        </a>
+
+                        <a class="secondary-button"
+                           href="https://search.google.com/local/writereview?placeid=ChIJlSpUn3Pfvx4R-TRKGDxwt0o"
+                           target="_blank" rel="noopener noreferrer">
+                            Write a Google Review
+                        </a>
+                    </div>
+
+                    <p style="font-size:13px;margin-top:18px;">Reviews are hosted and managed by Google. Injabulo Clinic does not control the content of independent patient reviews.</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+
+    <a href="{% url 'dashboard:login' %}"
+       class="admin-lock-access"
+       aria-label="Restricted access">
+        <span aria-hidden="true">&#128274;</span>
+    </a>
+
+<script>
+if ("serviceWorker" in navigator) {
+    window.addEventListener("load", function () {
+        navigator.serviceWorker.register("/service-worker.js")
+            .then(function (registration) {
+                console.log("Injabulo Clinic service worker registered:", registration.scope);
+            })
+            .catch(function (error) {
+                console.error("Service worker registration failed:", error);
+            });
+    });
+}
+</script>
+<script>
+let deferredInstallPrompt = null;
+
+const installButton = document.getElementById("install-app-button");
+
+window.addEventListener("beforeinstallprompt", function(event) {
+    event.preventDefault();
+    deferredInstallPrompt = event;
+
+    if (installButton) {
+        installButton.hidden = false;
+    }
+});
+
+if (installButton) {
+    installButton.addEventListener("click", async function() {
+        if (!deferredInstallPrompt) return;
+
+        deferredInstallPrompt.prompt();
+
+        const choice = await deferredInstallPrompt.userChoice;
+
+        console.log("Installation choice:", choice.outcome);
+
+        deferredInstallPrompt = null;
+        installButton.hidden = true;
+    });
+}
+
+window.addEventListener("appinstalled", function() {
+    if (installButton) {
+        installButton.hidden = true;
+    }
+    console.log("Injabulo Clinic installed successfully.");
+});
+</script>
+
+<footer class="clinic-social-footer">
+    <div class="clinic-social-inner">
+        <h2>Stay Connected with Injabulo Clinic</h2>
+        <p>Follow us for clinic updates, health information and announcements.</p>
+
+        <div class="clinic-social-links">
+            <a href="https://www.facebook.com/61567617202327/"
+               class="social-follow-link facebook-link"
+               target="_blank" rel="noopener noreferrer"
+               aria-label="Follow Injabulo Clinics on Facebook">
+                <span class="social-letter">f</span> Facebook
+            </a>
+
+            <a href="https://www.instagram.com/injabuloclinic/"
+               class="social-follow-link instagram-link"
+               target="_blank" rel="noopener noreferrer"
+               aria-label="Follow Injabulo Clinic on Instagram">
+                <span class="social-letter">?</span> Instagram
+            </a>
+
+            <a href="https://www.tiktok.com/@injabulo.clinic"
+               class="social-follow-link tiktok-link"
+               target="_blank" rel="noopener noreferrer"
+               aria-label="Follow Injabulo Clinic on TikTok">
+                <span class="social-letter">?</span> TikTok
+            </a>
+        </div>
+    </div>
+</footer>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const slider = document.getElementById("featured-gallery-slider");
+    if (!slider) return;
+
+    const slides = Array.from(slider.querySelectorAll(".featured-gallery-slide"));
+    const dots = Array.from(slider.querySelectorAll(".featured-gallery-dot"));
+    const previous = slider.querySelector(".featured-gallery-arrow.previous");
+    const next = slider.querySelector(".featured-gallery-arrow.next");
+
+    if (slides.length < 2) return;
+
+    let current = 0;
+    let rotation;
+
+    function showSlide(index) {
+        current = (index + slides.length) % slides.length;
+
+        slides.forEach((slide, i) => {
+            slide.classList.toggle("active", i === current);
+        });
+
+        dots.forEach((dot, i) => {
+            dot.classList.toggle("active", i === current);
+            dot.setAttribute("aria-current", i === current ? "true" : "false");
+        });
+    }
+
+    function startRotation() {
+        stopRotation();
+        rotation = setInterval(() => showSlide(current + 1), 5000);
+    }
+
+    function stopRotation() {
+        if (rotation) clearInterval(rotation);
+    }
+
+    if (previous) {
+        previous.addEventListener("click", function () {
+            showSlide(current - 1);
+            startRotation();
+        });
+    }
+
+    if (next) {
+        next.addEventListener("click", function () {
+            showSlide(current + 1);
+            startRotation();
+        });
+    }
+
+    dots.forEach((dot, index) => {
+        dot.addEventListener("click", function () {
+            showSlide(index);
+            startRotation();
+        });
+    });
+
+    slider.addEventListener("mouseenter", stopRotation);
+    slider.addEventListener("mouseleave", startRotation);
+    slider.addEventListener("focusin", stopRotation);
+    slider.addEventListener("focusout", startRotation);
+
+    document.addEventListener("visibilitychange", function () {
+        if (document.hidden) {
+            stopRotation();
+        } else {
+            startRotation();
+        }
+    });
+
+    showSlide(0);
+    startRotation();
+});
+</script>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const banner = document.getElementById("hero-glass-banner");
+    if (!banner) return;
+
+    const messages = Array.from(banner.querySelectorAll(".hero-banner-message"));
+    const indicators = Array.from(banner.querySelectorAll(".hero-banner-indicator span"));
+
+    if (messages.length < 2) return;
+
+    let current = 0;
+
+    setInterval(function () {
+        messages[current].classList.remove("active");
+        indicators[current].classList.remove("active");
+
+        current = (current + 1) % messages.length;
+
+        messages[current].classList.add("active");
+        indicators[current].classList.add("active");
+    }, 5000);
+});
+</script>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const toggle = document.querySelector(".mobile-menu-toggle");
+    const nav = document.getElementById("clinic-main-nav");
+    if (!toggle || !nav) return;
+
+    toggle.addEventListener("click", function () {
+        const isOpen = toggle.getAttribute("aria-expanded") === "true";
+        toggle.setAttribute("aria-expanded", String(!isOpen));
+        toggle.setAttribute("aria-label", isOpen ? "Open navigation menu" : "Close navigation menu");
+        nav.classList.toggle("mobile-nav-open", !isOpen);
+    });
+
+    nav.querySelectorAll("a").forEach(function (link) {
+        link.addEventListener("click", function () {
+            toggle.setAttribute("aria-expanded", "false");
+            toggle.setAttribute("aria-label", "Open navigation menu");
+            nav.classList.remove("mobile-nav-open");
+        });
+    });
+});
+</script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

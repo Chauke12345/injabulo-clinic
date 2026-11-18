@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page_title }} | Injabulo Clinic</title>
+    <style>
+        * { box-sizing: border-box; }
+        body { margin: 0; padding: 30px; font-family: Arial, sans-serif; background: #F7F2E9; color: #292929; }
+        .container { max-width: 760px; margin: 20px auto; }
+        .panel { background: white; padding: 30px; border: 1px solid #e9e4dc; border-radius: 10px; }
+        h1 { color: #206F74; margin-top: 0; }
+        .muted { color: #777; font-size: 14px; line-height: 1.6; }
+        label { display: block; font-weight: bold; font-size: 14px; margin: 20px 0 8px; }
+        input:not([type=checkbox]), select, textarea {
+            width: 100%; padding: 12px; border: 1px solid #d8d8d8;
+            border-radius: 6px; font: inherit; background: #fff;
+        }
+        input[type=file] { padding: 10px; }
+        textarea { resize: vertical; min-height: 110px; }
+        input:focus, textarea:focus, select:focus { outline: 2px solid #278B91; border-color: #278B91; }
+        .checkbox { display: flex; align-items: center; gap: 10px; margin: 22px 0; }
+        .checkbox label { margin: 0; }
+        .help { color: #777; font-size: 12px; margin-top: 5px; }
+        .errorlist { color: #a33b3b; font-size: 13px; }
+        .actions { display: flex; gap: 10px; margin-top: 25px; flex-wrap: wrap; }
+        .button { padding: 12px 18px; border: 0; border-radius: 6px; background: #278B91; color: white; text-decoration: none; cursor: pointer; font-size: 14px; }
+        .cancel { background: #eae7e0; color: #292929; }
+        @media(max-width: 600px) { body { padding: 15px; } .panel { padding: 20px; } }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="panel">
+        <h1>{{ page_title }}</h1>
+        <p class="muted">Create informative health and wellness content for the Injabulo Clinic website.</p>
+
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            {% for field in form %}
+                {% if field.name == "is_published" %}
+                    <div class="checkbox">
+                        {{ field }}
+                        <label for="{{ field.id_for_label }}">Publish this article on the website</label>
+                    </div>
+                {% elif field.name == "is_featured" %}
+                    <div class="checkbox">
+                        {{ field }}
+                        <label for="{{ field.id_for_label }}">Feature this article</label>
+                    </div>
+                {% else %}
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {{ field }}
+                    {% if field.help_text %}<div class="help">{{ field.help_text }}</div>{% endif %}
+                {% endif %}
+                {{ field.errors }}
+            {% endfor %}
+
+            {% if form.non_field_errors %}
+                {{ form.non_field_errors }}
+            {% endif %}
+
+            <div class="actions">
+                <button type="submit" class="button">{{ button_label }}</button>
+                <a href="{% url 'dashboard:blog_list' %}" class="button cancel">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

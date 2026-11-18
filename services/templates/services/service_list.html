@@ -1,0 +1,65 @@
+﻿{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Services | Injabulo Clinic</title>
+    <link rel="stylesheet" href="{% static 'core/css/style.css' %}">
+</head>
+<body>
+
+<header class="site-header">
+    <div class="nav-container">
+        <a href="/" class="logo">
+            <img src="{% static 'core/images/injabulo-clinic-logo.png' %}" alt="Injabulo Clinic">
+        </a>
+
+        <nav class="main-nav">
+            <a href="/">Home</a>
+            <a href="/#about">About Us</a>
+            <a href="{% url 'services:service_list' %}">Services</a>
+            <a href="{% url 'gallery:gallery_list' %}">Gallery</a>
+            <a href="{% url 'events:event_list' %}">Events</a>
+            <a href="{% url 'contact' %}">Contact</a>
+            <a href="{% url 'appointment' %}" class="nav-button">Book an Appointment</a>
+        </nav>
+    </div>
+</header>
+
+<main>
+    <section class="services-section">
+        <div class="services-heading">
+            <p class="hero-label">YOUR HEALTH, YOUR BEAUTY, OUR CARE</p>
+            <h1>Our Healthcare Services</h1>
+            <p>Discover the healthcare services offered at Injabulo Clinic. Our aim is to provide compassionate care for you and your family.</p>
+        </div>
+
+        <div class="services-grid">
+            {% for service in services %}
+                <article class="service-card">
+                    <div class="service-icon">+</div>
+                    <h2>{{ service.title }}</h2>
+                    <p>{{ service.short_description }}</p>
+                    <a href="{% url 'services:service_detail' service.slug %}" class="about-link">
+                        Learn More
+                    </a>
+                </article>
+            {% empty %}
+                <p>Our services are being updated. Please contact the clinic for assistance.</p>
+            {% endfor %}
+        </div>
+
+        <div class="hero-actions">
+            <a href="{% url 'appointment' %}"
+               class="nav-button">
+                Request an Appointment
+            </a>
+        </div>
+    </section>
+</main>
+
+</body>
+</html>
+
+

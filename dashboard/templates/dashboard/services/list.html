@@ -1,0 +1,91 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Services | Injabulo Clinic</title>
+    <style>
+        body { margin: 0; padding: 30px; font-family: Arial, sans-serif; background: #F7F2E9; color: #292929; }
+        .container { max-width: 1100px; margin: auto; }
+        .header { display: flex; justify-content: space-between; align-items: center; gap: 15px; flex-wrap: wrap; margin-bottom: 25px; }
+        h1 { color: #206F74; margin-bottom: 8px; }
+        .muted { color: #777; font-size: 14px; }
+        .button { display: inline-block; padding: 11px 16px; border-radius: 6px; background: #278B91; color: white; text-decoration: none; border: 0; cursor: pointer; font-size: 13px; }
+        .secondary { background: #206F74; }
+        .danger { background: #a33b3b; }
+        .panel { background: white; border: 1px solid #e9e4dc; border-radius: 10px; overflow: hidden; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 15px; text-align: left; border-bottom: 1px solid #eee; font-size: 14px; }
+        th { background: #f8f8f6; color: #555; }
+        .status { font-weight: bold; }
+        .active { color: #206F74; }
+        .inactive { color: #a33b3b; }
+        .actions { display: flex; gap: 8px; flex-wrap: wrap; }
+        .actions a { text-decoration: none; color: #278B91; font-weight: bold; font-size: 13px; }
+        .message { padding: 12px; margin-bottom: 15px; background: #e5f3ed; border-radius: 6px; }
+        @media(max-width: 700px) {
+            body { padding: 15px; }
+            .panel { overflow-x: auto; }
+            table { min-width: 650px; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <div>
+            <h1>Clinic Services</h1>
+            <p class="muted">Manage the healthcare services displayed on your website.</p>
+        </div>
+        <div>
+            <a class="button secondary" href="{% url 'dashboard:home' %}">Dashboard</a>
+            <a class="button" href="{% url 'dashboard:service_create' %}">+ Add Service</a>
+        </div>
+    </div>
+
+    {% for message in messages %}
+        <div class="message">{{ message }}</div>
+    {% endfor %}
+
+    <div class="panel">
+        <table>
+            <thead>
+                <tr>
+                    <th>Service</th>
+                    <th>Display order</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for service in services %}
+                <tr>
+                    <td>
+                        <strong>{{ service.title }}</strong><br>
+                        <span class="muted">{{ service.short_description|truncatechars:75 }}</span>
+                    </td>
+                    <td>{{ service.display_order }}</td>
+                    <td>
+                        {% if service.is_active %}
+                            <span class="status active">Published</span>
+                        {% else %}
+                            <span class="status inactive">Unpublished</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <div class="actions">
+                            <a href="{% url 'dashboard:service_edit' service.pk %}">Edit</a>
+                            <a href="{% url 'dashboard:service_delete' service.pk %}">Delete</a>
+                        </div>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="4">No services have been added yet.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Videos | Injabulo Clinic</title>
+    <style>
+        * { box-sizing: border-box; }
+        body { margin: 0; padding: 25px; font-family: Arial, sans-serif; background: #F7F2E9; color: #292929; }
+        .container { max-width: 1100px; margin: 20px auto; }
+        .header { display: flex; justify-content: space-between; align-items: center; gap: 15px; flex-wrap: wrap; margin-bottom: 25px; }
+        h1 { color: #206F74; margin: 0 0 8px; }
+        .muted { color: #777; font-size: 14px; }
+        .button { display: inline-block; padding: 11px 16px; border-radius: 6px; background: #278B91; color: white; text-decoration: none; font-size: 14px; border: 0; cursor: pointer; }
+        .panel { background: white; border: 1px solid #e9e4dc; border-radius: 10px; overflow: hidden; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 15px; text-align: left; border-bottom: 1px solid #eee; font-size: 14px; vertical-align: middle; }
+        th { background: #f5f7f5; color: #206F74; }
+        .status { display: inline-block; padding: 5px 9px; border-radius: 20px; font-size: 12px; font-weight: bold; }
+        .published { background: #e3f4e8; color: #24713b; }
+        .draft { background: #f1eee8; color: #756b5c; }
+        .featured { color: #206F74; font-weight: bold; }
+        .actions { display: flex; gap: 8px; flex-wrap: wrap; }
+        .edit { background: #278B91; }
+        .delete { background: #a33b3b; }
+        .empty { padding: 45px 20px; text-align: center; color: #777; }
+        .empty h2 { color: #206F74; }
+        .messages { margin-bottom: 18px; }
+        .messages li { list-style: none; background: #e3f4e8; color: #24713b; padding: 12px; border-radius: 6px; margin-bottom: 8px; }
+        @media(max-width: 700px) {
+            body { padding: 12px; }
+            .panel { overflow-x: auto; }
+            table { min-width: 720px; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <div>
+            <h1>Health Education Videos</h1>
+            <p class="muted">Upload and manage the clinic's educational and wellness videos.</p>
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;">
+            <a class="button" href="{% url 'home' %}" style="background:white;color:#206F74;border:1px solid #278B91;">&#8592; Back to Website</a>
+            <a class="button" href="{% url 'dashboard:video_create' %}">+ Upload New Video</a>
+        </div>
+    </div>
+
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <div class="panel">
+        {% if videos %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Video</th>
+                        <th>Category</th>
+                        <th>Publication</th>
+                        <th>Featured</th>
+                        <th>Uploaded</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for video in videos %}
+                        <tr>
+                            <td><strong>{{ video.title }}</strong></td>
+                            <td>{{ video.get_category_display }}</td>
+                            <td>
+                                {% if video.is_published %}
+                                    <span class="status published">Published</span>
+                                {% else %}
+                                    <span class="status draft">Draft</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if video.is_featured %}
+                                    <span class="featured">Yes</span>
+                                {% else %}
+                                    No
+                                {% endif %}
+                            </td>
+                            <td>{{ video.created_at|date:"d M Y" }}</td>
+                            <td>
+                                <div class="actions">
+                                    <a class="button edit" href="{% url 'dashboard:video_edit' video.pk %}">Edit</a>
+                                    <a class="button delete" href="{% url 'dashboard:video_delete' video.pk %}">Delete</a>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <div class="empty">
+                <h2>No videos uploaded yet</h2>
+                <p>Your health education videos will appear here after uploading.</p>
+                <br>
+                <a class="button" href="{% url 'dashboard:video_create' %}">Upload First Video</a>
+            </div>
+        {% endif %}
+    </div>
+</div>
+</body>
+</html>

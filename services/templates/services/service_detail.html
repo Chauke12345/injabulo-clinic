@@ -1,0 +1,58 @@
+﻿{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ service.title }} | Injabulo Clinic</title>
+    <link rel="stylesheet" href="{% static 'core/css/style.css' %}">
+</head>
+<body>
+
+<header class="site-header">
+    <div class="nav-container">
+        <a href="/" class="logo">
+            <img src="{% static 'core/images/injabulo-clinic-logo.png' %}" alt="Injabulo Clinic">
+        </a>
+
+        <nav class="main-nav">
+            <a href="/">Home</a>
+            <a href="/#about">About Us</a>
+            <a href="{% url 'services:service_list' %}">Services</a>
+            <a href="{% url 'gallery:gallery_list' %}">Gallery</a>
+            <a href="{% url 'contact' %}">Contact</a>
+            <a href="{% url 'appointment' %}?service={{ service.pk }}" class="nav-button">Book an Appointment</a>
+        </nav>
+    </div>
+</header>
+
+<main>
+    <section class="services-section">
+        <div class="services-heading">
+            <p class="hero-label">INJABULO CLINIC</p>
+            <h1>{{ service.title }}</h1>
+            <p>{{ service.short_description }}</p>
+        </div>
+
+        <div class="about-content">
+            <div class="service-description">
+                {{ service.description|linebreaks }}
+            </div>
+
+            <div class="hero-actions">
+                <a href="{% url 'appointment' %}?service={{ service.pk }}"
+                   class="nav-button">
+                    Request an Appointment
+                </a>
+
+                <a href="{% url 'services:service_list' %}" class="about-link">
+                    Back to All Services
+                </a>
+            </div>
+        </div>
+    </section>
+</main>
+
+</body>
+</html>
+

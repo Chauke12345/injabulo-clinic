@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Events | Injabulo Clinic</title>
+    <style>
+        * { box-sizing: border-box; }
+        body { margin: 0; padding: 30px; font-family: Arial, sans-serif; background: #F7F2E9; color: #292929; }
+        .container { max-width: 1150px; margin: auto; }
+        .header { display: flex; justify-content: space-between; align-items: center; gap: 15px; flex-wrap: wrap; margin-bottom: 25px; }
+        h1 { color: #206F74; margin-bottom: 8px; }
+        .muted { color: #777; font-size: 14px; line-height: 1.5; }
+        .button { display: inline-block; padding: 11px 16px; border-radius: 6px; background: #278B91; color: white; text-decoration: none; border: 0; cursor: pointer; font-size: 13px; }
+        .secondary { background: #206F74; }
+        .panel { background: white; border: 1px solid #e9e4dc; border-radius: 10px; overflow: hidden; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 15px; text-align: left; border-bottom: 1px solid #eee; font-size: 14px; vertical-align: middle; }
+        th { background: #f8f8f6; color: #555; }
+        .event-image { width: 75px; height: 60px; object-fit: cover; border-radius: 6px; background: #f1eee8; }
+        .status { font-weight: bold; }
+        .active { color: #206F74; }
+        .inactive { color: #a33b3b; }
+        .actions { display: flex; gap: 10px; flex-wrap: wrap; }
+        .actions a { text-decoration: none; color: #278B91; font-weight: bold; font-size: 13px; }
+        .message { padding: 12px; margin: 15px; background: #e5f3ed; border-radius: 6px; }
+        .empty { text-align: center; padding: 40px; color: #777; }
+        @media(max-width: 750px) {
+            body { padding: 15px; }
+            .panel { overflow-x: auto; }
+            table { min-width: 850px; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <div>
+            <h1>Clinic Events</h1>
+            <p class="muted">Create and manage clinic events, community outreach programmes and announcements.</p>
+        </div>
+        <div>
+            <a class="button secondary" href="{% url 'dashboard:home' %}">Dashboard</a>
+            <a class="button" href="{% url 'dashboard:event_create' %}">+ Add Event</a>
+        </div>
+    </div>
+
+    {% for message in messages %}
+        <div class="message">{{ message }}</div>
+    {% endfor %}
+
+    <div class="panel">
+        <table>
+            <thead>
+                <tr>
+                    <th>Image</th>
+                    <th>Event</th>
+                    <th>Category</th>
+                    <th>Date & Time</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for event in events %}
+                <tr>
+                    <td>
+                        {% if event.image %}
+                            <img class="event-image" src="{{ event.image.url }}" alt="{{ event.title }}">
+                        {% else %}
+                            <span class="muted">No image</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <strong>{{ event.title }}</strong><br>
+                        <span class="muted">{{ event.short_description|truncatechars:70 }}</span>
+                    </td>
+                    <td>{{ event.get_category_display }}</td>
+                    <td>
+                        {% if event.event_date %}
+                            {{ event.event_date|date:"d M Y" }}
+                        {% else %}
+                            <span class="muted">Date not set</span>
+                        {% endif %}
+                        {% if event.event_time %}
+                            <br><span class="muted">{{ event.event_time|time:"H:i" }}</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if event.is_published %}
+                            <span class="status active">Published</span>
+                        {% else %}
+                            <span class="status inactive">Unpublished</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <div class="actions">
+                            <a href="{% url 'dashboard:event_edit' event.pk %}">Edit</a>
+                            <a href="{% url 'dashboard:event_delete' event.pk %}">Delete</a>
+                        </div>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6">
+                        <div class="empty">
+                            <h3>No events have been added yet.</h3>
+                            <p>Create your first clinic event to get started.</p>
+                            <a class="button" href="{% url 'dashboard:event_create' %}">Add Event</a>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

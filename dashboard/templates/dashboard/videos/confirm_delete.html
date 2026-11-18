@@ -1,0 +1,33 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Video | Injabulo Clinic</title>
+    <style>
+        * { box-sizing: border-box; }
+        body { margin: 0; padding: 25px; font-family: Arial, sans-serif; background: #F7F2E9; color: #292929; }
+        .panel { max-width: 550px; margin: 80px auto; background: white; padding: 30px; border: 1px solid #e9e4dc; border-radius: 10px; text-align: center; }
+        h1 { color: #a33b3b; }
+        p { color: #777; line-height: 1.7; }
+        .actions { display: flex; justify-content: center; gap: 12px; margin-top: 25px; flex-wrap: wrap; }
+        .button { padding: 12px 18px; border: 0; border-radius: 6px; background: #a33b3b; color: white; text-decoration: none; cursor: pointer; font-size: 14px; }
+        .cancel { background: #eae7e0; color: #292929; }
+    </style>
+</head>
+<body>
+<div class="panel">
+    <h1>Delete Health Video?</h1>
+    <p>Are you sure you want to delete <strong>{{ video.title }}</strong>?</p>
+    <p>This action cannot be undone. The video will be removed from the clinic's video library.</p>
+
+    <div class="actions">
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="button">Yes, Delete Video</button>
+        </form>
+        <a href="{% url 'dashboard:video_list' %}" class="button cancel">Cancel</a>
+    </div>
+</div>
+</body>
+</html>

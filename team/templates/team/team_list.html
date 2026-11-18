@@ -1,0 +1,85 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meet a Few of Our Team Members | Injabulo Clinic</title>
+<link rel="stylesheet" href="{% static 'core/css/style.css' %}">
+<style>
+* { box-sizing:border-box; }
+body { margin:0; background:#F7F2E9; color:#444; }
+.team-page { min-height:75vh; padding:65px 20px; }
+.team-container { max-width:1150px; margin:auto; }
+.team-heading { text-align:center; margin-bottom:42px; }
+.team-heading h1 { color:#206F74; font-size:clamp(30px,5vw,44px); margin-bottom:12px; }
+.team-heading p { max-width:680px; margin:auto; line-height:1.8; }
+.team-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:28px; }
+.team-card { background:white; border-radius:15px; overflow:hidden; box-shadow:0 5px 20px rgba(0,0,0,.07); }
+.team-photo { width:100%; height:280px; object-fit:cover; display:block; background:#e8eeee; }
+.team-placeholder { height:280px; display:flex; align-items:center; justify-content:center; background:#e8eeee; color:#206F74; font-size:55px; }
+.team-details { padding:24px; }
+.team-details h2 { color:#206F74; font-size:22px; margin:0 0 8px; }
+.team-role { color:#278B91; font-weight:bold; margin-bottom:12px; }
+.team-qualifications { font-size:14px; font-weight:600; color:#666; margin-bottom:12px; }
+.team-biography { line-height:1.75; font-size:15px; white-space:pre-line; }
+.team-empty { text-align:center; background:white; padding:45px 20px; border-radius:14px; }
+@media(max-width:600px) { .team-page { padding:40px 15px; } }
+</style>
+</head>
+<body>
+<header class="site-header">
+<div class="nav-container">
+<a href="/" class="logo">
+<img src="{% static 'core/images/injabulo-clinic-logo.png' %}" alt="Injabulo Clinic">
+</a>
+<nav class="main-nav">
+<a href="/">Home</a>
+<a href="{% url 'services:service_list' %}">Services</a>
+<a href="{% url 'team:team_list' %}">Our Team</a>
+<a href="{% url 'blog:post_list' %}">Health Blog</a>
+<a href="{% url 'contact' %}">Contact</a>
+</nav>
+<a href="{% url 'appointment' %}" class="nav-button">Book an Appointment</a>
+</div>
+</header>
+
+<main class="team-page">
+<div class="team-container">
+<div class="team-heading">
+<h1>Meet a Few of Our Team Members</h1>
+<p>Get to know the dedicated people behind Injabulo Clinic. Our team is committed to providing professional, compassionate care to our community.</p>
+</div>
+
+{% if members %}
+<div class="team-grid">
+{% for member in members %}
+<article class="team-card">
+{% if member.photograph %}
+<img class="team-photo" src="{{ member.photograph.url }}" alt="{{ member.full_name }}">
+{% else %}
+<div class="team-placeholder">+</div>
+{% endif %}
+<div class="team-details">
+<h2>{{ member.full_name }}</h2>
+<div class="team-role">{{ member.job_title }}</div>
+{% if member.qualifications %}
+<div class="team-qualifications">{{ member.qualifications }}</div>
+{% endif %}
+{% if member.biography %}
+<p class="team-biography">{{ member.biography }}</p>
+{% endif %}
+</div>
+</article>
+{% endfor %}
+</div>
+{% else %}
+<div class="team-empty">
+<h2>Our team profiles are coming soon</h2>
+<p>Please check back as we introduce the people behind Injabulo Clinic.</p>
+</div>
+{% endif %}
+</div>
+</main>
+</body>
+</html>

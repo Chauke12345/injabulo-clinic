@@ -1,0 +1,252 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appointment Details | Injabulo Clinic</title>
+    <style>
+        :root {
+            --teal: #278B91;
+            --green: #206F74;
+            --ivory: #F7F2E9;
+            --dark: #292929;
+            --muted: #777;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            padding: 35px 20px;
+            background: var(--ivory);
+            color: var(--dark);
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        h1 { margin: 0 0 8px; }
+
+        .muted { color: var(--muted); }
+
+        .panel {
+            background: white;
+            border: 1px solid #e9e4dc;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            color: var(--green);
+            font-size: 19px;
+            margin-top: 0;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 12px;
+        }
+
+        .details {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 22px;
+        }
+
+        .field small {
+            display: block;
+            color: var(--muted);
+            margin-bottom: 7px;
+        }
+
+        .field strong { overflow-wrap: anywhere; }
+
+        .actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 12px 17px;
+            border-radius: 6px;
+            color: white;
+            background: var(--teal);
+            text-decoration: none;
+            border: 0;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .whatsapp { background: #218838; }
+        .call { background: var(--green); }
+
+        .status {
+            display: inline-block;
+            padding: 7px 12px;
+            border-radius: 20px;
+            background: #e5f4e9;
+            color: #176b3a;
+            font-weight: bold;
+        }
+
+        @media(max-width: 600px) {
+            .details { grid-template-columns: 1fr; }
+            body { padding: 20px 12px; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <header class="header">
+        <div>
+            <h1>Appointment Details</h1>
+            <p class="muted">Injabulo Clinic | Reference #{{ appointment.pk }}</p>
+        </div>
+        <a class="button" href="{% url 'dashboard:appointment_list' %}">
+            Back to Appointments
+        </a>
+    </header>
+
+    <section class="panel">
+        <h2>Patient Information</h2>
+        <div class="details">
+            <div class="field">
+                <small>Patient Name</small>
+                <strong>{{ appointment.patient_name }}</strong>
+            </div>
+
+            <div class="field">
+                <small>Contact Number</small>
+                <strong>{{ appointment.contact_number }}</strong>
+            </div>
+
+            <div class="field">
+                <small>Appointment Reference</small>
+                <strong>#{{ appointment.pk }}</strong>
+            </div>
+
+            <div class="field">
+                <small>Request Submitted</small>
+                <strong>{{ appointment.created_at|date:"d M Y H:i" }}</strong>
+            </div>
+        </div>
+    </section>
+
+    <section class="panel">
+        <h2>Appointment Information</h2>
+        <div class="details">
+            <div class="field">
+                <small>Requested Service</small>
+                <strong>{{ appointment.service.title }}</strong>
+            </div>
+
+            <div class="field">
+                <small>Preferred Date</small>
+                <strong>{{ appointment.preferred_date|date:"d M Y" }}</strong>
+            </div>
+
+            <div class="field">
+                <small>Preferred Time</small>
+                <strong>
+                    {% if appointment.preferred_time %}
+                        {{ appointment.preferred_time|time:"H:i" }}
+                    {% else %}
+                        Not specified
+                    {% endif %}
+                </strong>
+            </div>
+
+            <div class="field">
+                <small>Appointment Status</small>
+                <span class="status">{{ appointment.get_status_display }}</span>
+            </div>
+
+            <div class="field">
+                <small>Confirmed Date</small>
+                <strong>
+                    {% if appointment.confirmed_date %}
+                        {{ appointment.confirmed_date|date:"d M Y" }}
+                    {% else %}
+                        Not confirmed
+                    {% endif %}
+                </strong>
+            </div>
+
+            <div class="field">
+                <small>Confirmed Time</small>
+                <strong>
+                    {% if appointment.confirmed_time %}
+                        {{ appointment.confirmed_time|time:"H:i" }}
+                    {% else %}
+                        Not confirmed
+                    {% endif %}
+                </strong>
+            </div>
+        </div>
+
+        {% if appointment.booking_message %}
+            <div style="margin-top:22px;">
+                <small class="muted">Booking Message</small>
+                <p>{{ appointment.booking_message|linebreaksbr }}</p>
+            </div>
+        {% endif %}
+    </section>
+
+    <section class="panel">
+        <h2>Patient Communication</h2>
+
+        <p>
+            {% if appointment.communication_status == "contacted" %}
+                <span class="status">Contacted</span>
+                {% if appointment.contacted_at %}
+                    <br><br>
+                    Contact recorded:
+                    {{ appointment.contacted_at|date:"d M Y H:i" }}
+                {% endif %}
+            {% else %}
+                <span class="muted">Patient has not been marked as contacted.</span>
+            {% endif %}
+        </p>
+
+        <div class="actions">
+            <a class="button call"
+               href="tel:{{ appointment.contact_number }}">
+                Call Patient
+            </a>
+
+            <a class="button whatsapp"
+               href="https://wa.me/{{ appointment.contact_number }}"
+               target="_blank"
+               rel="noopener noreferrer">
+                Open WhatsApp
+            </a>
+
+            {% if appointment.communication_status != "contacted" %}
+                <form method="post"
+                      action="{% url 'dashboard:appointment_mark_contacted' appointment.pk %}">
+                    {% csrf_token %}
+                    <button class="button" type="submit">
+                        Mark as Contacted
+                    </button>
+                </form>
+            {% endif %}
+        </div>
+    </section>
+
+</div>
+</body>
+</html>

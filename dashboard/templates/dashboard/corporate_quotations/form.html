@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Create Corporate Quotation | Injabulo Clinic</title>
+<style>
+:root{--teal:#278B91;--ivory:#F7F2E9;--dark:#292929;--muted:#777}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:var(--ivory);color:var(--dark)}
+.layout{display:flex;min-height:100vh}
+.sidebar{width:250px;flex-shrink:0;background:white;padding:30px 20px}
+.brand{font-size:21px;font-weight:bold;color:var(--teal);margin-bottom:35px}
+.sidebar a{display:block;padding:13px;margin-bottom:7px;border-radius:7px;text-decoration:none;color:var(--dark);font-size:14px}
+.sidebar a.active,.sidebar a:hover{background:var(--teal);color:white}
+.main{flex:1;min-width:0;padding:35px}
+h1{font-size:27px;margin:0 0 8px}
+.muted{color:var(--muted);font-size:14px}
+.panel{background:white;padding:25px;border:1px solid #e9e4dc;border-radius:10px;margin:20px 0}
+.field{margin-bottom:16px}
+.field label{display:block;font-weight:bold;font-size:14px;margin-bottom:7px}
+input,select,textarea{width:100%;max-width:100%;padding:11px;border:1px solid #ddd;border-radius:6px;font:inherit}
+textarea{min-height:90px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.item-row{display:grid;grid-template-columns:2fr .7fr 1fr .8fr;gap:12px;align-items:end;padding:14px 0;border-bottom:1px solid #eee}
+.item-row label{display:block;font-size:13px;font-weight:bold;margin-bottom:7px}
+.button{display:inline-block;background:var(--teal);color:white;padding:12px 18px;border:0;border-radius:6px;text-decoration:none;cursor:pointer}
+.secondary{background:#777}
+.total{font-size:22px;font-weight:bold;color:var(--teal);text-align:right;padding:18px 0}
+.errorlist{color:#b3261e;font-size:13px}
+.messages{padding:12px;background:#fbe5e5;border-radius:6px;margin-bottom:15px}
+.help{color:var(--muted);font-size:12px}
+.actions{display:flex;gap:10px;flex-wrap:wrap}
+@media(max-width:850px){.item-row{grid-template-columns:1fr 1fr}}
+@media(max-width:650px){.layout{display:block}.sidebar{width:100%;padding:15px}.sidebar a{display:inline-block;padding:9px}.main{padding:18px}.grid{grid-template-columns:1fr}.item-row{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+<div class="brand">Injabulo Clinic</div>
+<a href="{% url 'dashboard:home' %}">Dashboard</a>
+<a href="{% url 'dashboard:corporate_enquiry_list' %}">Corporate Enquiries</a>
+<a href="{% url 'dashboard:corporate_quotation_list' %}" class="active">Corporate Quotations</a>
+<a href="{% url 'dashboard:appointment_list' %}">Appointments</a>
+<a href="/admin/">Administration</a>
+</aside>
+<main class="main">
+<h1>Create Corporate Quotation</h1>
+<p class="muted">Prepare a priced proposal for a corporate healthcare client.</p>
+{% if messages %}{% for message in messages %}<div class="messages">{{ message }}</div>{% endfor %}{% endif %}
+<form method="post">
+{% csrf_token %}
+<section class="panel">
+<h2>Quotation Details</h2>
+{{ form.non_field_errors }}
+<div class="grid">
+{% for field in form %}
+<div class="field"><label for="{{ field.id_for_label }}">{{ field.label }}</label>{{ field }}{{ field.errors }}</div>
+{% endfor %}
+</div>
+</section>
+<section class="panel">
+<h2>Services and Pricing</h2>
+<p class="muted">Enter each service, quantity and price per unit. Amounts are in South African rand (ZAR).</p>
+{{ item_formset.management_form }}
+{{ item_formset.non_form_errors }}
+{% for item_form in item_formset %}
+<div class="item-row">
+{% for hidden in item_form.hidden_fields %}{{ hidden }}{% endfor %}
+<div><label>Description</label>{{ item_form.description }}{{ item_form.description.errors }}</div>
+<div><label>Quantity</label>{{ item_form.quantity }}{{ item_form.quantity.errors }}</div>
+<div><label>Unit Price (R)</label>{{ item_form.unit_price }}{{ item_form.unit_price.errors }}</div>
+<div><label>Remove</label>{% if item_form.DELETE %}{{ item_form.DELETE }}{% endif %}</div>
+</div>
+{% endfor %}
+<div class="total">Estimated subtotal: R <span id="subtotal">0.00</span></div>
+<p class="help">The final subtotal is recalculated and validated by the server when you save.</p>
+</section>
+<div class="actions">
+<button class="button" type="submit">Create Quotation</button>
+<a class="button secondary" href="{% url 'dashboard:corporate_quotation_list' %}">Cancel</a>
+</div>
+</form>
+</main></div>
+<script>
+function calculateSubtotal(){
+ let total=0;
+ document.querySelectorAll(".item-row").forEach(row=>{
+  const del=row.querySelector('input[type="checkbox"][name$="-DELETE"]');
+  if(del && del.checked)return;
+  const q=row.querySelector('input[name$="-quantity"]');
+  const p=row.querySelector('input[name$="-unit_price"]');
+  if(q && p)total+=(Number(q.value)||0)*(Number(p.value)||0);
+ });
+ document.getElementById("subtotal").textContent=total.toFixed(2);
+}
+document.querySelectorAll(".item-row input").forEach(input=>{
+ input.addEventListener("input",calculateSubtotal);
+ input.addEventListener("change",calculateSubtotal);
+});
+calculateSubtotal();
+</script>
+</body></html>

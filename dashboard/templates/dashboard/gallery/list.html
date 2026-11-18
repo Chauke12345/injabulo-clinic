@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Gallery | Injabulo Clinic</title>
+    <style>
+        * { box-sizing: border-box; }
+        body { margin: 0; padding: 30px; font-family: Arial, sans-serif; background: #F7F2E9; color: #292929; }
+        .container { max-width: 1150px; margin: auto; }
+        .header { display: flex; justify-content: space-between; align-items: center; gap: 15px; flex-wrap: wrap; margin-bottom: 25px; }
+        h1 { color: #206F74; margin-bottom: 8px; }
+        .muted { color: #777; font-size: 14px; }
+        .button { display: inline-block; padding: 11px 16px; border-radius: 6px; background: #278B91; color: white; text-decoration: none; border: 0; cursor: pointer; font-size: 13px; }
+        .secondary { background: #206F74; }
+        .panel { background: white; border: 1px solid #e9e4dc; border-radius: 10px; padding: 20px; }
+        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 20px; }
+        .image-card { border: 1px solid #eee; border-radius: 9px; overflow: hidden; background: #fff; }
+        .preview { width: 100%; height: 190px; object-fit: cover; display: block; background: #f1eee8; }
+        .details { padding: 15px; }
+        .details h3 { margin: 0 0 8px; color: #206F74; font-size: 17px; }
+        .status { font-weight: bold; font-size: 13px; }
+        .active { color: #206F74; }
+        .inactive { color: #a33b3b; }
+        .actions { display: flex; gap: 12px; margin-top: 15px; }
+        .actions a { text-decoration: none; color: #278B91; font-weight: bold; font-size: 13px; }
+        .message { padding: 12px; margin-bottom: 15px; background: #e5f3ed; border-radius: 6px; }
+        .empty { text-align: center; padding: 45px 15px; color: #777; }
+        @media(max-width: 600px) { body { padding: 15px; } }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <div>
+            <h1>Clinic Gallery</h1>
+            <p class="muted">Upload and manage photographs displayed on the clinic website.</p>
+        </div>
+        <div>
+            <a class="button secondary" href="{% url 'dashboard:home' %}">Dashboard</a>
+            <a class="button" href="{% url 'dashboard:gallery_create' %}">+ Upload Image</a>
+        </div>
+    </div>
+
+    {% for message in messages %}
+        <div class="message">{{ message }}</div>
+    {% endfor %}
+
+    <div class="panel">
+        <div class="gallery-grid">
+            {% for image in images %}
+                <article class="image-card">
+                    {% if image.image %}
+                        <img class="preview" src="{{ image.image.url }}" alt="{{ image.title }}">
+                    {% else %}
+                        <div class="preview"></div>
+                    {% endif %}
+                    <div class="details">
+                        <h3>{{ image.title }}</h3>
+                        <p class="muted">{{ image.get_category_display }}</p>
+                        {% if image.caption %}
+                            <p class="muted">{{ image.caption|truncatechars:100 }}</p>
+                        {% endif %}
+                        {% if image.event_date %}
+                            <p class="muted">Event date: {{ image.event_date|date:"d M Y" }}</p>
+                        {% endif %}
+                        {% if image.is_published %}
+                            <p class="status active">Published</p>
+                        {% else %}
+                            <p class="status inactive">Unpublished</p>
+                        {% endif %}
+                        <div class="actions">
+                            <a href="{% url 'dashboard:gallery_edit' image.pk %}">Edit</a>
+                            <a href="{% url 'dashboard:gallery_delete' image.pk %}">Delete</a>
+                        </div>
+                    </div>
+                </article>
+            {% empty %}
+                <div class="empty">
+                    <h3>No gallery images yet</h3>
+                    <p>Upload your first clinic photograph to get started.</p>
+                    <a class="button" href="{% url 'dashboard:gallery_create' %}">Upload Image</a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+</body>
+</html>

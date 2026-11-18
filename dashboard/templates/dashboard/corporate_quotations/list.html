@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Corporate Quotations | Injabulo Clinic</title>
+<style>
+:root{--teal:#278B91;--green:#206F74;--ivory:#F7F2E9;--dark:#292929;--muted:#777}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:var(--ivory);color:var(--dark)}
+.layout{display:flex;min-height:100vh}
+.sidebar{width:250px;flex-shrink:0;background:white;padding:30px 20px}
+.brand{font-size:21px;font-weight:bold;color:var(--teal);margin-bottom:35px}
+.sidebar a{display:block;padding:13px;margin-bottom:7px;border-radius:7px;text-decoration:none;color:var(--dark);font-size:14px}
+.sidebar a.active,.sidebar a:hover{background:var(--teal);color:white}
+.main{flex:1;min-width:0;padding:35px}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap;margin-bottom:25px}
+h1{font-size:27px;margin:0 0 8px}
+.muted{color:var(--muted);font-size:14px}
+.button{display:inline-block;background:var(--teal);color:white;padding:12px 17px;border:0;border-radius:6px;text-decoration:none;cursor:pointer}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:15px;margin-bottom:25px}
+.card,.panel{background:white;padding:21px;border:1px solid #e9e4dc;border-radius:10px}
+.card span{display:block;color:var(--muted);font-size:13px;margin-bottom:10px}
+.card strong{font-size:26px;color:var(--teal)}
+.filters{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0}
+input,select{padding:11px;border:1px solid #ddd;border-radius:6px;font:inherit}
+.filters input{flex:1;min-width:200px}
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:750px}
+th,td{text-align:left;padding:14px 12px;border-bottom:1px solid #eee;font-size:13px;vertical-align:middle}
+th{color:var(--muted)}
+.status{display:inline-block;padding:6px 9px;border-radius:20px;background:#eee;font-size:12px}
+.draft{background:#eee;color:#555}.sent{background:#e3efff;color:#245b9b}
+.accepted{background:#e1f2e6;color:#246b39}.rejected{background:#fbe5e5;color:#a32f2f}
+.expired{background:#fff1d6;color:#875b00}
+.messages{padding:12px;background:#e1f2e6;border-radius:6px;margin-bottom:15px}
+.empty{text-align:center;padding:30px;color:var(--muted)}
+.update-form{display:flex;gap:6px;align-items:center}
+.update-form select{max-width:130px;padding:8px}
+@media(max-width:850px){.stats{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:650px){.layout{display:block}.sidebar{width:100%;padding:15px}.sidebar a{display:inline-block;padding:9px}.main{padding:18px}}
+</style>
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+<div class="brand">Injabulo Clinic</div>
+<a href="{% url 'dashboard:home' %}">Dashboard</a>
+<a href="{% url 'dashboard:corporate_enquiry_list' %}">Corporate Enquiries</a>
+<a href="{% url 'dashboard:corporate_quotation_list' %}" class="active">Corporate Quotations</a>
+<a href="{% url 'dashboard:appointment_list' %}">Appointments</a>
+<a href="{% url 'dashboard:service_list' %}">Services</a>
+<a href="/admin/">Administration</a>
+<form method="post" action="{% url 'dashboard:logout' %}">{% csrf_token %}<button class="button" type="submit">Sign Out</button></form>
+</aside>
+<main class="main">
+<div class="topbar">
+<div><h1>Corporate Quotations</h1><p class="muted">Prepare and track quotations for corporate healthcare services.</p></div>
+<a class="button" href="{% url 'dashboard:corporate_quotation_create' %}">+ Create Quotation</a>
+</div>
+{% if messages %}{% for message in messages %}<div class="messages">{{ message }}</div>{% endfor %}{% endif %}
+<div class="stats">
+<div class="card"><span>Total Quotations</span><strong>{{ total_quotations }}</strong></div>
+<div class="card"><span>Draft</span><strong>{{ draft_quotations }}</strong></div>
+<div class="card"><span>Sent</span><strong>{{ sent_quotations }}</strong></div>
+<div class="card"><span>Accepted</span><strong>{{ accepted_quotations }}</strong></div>
+</div>
+<section class="panel">
+<h2>Quotation Register</h2>
+<form method="get" class="filters">
+<input type="search" name="q" value="{{ search }}" placeholder="Search quotation reference or company...">
+<select name="status"><option value="">All statuses</option>
+{% for value,label in status_choices %}<option value="{{ value }}" {% if selected_status == value %}selected{% endif %}>{{ label }}</option>{% endfor %}
+</select>
+<button class="button" type="submit">Search</button>
+<a href="{% url 'dashboard:corporate_quotation_list' %}" style="padding:12px;color:var(--teal)">Clear</a>
+</form>
+<div class="table-wrap"><table>
+<thead><tr><th>Reference</th><th>Company</th><th>Issue Date</th><th>Valid Until</th><th>Items</th><th>Subtotal</th><th>Status</th><th>Update Status</th></tr></thead>
+<tbody>
+{% for quotation in quotations %}
+<tr>
+<td>
+<strong>{{ quotation.reference }}</strong><br>
+<a href="{% url 'dashboard:corporate_quotation_pdf' quotation.pk %}" style="color:var(--teal);font-size:13px;font-weight:600;">Download PDF</a>
+</td>
+<td>{{ quotation.enquiry.company_name }}</td>
+<td>{{ quotation.issue_date|date:"d M Y" }}</td>
+<td>{{ quotation.valid_until|date:"d M Y" }}</td>
+<td>{{ quotation.items.count }}</td>
+<td>R {{ quotation.subtotal|floatformat:2 }}</td>
+<td><span class="status {{ quotation.status }}">{{ quotation.get_status_display }}</span></td>
+<td><form method="post" action="{% url 'dashboard:corporate_quotation_update_status' quotation.pk %}" class="update-form">
+{% csrf_token %}
+<select name="status">{% for value,label in status_choices %}<option value="{{ value }}" {% if quotation.status == value %}selected{% endif %}>{{ label }}</option>{% endfor %}</select>
+<button class="button" type="submit">Save</button></form></td>
+</tr>
+{% empty %}<tr><td colspan="8" class="empty">No quotations have been created yet. Select Create Quotation to prepare the first one.</td></tr>{% endfor %}
+</tbody></table></div>
+</section>
+</main></div></body></html>

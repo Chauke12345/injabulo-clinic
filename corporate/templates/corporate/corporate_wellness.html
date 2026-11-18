@@ -1,0 +1,328 @@
+﻿{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Corporate Wellness | Injabulo Clinic</title>
+    <link rel="stylesheet" href="{% static 'core/css/style.css' %}">
+
+    <style>
+        .corporate-hero {
+            background: linear-gradient(120deg, #0f514f, #0f766e);
+            color: white;
+            padding: 85px 24px;
+        }
+        .corporate-hero-inner {
+            max-width: 1150px;
+            margin: auto;
+        }
+        .corporate-hero h1 {
+            max-width: 750px;
+            font-size: clamp(2.2rem, 5vw, 3.8rem);
+            line-height: 1.15;
+            margin: 18px 0;
+        }
+        .corporate-hero p {
+            max-width: 720px;
+            line-height: 1.8;
+            font-size: 1.05rem;
+        }
+        .corporate-section {
+            max-width: 1150px;
+            margin: auto;
+            padding: 65px 24px;
+        }
+        .corporate-heading {
+            text-align: center;
+            max-width: 750px;
+            margin: 0 auto 38px;
+        }
+        .corporate-heading h2 {
+            margin: 12px 0;
+        }
+        .corporate-services {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 22px;
+        }
+        .corporate-card {
+            background: white;
+            border: 1px solid #e5ece8;
+            border-radius: 13px;
+            padding: 26px;
+            box-shadow: 0 5px 20px rgba(0,0,0,.045);
+        }
+        .corporate-card .number {
+            color: #0f766e;
+            font-size: 1.5rem;
+            font-weight: 800;
+        }
+        .corporate-card h3 {
+            color: #206f74;
+            margin: 14px 0 10px;
+        }
+        .corporate-card p {
+            line-height: 1.7;
+        }
+        .corporate-form-section {
+            background: #f4f8f6;
+        }
+        .corporate-form {
+            max-width: 850px;
+            margin: auto;
+            background: white;
+            padding: 35px;
+            border-radius: 15px;
+            box-shadow: 0 8px 30px rgba(0,0,0,.06);
+        }
+        .corporate-form p {
+            margin-bottom: 19px;
+        }
+        .corporate-form label {
+            display: block;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #285b58;
+        }
+        .corporate-form input,
+        .corporate-form select,
+        .corporate-form textarea {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #d5dfda;
+            border-radius: 7px;
+            font: inherit;
+            background: #fff;
+        }
+        .corporate-form input:focus,
+        .corporate-form select:focus,
+        .corporate-form textarea:focus {
+            outline: 2px solid #0f766e;
+            border-color: #0f766e;
+        }
+        .corporate-form .helptext {
+            display: block;
+            font-size: .85rem;
+            color: #777;
+        }
+        .corporate-submit {
+            width: 100%;
+            padding: 15px;
+            border: 0;
+            border-radius: 8px;
+            background: #0f766e;
+            color: white;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+        }
+        .corporate-submit:hover {
+            background: #0b5d57;
+        }
+        .corporate-messages {
+            max-width: 850px;
+            margin: 0 auto 22px;
+            padding: 15px 20px;
+            border-radius: 8px;
+            background: #e3f4e8;
+            color: #24713b;
+        }
+        .field-errors {
+            color: #a33b3b;
+            font-size: .9rem;
+        }
+        .corporate-cta {
+            text-align: center;
+            padding: 35px 20px;
+            color: #206f74;
+        }
+        @media(max-width: 600px) {
+            .corporate-hero {
+                padding: 55px 20px;
+            }
+            .corporate-section {
+                padding: 45px 18px;
+            }
+            .corporate-form {
+                padding: 22px 17px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="site-header">
+    <div class="nav-container">
+        <a href="/" class="logo">
+            <img src="{% static 'core/images/injabulo-clinic-logo.png' %}" alt="Injabulo Clinic">
+        </a>
+
+        <nav class="main-nav">
+            <a href="/">Home</a>
+            <a href="/#about">About Us</a>
+            <a href="{% url 'services:service_list' %}">Services</a>
+            <a href="{% url 'gallery:gallery_list' %}">Gallery</a>
+            <a href="{% url 'events:event_list' %}">Events</a>
+            <a href="{% url 'videos:video_library' %}">Health Videos</a>
+            <a href="{% url 'contact' %}">Contact</a>
+            <a href="{% url 'appointment' %}" class="nav-button">Book an Appointment</a>
+        </nav>
+    </div>
+</header>
+
+<main>
+
+    <section class="corporate-hero">
+        <div class="corporate-hero-inner">
+            <span class="hero-label">HEALTHIER WORKPLACES, STRONGER COMMUNITIES</span>
+
+            <h1>Invest in Your Employees' Health. Invest in Your Company's Future.</h1>
+
+            <p>
+                Injabulo Clinic partners with businesses and organisations
+                to bring professional healthcare, workplace health screening
+                and wellness initiatives closer to their employees.
+            </p>
+
+            <div class="hero-actions">
+                <a href="#corporate-enquiry" class="primary-button">
+                    Request a Corporate Proposal
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="corporate-section">
+        <div class="corporate-heading">
+            <span class="section-label">CORPORATE HEALTHCARE SOLUTIONS</span>
+            <h2>Supporting the Health of Your Workforce</h2>
+            <p>
+                Explore healthcare solutions designed to support organisations,
+                promote employee wellbeing and encourage healthier workplaces.
+            </p>
+        </div>
+
+        <div class="corporate-services">
+
+            <article class="corporate-card">
+                <span class="number">01</span>
+                <h3>Workplace Health Screening</h3>
+                <p>
+                    Request workplace screening initiatives to help employees
+                    become more aware of important aspects of their health.
+                </p>
+            </article>
+
+            <article class="corporate-card">
+                <span class="number">02</span>
+                <h3>Employee Medical Assessments</h3>
+                <p>
+                    Discuss employee health assessment requirements with
+                    our clinic and explore suitable service arrangements.
+                </p>
+            </article>
+
+            <article class="corporate-card">
+                <span class="number">03</span>
+                <h3>Corporate Wellness Programmes</h3>
+                <p>
+                    Develop workplace wellness initiatives that encourage
+                    healthier lifestyles and employee wellbeing.
+                </p>
+            </article>
+
+            <article class="corporate-card">
+                <span class="number">04</span>
+                <h3>On-site Nursing Services</h3>
+                <p>
+                    Enquire about professional nursing services at your
+                    company's premises.
+                </p>
+            </article>
+
+            <article class="corporate-card">
+                <span class="number">05</span>
+                <h3>Workplace Wellness Campaigns</h3>
+                <p>
+                    Explore health awareness campaigns and wellness events
+                    tailored to your organisation's requirements.
+                </p>
+            </article>
+
+            <article class="corporate-card">
+                <span class="number">06</span>
+                <h3>Custom Healthcare Solutions</h3>
+                <p>
+                    Have a specific healthcare requirement? Tell us about
+                    your organisation and let us discuss your needs.
+                </p>
+            </article>
+
+        </div>
+    </section>
+
+    <section class="corporate-form-section" id="corporate-enquiry">
+        <div class="corporate-section">
+
+            <div class="corporate-heading">
+                <span class="section-label">LET'S WORK TOGETHER</span>
+                <h2>Request a Corporate Wellness Proposal</h2>
+                <p>
+                    Complete the form below and our team will contact you
+                    to discuss your company's healthcare requirements.
+                </p>
+            </div>
+
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="corporate-messages">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+
+            <form method="post" class="corporate-form">
+                {% csrf_token %}
+
+                {% for field in form %}
+                    <p>
+                        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        {{ field }}
+
+                        {% if field.help_text %}
+                            <span class="helptext">{{ field.help_text }}</span>
+                        {% endif %}
+
+                        {% for error in field.errors %}
+                            <span class="field-errors">{{ error }}</span>
+                        {% endfor %}
+                    </p>
+                {% endfor %}
+
+                {% if form.non_field_errors %}
+                    <div class="field-errors">{{ form.non_field_errors }}</div>
+                {% endif %}
+
+                <button type="submit" class="corporate-submit">
+                    Submit Corporate Enquiry
+                </button>
+
+                <p style="font-size: .82rem; color: #777; margin-top: 15px;">
+                    Please do not include employee medical records or
+                    confidential health information in this enquiry form.
+                </p>
+            </form>
+
+        </div>
+    </section>
+
+    <section class="corporate-cta">
+        <h2>Let's Build a Healthier Workplace Together.</h2>
+        <p>Injabulo Clinic — Your Health, Your Beauty, Our Care.</p>
+        <a href="{% url 'contact' %}" class="about-link">Contact the Clinic</a>
+    </section>
+
+</main>
+
+</body>
+</html>

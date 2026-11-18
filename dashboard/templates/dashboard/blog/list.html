@@ -1,0 +1,91 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Blog | Injabulo Clinic</title>
+    <style>
+        body { margin: 0; padding: 30px; font-family: Arial, sans-serif; background: #F7F2E9; color: #292929; }
+        .container { max-width: 1100px; margin: auto; }
+        .header { display: flex; justify-content: space-between; align-items: center; gap: 15px; flex-wrap: wrap; margin-bottom: 25px; }
+        h1 { color: #206F74; margin-bottom: 8px; }
+        .muted { color: #777; font-size: 14px; }
+        .button { display: inline-block; padding: 11px 16px; border-radius: 6px; background: #278B91; color: white; text-decoration: none; border: 0; cursor: pointer; font-size: 13px; }
+        .secondary { background: #206F74; }
+        .panel { background: white; border: 1px solid #e9e4dc; border-radius: 10px; overflow: hidden; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 15px; text-align: left; border-bottom: 1px solid #eee; font-size: 14px; }
+        th { background: #f8f8f6; color: #555; }
+        .status { font-weight: bold; }
+        .active { color: #206F74; }
+        .inactive { color: #a33b3b; }
+        .actions { display: flex; gap: 12px; flex-wrap: wrap; }
+        .actions a { text-decoration: none; color: #278B91; font-weight: bold; font-size: 13px; }
+        .message { padding: 12px; margin-bottom: 15px; background: #e5f3ed; border-radius: 6px; }
+        @media(max-width: 700px) {
+            body { padding: 15px; }
+            .panel { overflow-x: auto; }
+            table { min-width: 750px; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <div>
+            <h1>Health & Wellness Blog</h1>
+            <p class="muted">Create and manage health information and wellness articles.</p>
+        </div>
+        <div>
+            <a class="button secondary" href="{% url 'dashboard:home' %}">Dashboard</a>
+            <a class="button" href="{% url 'dashboard:blog_create' %}">+ Add Article</a>
+        </div>
+    </div>
+
+    {% for message in messages %}
+        <div class="message">{{ message }}</div>
+    {% endfor %}
+
+    <div class="panel">
+        <table>
+            <thead>
+                <tr>
+                    <th>Article</th>
+                    <th>Category</th>
+                    <th>Author</th>
+                    <th>Status</th>
+                    <th>Featured</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for post in posts %}
+                <tr>
+                    <td><strong>{{ post.title }}</strong><br><span class="muted">{{ post.excerpt|truncatechars:70 }}</span></td>
+                    <td>{{ post.category|default:"Uncategorised" }}</td>
+                    <td>{{ post.author|default:"?" }}</td>
+                    <td>
+                        {% if post.is_published %}
+                            <span class="status active">Published</span>
+                        {% else %}
+                            <span class="status inactive">Draft</span>
+                        {% endif %}
+                    </td>
+                    <td>{% if post.is_featured %}Yes{% else %}No{% endif %}</td>
+                    <td>
+                        <div class="actions">
+                            <a href="{% url 'dashboard:blog_edit' post.pk %}">Edit</a>
+                            <a href="{% url 'dashboard:blog_delete' post.pk %}">Delete</a>
+                        </div>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="6">No blog articles have been added yet.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

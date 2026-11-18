@@ -1,0 +1,336 @@
+﻿{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Owner Dashboard | Injabulo Clinic</title>
+    <style>
+        :root {
+            --teal: #278B91;
+            --green: #206F74;
+            --ivory: #F7F2E9;
+            --white: #FFFFFF;
+            --dark: #292929;
+            --muted: #777777;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: var(--ivory);
+            color: var(--dark);
+        }
+
+        .layout {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 250px;
+            background: var(--white);
+            padding: 30px 20px;
+            border-right: 1px solid #e9e4dc;
+        }
+
+        .brand {
+            color: var(--teal);
+            font-size: 21px;
+            font-weight: bold;
+            margin-bottom: 45px;
+        }
+
+        .sidebar a {
+            display: block;
+            text-decoration: none;
+            color: var(--dark);
+            padding: 14px;
+            margin-bottom: 8px;
+            border-radius: 7px;
+            font-size: 14px;
+        }
+
+        .sidebar a.active,
+        .sidebar a:hover {
+            background: var(--teal);
+            color: var(--white);
+        }
+
+        .main {
+            flex: 1;
+            padding: 35px;
+            min-width: 0;
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 35px;
+        }
+
+        .topbar h1 {
+            font-size: 27px;
+            margin-bottom: 8px;
+        }
+
+        .topbar p {
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .view-site {
+            color: var(--white);
+            background: var(--teal);
+            padding: 12px 18px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 13px;
+        }
+
+        .section-title {
+            font-size: 18px;
+            margin-bottom: 18px;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 18px;
+            margin-bottom: 35px;
+        }
+
+        .stat-card {
+            background: var(--white);
+            padding: 25px;
+            border-radius: 10px;
+            border: 1px solid #e9e4dc;
+        }
+
+        .stat-card span {
+            display: block;
+            color: var(--muted);
+            font-size: 13px;
+            margin-bottom: 14px;
+        }
+
+        .stat-card strong {
+            font-size: 30px;
+            color: var(--teal);
+        }
+
+        .management-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 18px;
+        }
+
+        .management-card {
+            background: var(--white);
+            padding: 25px;
+            border-radius: 10px;
+            border: 1px solid #e9e4dc;
+        }
+
+        .management-card h3 {
+            font-size: 17px;
+            margin-bottom: 10px;
+        }
+
+        .management-card p {
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.7;
+            margin-bottom: 18px;
+        }
+
+        .management-card a {
+            color: var(--teal);
+            font-weight: bold;
+            text-decoration: none;
+            font-size: 13px;
+        }
+
+        @media (max-width: 1000px) {
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .management-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 650px) {
+            .layout {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                padding: 18px;
+            }
+
+            .brand {
+                margin-bottom: 15px;
+            }
+
+            .sidebar a {
+                display: inline-block;
+                margin: 3px;
+                padding: 10px;
+            }
+
+            .main {
+                padding: 22px 16px;
+            }
+
+            .stats,
+            .management-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="layout">
+
+    <aside class="sidebar">
+        <div class="brand">INJABULO CLINIC</div>
+
+        <nav>
+            <a href="{% url 'dashboard:home' %}" class="active">Dashboard</a>
+            <a href="{% url 'dashboard:service_list' %}">Services</a>
+            <a href="{% url 'dashboard:gallery_list' %}">Gallery</a>
+            <a href="{% url 'dashboard:video_list' %}">Health Videos</a>
+            <a href="{% url 'dashboard:event_list' %}">Events</a>
+            <a href="{% url 'dashboard:homepage_content_edit' %}">Homepage Content</a>
+            <a href="{% url 'dashboard:appointment_list' %}">Appointment Management</a>
+              <a href="{% url 'dashboard:corporate_enquiry_list' %}">Corporate Enquiries</a>
+            <a href="{% url 'dashboard:blog_list' %}">Health & Wellness Blog</a>
+            
+            <a href="{% url 'dashboard:team_list' %}">Meet Our Team</a>
+            {% if request.user.is_superuser %}<a href="/admin/">Administration</a>{% endif %}
+                    <form method="post" action="{% url 'dashboard:logout' %}" style="margin-top: 25px;">
+                {% csrf_token %}
+                <button type="submit" name="logout" style="width:100%; padding:13px; border:0; border-radius:7px; background:#f7f2e9; color:#292929; font-weight:700; cursor:pointer;">
+                    Sign Out
+                </button>
+            </form>
+        </nav>
+    </aside>
+
+    <main class="main">
+
+        <header class="topbar">
+            <div>
+                <h1>Welcome to your dashboard</h1>
+                <p>Manage your Injabulo Clinic website from one place.</p>
+            </div>
+
+            <a href="/" class="view-site" target="_blank">View Website</a>
+        </header>
+
+        <h2 class="section-title">Website Overview</h2>
+
+        <section class="stats">
+            <article class="stat-card">
+                <span>Clinic Services</span>
+                <strong>{{ total_services }}</strong>
+            </article>
+
+            <article class="stat-card">
+                <span>Gallery Images</span>
+                <strong>{{ total_gallery }}</strong>
+            </article>
+
+            <article class="stat-card">
+                <span>Published Events</span>
+                <strong>{{ total_events }}</strong>
+            </article>
+
+            <article class="stat-card">
+                <span>Administrator</span>
+                <strong style="font-size: 16px;">{{ request.user.username }}</strong>
+            </article>
+        </section>
+
+        <h2 class="section-title">Website Management</h2>
+
+        <section class="management-grid">
+
+            <article class="management-card">
+                <h3>Manage Services</h3>
+                <p>Add, edit and update the healthcare services displayed on your website.</p>
+                <a href="{% url 'dashboard:service_list' %}">Manage Services ?</a>
+            </article>
+
+            <article class="management-card">
+                <h3>Manage Gallery</h3>
+                <p>Upload clinic photographs and control which images appear publicly.</p>
+                <a href="{% url 'dashboard:gallery_list' %}">Manage Gallery ?</a>
+            </article>
+
+            <article class="management-card">
+                <h3>Health Education Videos</h3>
+                <p>Upload educational and wellness videos and control which videos are published on the website.</p>
+                <a href="{% url 'dashboard:video_list' %}">Manage Health Videos</a>
+            </article>
+
+            <article class="management-card">
+                <h3>Events & Announcements</h3>
+                <p>Publish clinic events, community outreach and health campaigns.</p>
+                <a href="{% url 'dashboard:event_list' %}">Manage Events ?</a>
+            </article>
+
+            <article class="management-card">
+                <h3>Homepage Content</h3>
+                <p>Update the homepage headings, clinic information, mission, vision and values.</p>
+                <a href="{% url 'dashboard:homepage_content_edit' %}">Manage Homepage Content</a>
+            </article>
+
+            <article class="management-card">
+                <h3>Appointments</h3>
+                <p>View patient appointment requests, confirm bookings and manage appointment schedules.</p>
+                <a href="{% url 'dashboard:appointment_list' %}">Manage Appointments</a>
+              </article>
+
+              <article class="management-card">
+                  <h3>Corporate Wellness Enquiries</h3>
+                  <p>Review company enquiries, manage quotations, track approvals and record staff notes.</p>
+                  <a href="{% url 'dashboard:corporate_enquiry_list' %}">Manage Corporate Enquiries</a>
+            </article>
+
+            {% if request.user.is_superuser %}
+            <article class="management-card">
+                <h3>Website Administration</h3>
+                <p>Access the existing Django administration area.</p>
+                <a href="/admin/">Open Administration</a>
+            </article>
+            {% endif %}
+
+            <article class="management-card">
+                <h3>Public Website</h3>
+                <p>Preview the live-facing clinic website.</p>
+                <a href="/" target="_blank">Open Website ?</a>
+            </article>
+
+        </section>
+
+    </main>
+</div>
+
+</body>
+</html>
+
+
+

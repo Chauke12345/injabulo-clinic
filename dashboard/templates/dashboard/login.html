@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Owner Login | Injabulo Clinic</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            min-height: 100vh;
+            display: grid;
+            place-items: center;
+            padding: 20px;
+            background: #F7F2E9;
+            font-family: Arial, sans-serif;
+            color: #292929;
+        }
+
+        .login-card {
+            width: 100%;
+            max-width: 430px;
+            padding: 42px;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 12px 40px rgba(0,0,0,.07);
+        }
+
+        .brand {
+            color: #278B91;
+            font-size: 22px;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 12px;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 25px;
+            margin-bottom: 10px;
+        }
+
+        .intro {
+            color: #777;
+            text-align: center;
+            font-size: 14px;
+            margin-bottom: 30px;
+        }
+
+        label {
+            display: block;
+            font-size: 13px;
+            font-weight: 700;
+            margin: 18px 0 8px;
+        }
+
+        input {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #D8DEDE;
+            border-radius: 6px;
+            font-size: 15px;
+        }
+
+        input:focus {
+            outline: 2px solid rgba(39,139,145,.2);
+            border-color: #278B91;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 25px;
+            padding: 15px;
+            border: 0;
+            border-radius: 6px;
+            background: #278B91;
+            color: white;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        button:hover { background: #206F74; }
+
+        .error {
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 6px;
+            background: #fff0ed;
+            color: #a33324;
+            font-size: 13px;
+        }
+
+        .back {
+            display: block;
+            margin-top: 25px;
+            text-align: center;
+            color: #278B91;
+            text-decoration: none;
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+    <main class="login-card">
+        <div class="brand">INJABULO CLINIC</div>
+        <h1>Owner Login</h1>
+        <p class="intro">Sign in to manage your clinic website.</p>
+
+        <form method="post">
+            {% csrf_token %}
+            <input type="hidden" name="next" value="{{ next }}">
+
+            <label for="id_username">Username</label>
+            <input
+                type="text"
+                name="username"
+                id="id_username"
+                autocomplete="username"
+                required
+                autofocus
+            >
+
+            <label for="id_password">Password</label>
+            <input
+                type="password"
+                name="password"
+                id="id_password"
+                autocomplete="current-password"
+                required
+            >
+
+            {% if form.errors %}
+                <div class="error">
+                    The username or password is incorrect. Please try again.
+                </div>
+            {% endif %}
+
+            <button type="submit">Sign In</button>
+        </form>
+
+        <a class="back" href="/">Return to public website</a>
+    </main>
+</body>
+</html>

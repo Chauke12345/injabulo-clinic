@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Patient Testimonials | Injabulo Clinic</title>
+<style>
+* { box-sizing: border-box; }
+body { margin: 0; padding: 30px; font-family: Arial,sans-serif; background: #F7F2E9; color: #292929; }
+.container { max-width: 1100px; margin: auto; }
+.header { display:flex; justify-content:space-between; align-items:center; gap:15px; flex-wrap:wrap; margin-bottom:25px; }
+h1 { color:#206F74; margin-bottom:8px; }
+.muted { color:#777; font-size:14px; }
+.button { display:inline-block; padding:11px 16px; border-radius:6px; background:#206F74; color:white; text-decoration:none; font-size:13px; }
+.panel { background:white; border:1px solid #e9e4dc; border-radius:10px; overflow:hidden; }
+table { width:100%; border-collapse:collapse; }
+th,td { padding:15px; text-align:left; border-bottom:1px solid #eee; font-size:14px; }
+th { background:#f8f8f6; color:#555; }
+.status { font-weight:bold; }
+.yes { color:#206F74; }
+.no { color:#a33b3b; }
+.actions a { color:#278B91; text-decoration:none; font-weight:bold; }
+.message { padding:12px; margin-bottom:15px; background:#e5f3ed; border-radius:6px; }
+@media(max-width:700px) { body { padding:15px; } .panel { overflow-x:auto; } table { min-width:750px; } }
+</style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <div>
+            <h1>Patient Testimonials</h1>
+            <p class="muted">Review patient feedback, verify consent and manage approved testimonials.</p>
+        </div>
+        <a class="button" href="{% url 'dashboard:home' %}">Back to Dashboard</a>
+    </div>
+
+    {% for message in messages %}
+        <div class="message">{{ message }}</div>
+    {% endfor %}
+
+    <div class="panel">
+    <table>
+        <thead>
+            <tr>
+                <th>Patient display name</th>
+                <th>Rating</th>
+                <th>Consent</th>
+                <th>Approval</th>
+                <th>Featured</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for item in testimonials %}
+            <tr>
+                <td><strong>{{ item.display_name|default:"Anonymous" }}</strong><br>
+                    <span class="muted">{{ item.testimonial|truncatechars:85 }}</span></td>
+                <td>{{ item.rating }}/5</td>
+                <td>{% if item.consent_to_publish %}<span class="status yes">Given</span>{% else %}<span class="status no">Not given</span>{% endif %}</td>
+                <td>{% if item.is_approved and item.consent_to_publish %}<span class="status yes">Approved</span>{% else %}<span class="status no">Not approved</span>{% endif %}</td>
+                <td>{% if item.is_featured and item.consent_to_publish and item.is_approved %}Yes{% else %}No{% endif %}</td>
+                <td class="actions"><a href="{% url 'dashboard:testimonial_edit' item.pk %}">Review / Edit</a></td>
+            </tr>
+        {% empty %}
+            <tr><td colspan="6">No patient testimonials have been submitted yet.</td></tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,86 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Share Your Experience | Injabulo Clinic</title>
+<link rel="stylesheet" href="{% static 'core/css/style.css' %}">
+<style>
+* { box-sizing:border-box; }
+body { margin:0; background:#F7F2E9; color:#444; }
+.review-page { min-height:80vh; padding:55px 20px; }
+.review-container { max-width:720px; margin:auto; background:white; padding:clamp(24px,5vw,45px); border-radius:16px; box-shadow:0 6px 25px rgba(0,0,0,.07); }
+.review-heading { text-align:center; margin-bottom:30px; }
+.review-heading h1 { color:#206F74; font-size:clamp(28px,5vw,38px); }
+.review-heading p { line-height:1.7; }
+.review-form p { margin-bottom:20px; }
+.review-form label { display:block; font-weight:600; color:#206F74; margin-bottom:8px; }
+.review-form input:not([type="checkbox"]), .review-form textarea, .review-form select { width:100%; padding:13px; border:1px solid #d6dddd; border-radius:8px; font:inherit; }
+.review-form textarea { resize:vertical; }
+.review-form input[type="checkbox"] { margin-right:9px; }
+.review-form button { width:100%; padding:15px; border:0; border-radius:8px; background:#206F74; color:white; font-size:16px; font-weight:bold; cursor:pointer; }
+.review-form button:hover { background:#17585d; }
+.consent-box { background:#f1f7f6; padding:17px; border-radius:9px; line-height:1.6; }
+.errorlist { color:#b42318; padding-left:20px; }
+.review-notice { font-size:13px; color:#666; line-height:1.7; margin-top:20px; }
+.message { padding:13px; border-radius:8px; background:#e9f6ed; color:#20633b; margin-bottom:20px; }
+</style>
+</head>
+<body>
+<header class="site-header">
+<div class="nav-container">
+<a href="/" class="logo">
+<img src="{% static 'core/images/injabulo-clinic-logo.png' %}" alt="Injabulo Clinic">
+</a>
+<nav class="main-nav">
+<a href="/">Home</a>
+<a href="{% url 'team:team_list' %}">Our Team</a>
+<a href="{% url 'blog:post_list' %}">Health Blog</a>
+<a href="{% url 'contact' %}">Contact</a>
+</nav>
+<a href="{% url 'appointment' %}" class="nav-button">Book an Appointment</a>
+</div>
+</header>
+
+<main class="review-page">
+<section class="review-container">
+<div class="review-heading">
+<h1>Share Your Experience</h1>
+<p>Your feedback helps us improve our services and support our community. We appreciate you taking the time to share your experience.</p>
+</div>
+
+{% if messages %}
+{% for message in messages %}
+<div class="message">{{ message }}</div>
+{% endfor %}
+{% endif %}
+
+<form method="post" class="review-form">
+{% csrf_token %}
+{% for field in form %}
+<p>
+{% if field.name == "consent_to_publish" %}
+<div class="consent-box">
+{{ field }}
+<label for="{{ field.id_for_label }}">{{ field.label }}</label>
+{% if field.help_text %}<small>{{ field.help_text }}</small>{% endif %}
+{{ field.errors }}
+</div>
+{% else %}
+<label for="{{ field.id_for_label }}">{{ field.label }}</label>
+{{ field }}
+{{ field.errors }}
+{% endif %}
+</p>
+{% endfor %}
+<button type="submit">Submit My Review</button>
+</form>
+
+<p class="review-notice">
+By submitting, you confirm that your review reflects your own experience. Please do not include private medical information or details about other patients. Your review will remain unpublished until authorised clinic staff have reviewed it. Your permission applies to publishing the review you submit on the clinic website.
+</p>
+</section>
+</main>
+</body>
+</html>

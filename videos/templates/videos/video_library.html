@@ -1,0 +1,186 @@
+﻿{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Education & Wellness Videos | Injabulo Clinic</title>
+    <link rel="stylesheet" href="{% static 'core/css/style.css' %}">
+    <style>
+        .video-library-section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 65px 24px;
+        }
+        .video-library-heading {
+            text-align: center;
+            max-width: 760px;
+            margin: 0 auto 35px;
+        }
+        .video-library-heading h1 {
+            margin: 12px 0;
+        }
+        .video-filter {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin: 30px 0 40px;
+        }
+        .video-filter select {
+            min-width: 240px;
+            padding: 12px 15px;
+            border: 1px solid #cbd5d1;
+            border-radius: 8px;
+            background: white;
+            font: inherit;
+        }
+        .video-filter button {
+            padding: 12px 22px;
+            border: 0;
+            border-radius: 8px;
+            background: #0f766e;
+            color: white;
+            font-weight: 700;
+            cursor: pointer;
+        }
+        .video-library-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 26px;
+        }
+        .education-video-card {
+            overflow: hidden;
+            border-radius: 14px;
+            background: white;
+            box-shadow: 0 5px 22px rgba(0,0,0,.08);
+        }
+        .education-video-card video {
+            display: block;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            background: #142b2a;
+            object-fit: contain;
+        }
+        .education-video-card img {
+            display: block;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            object-fit: cover;
+        }
+        .education-video-content {
+            padding: 22px;
+        }
+        .education-video-category {
+            color: #0f766e;
+            font-size: .82rem;
+            font-weight: 700;
+        }
+        .education-video-content h2 {
+            margin: 9px 0;
+            font-size: 1.25rem;
+        }
+        .education-video-content p {
+            line-height: 1.65;
+        }
+        .video-empty-state {
+            text-align: center;
+            padding: 45px 20px;
+            background: #f4f8f6;
+            border-radius: 14px;
+        }
+        @media (max-width: 600px) {
+            .video-library-section {
+                padding: 40px 16px;
+            }
+            .video-filter {
+                align-items: stretch;
+                flex-direction: column;
+            }
+            .video-filter select,
+            .video-filter button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header class="site-header">
+    <div class="nav-container">
+        <a href="/" class="logo">
+            <img src="{% static 'core/images/injabulo-clinic-logo.png' %}" alt="Injabulo Clinic">
+        </a>
+
+        <nav class="main-nav">
+            <a href="/">Home</a>
+            <a href="/#about">About Us</a>
+            <a href="{% url 'services:service_list' %}">Services</a>
+            <a href="{% url 'gallery:gallery_list' %}">Gallery</a>
+            <a href="{% url 'events:event_list' %}">Events</a>
+            <a href="{% url 'videos:video_library' %}">Health Videos</a>
+            <a href="{% url 'contact' %}">Contact</a>
+            <a href="{% url 'appointment' %}" class="nav-button">Book an Appointment</a>
+        </nav>
+    </div>
+</header>
+
+<main>
+    <section class="video-library-section">
+        <div class="video-library-heading">
+            <p class="hero-label">YOUR HEALTH, YOUR BEAUTY, OUR CARE</p>
+            <h1>Health Education & Wellness</h1>
+            <p>
+                Explore educational videos from Injabulo Clinic.
+                Learn more about your health, family wellbeing and preventative care.
+            </p>
+        </div>
+
+        <form method="get" class="video-filter">
+            <select name="category" aria-label="Filter videos by category">
+                <option value="">All video categories</option>
+                {% for value, label in categories %}
+                    <option value="{{ value }}" {% if selected_category == value %}selected{% endif %}>
+                        {{ label }}
+                    </option>
+                {% endfor %}
+            </select>
+            <button type="submit">Filter Videos</button>
+            {% if selected_category %}
+                <a href="{% url 'videos:video_library' %}">Clear Filter</a>
+            {% endif %}
+        </form>
+
+        <div class="video-library-grid">
+            {% for video in videos %}
+                <article class="education-video-card">
+                    <video controls preload="metadata"
+                           {% if video.thumbnail %}poster="{{ video.thumbnail.url }}"{% endif %}>
+                        <source src="{{ video.video_file.url }}">
+                        Your browser does not support video playback.
+                    </video>
+
+                    <div class="education-video-content">
+                        <span class="education-video-category">
+                            {{ video.get_category_display }}
+                        </span>
+                        <h2>{{ video.title }}</h2>
+                        <p>{{ video.description|linebreaksbr }}</p>
+                    </div>
+                </article>
+            {% empty %}
+                <div class="video-empty-state">
+                    <h2>No videos available yet</h2>
+                    <p>
+                        Our health education videos are being prepared.
+                        Please check back soon.
+                    </p>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+</main>
+
+</body>
+</html>
