@@ -1,4 +1,4 @@
-{% load static %}
+﻿{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -43,6 +43,8 @@ body { margin:0; background:#F7F2E9; color:#444; }
 </div>
 </header>
 
+{% include 'core/includes/back_to_home.html' %}
+
 <main class="review-page">
 <section class="review-container">
 <div class="review-heading">
@@ -82,5 +84,6 @@ By submitting, you confirm that your review reflects your own experience. Please
 </p>
 </section>
 </main>
+{% include 'core/includes/floating_whatsapp.html' %}
 </body>
 </html>

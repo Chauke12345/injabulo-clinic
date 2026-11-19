@@ -1,4 +1,4 @@
-{% load static %}
+﻿{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -44,6 +44,8 @@ body { margin:0; background:#F7F2E9; color:#444; }
 </div>
 </header>
 
+{% include 'core/includes/back_to_home.html' %}
+
 <main class="team-page">
 <div class="team-container">
 <div class="team-heading">
@@ -81,5 +83,6 @@ body { margin:0; background:#F7F2E9; color:#444; }
 {% endif %}
 </div>
 </main>
+{% include 'core/includes/floating_whatsapp.html' %}
 </body>
 </html>

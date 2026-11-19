@@ -35,6 +35,8 @@
 </div>
 </header>
 
+{% include 'core/includes/back_to_home.html' %}
+
 <main class="article-page">
 <article class="article-container">
 {% if post.category %}
@@ -53,6 +55,7 @@
 <a href="{% url 'blog:post_list' %}" class="back-link">← Back to all articles</a>
 </article>
 </main>
+{% include 'core/includes/floating_whatsapp.html' %}
 </body>
 </html>
 

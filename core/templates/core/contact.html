@@ -1,4 +1,4 @@
-{% load static %}
+﻿{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -42,6 +42,8 @@
         </nav>
     </div>
 </header>
+
+{% include 'core/includes/back_to_home.html' %}
 
 <main>
     <section class="services-section">
@@ -126,7 +128,7 @@
 
         <div class="about-content">
             <h2>Operating Hours</h2>
-            <p>Monday to Saturday: 08:00 - 17:00</p>
+            <p>Monday to Friday: 08:00 - 17:00</p><p>Saturday: 09:00 - 13:00</p>
 
             <h2>Professional Nurse</h2>
             <p>Sr H.G. Fankomo</p>
@@ -155,32 +157,64 @@ if ("serviceWorker" in navigator) {
 </script>
 
 <footer class="clinic-social-footer">
-    <div class="clinic-social-inner">
-        <h2>Stay Connected with Injabulo Clinic</h2>
-        <p>Follow us for clinic updates, health information and announcements.</p>
+    <div class="clinic-social-inner clinic-footer-grid">
 
-        <div class="clinic-social-links">
-            <a href="https://www.facebook.com/61567617202327/"
-               class="social-follow-link facebook-link"
-               target="_blank" rel="noopener noreferrer"
-               aria-label="Follow Injabulo Clinics on Facebook">
-                <span class="social-letter">f</span> Facebook
-            </a>
-
-            <a href="https://www.instagram.com/injabuloclinic/"
-               class="social-follow-link instagram-link"
-               target="_blank" rel="noopener noreferrer"
-               aria-label="Follow Injabulo Clinic on Instagram">
-                <span class="social-letter">?</span> Instagram
-            </a>
-
-            <a href="https://www.tiktok.com/@injabulo.clinic"
-               class="social-follow-link tiktok-link"
-               target="_blank" rel="noopener noreferrer"
-               aria-label="Follow Injabulo Clinic on TikTok">
-                <span class="social-letter">?</span> TikTok
-            </a>
+        <div class="clinic-footer-brand">
+            <h2>Injabulo Clinic</h2>
+            <p>Compassionate healthcare and quality patient care. We are committed to supporting the health and wellbeing of our community.</p>
         </div>
+
+        <div class="clinic-footer-contact">
+            <h3>Contact Us</h3>
+            <p><strong>Telephone:</strong> <a href="tel:+27128001903">012 800 1903</a></p>
+            <p><strong>Mobile:</strong> <a href="tel:+27793996635">079 399 6635</a></p>
+            <p><strong>WhatsApp:</strong> <a href="https://wa.me/27793996635" target="_blank" rel="noopener noreferrer">Chat with us</a></p>
+            <p><strong>Email:</strong> <a href="mailto:injabuloclinics@gmail.com">injabuloclinics@gmail.com</a></p>
+        </div>
+
+        <div class="clinic-footer-address">
+            <h3>Find Us</h3>
+            <p>18 Stapelburg Avenue,<br>East Lynne, Pretoria,<br>0186</p>
+            <a href="https://www.google.com/maps/search/?api=1&query=18+Stapelburg+Ave+Eastlynne+Pretoria+0186" target="_blank" rel="noopener noreferrer">Get Directions</a>
+        </div>
+
+        <div class="clinic-footer-hours">
+            <h3>Operating Hours</h3>
+            <p><strong>Monday – Friday:</strong><br>08:00 – 17:00</p>
+            <p><strong>Saturday:</strong><br>09:00 – 13:00</p>
+        </div>
+
+        <div class="clinic-footer-social">
+            <h3>Stay Connected</h3>
+            <p>Follow us for clinic updates and health information.</p>
+
+            <div class="clinic-footer-social-links">
+                <a class="clinic-footer-social-link" href="https://www.facebook.com/61567617202327/" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M13.5 21v-8h2.7l.4-3h-3.1V8.1c0-.9.3-1.5 1.6-1.5h1.7V3.9c-.3 0-1.3-.1-2.4-.1-2.4 0-4.1 1.5-4.1 4.2V10H7.5v3h2.8v8z"/></svg>
+                </a>
+
+                <a class="clinic-footer-social-link" href="https://www.instagram.com/injabuloclinic/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor"/></svg>
+                </a>
+
+                <a class="clinic-footer-social-link" href="https://www.tiktok.com/@injabulo.clinic" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 3c.3 2.5 1.7 4 4 4.2v3.1c-1.5 0-2.9-.5-4-1.3v6.4a5.5 5.5 0 1 1-5.5-5.5c.4 0 .8 0 1.2.1v3.2a2.5 2.5 0 1 0 1.3 2.2V3z" fill="currentColor"/></svg>
+                </a>
+            </div>
+        </div>
+
+    </div>
+    <div class="clinic-footer-bottom">
+        <p>
+            &copy; 2026 Injabulo Clinic. All rights reserved.
+            <a href="/dashboard/login/" class="clinic-admin-lock" aria-label="Staff administration login" title="Staff Login">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <rect x="5" y="10" width="14" height="11" rx="2" fill="none" stroke="currentColor" stroke-width="2"/>
+                    <path d="M8 10V7a4 4 0 0 1 8 0v3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    <circle cx="12" cy="15" r="1.3" fill="currentColor"/>
+                </svg>
+            </a>
+        </p>
     </div>
 </footer>
 
@@ -208,5 +242,10 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 </script>
 
+{% include 'core/includes/floating_whatsapp.html' %}
 </body>
 </html>
+
+
+
+
