@@ -7,7 +7,7 @@
     <title>Our Services | Injabulo Clinic</title>
     <link rel="stylesheet" href="{% static 'core/css/style.css' %}">
 </head>
-<body>
+<body class="services-page">
 
 <header class="site-header">
     <div class="nav-container">
@@ -40,7 +40,30 @@
         <div class="services-grid">
             {% for service in services %}
                 <article class="service-card">
-                    <div class="service-icon">+</div>
+                    <div class="service-icon">
+    {% if service.slug == "womens-healthcare" %}♀
+    {% elif service.slug == "baby-child-healthcare" %}👶
+    {% elif service.slug == "general-healthcare" %}✚
+    {% elif service.slug == "hiv-testing-counselling" %}🎗️
+    {% elif service.slug == "wound-care-dressing" %}🩹
+    {% elif service.slug == "home-based-palliative-care" %}♥
+    {% elif service.slug == "mens-healthcare" %}♂
+    {% elif service.slug == "additional-services" %}✚
+    {% elif service.slug == "chronic-disease-management" %}♡
+    {% elif service.slug == "hiv-art-niart-sti-services" %}🎗️
+    {% elif service.slug == "corporate-wellness-programmes" %}♧
+    {% elif service.slug == "workplace-health-screening" %}✓
+    {% elif service.slug == "onsite-nursing-services" %}⚕
+    {% elif service.slug == "employee-health-assessments" %}☑
+    {% elif service.slug == "health-education-wellness-outreach" %}✚
+    {% elif service.slug == "iv-therapy-immunity-boosting-detox-hydration" %}💧
+    {% elif service.slug == "physical-detox" %}🍃
+    {% elif service.slug == "diagnostic-scanning" %}◎
+    {% elif service.slug == "medical-certificates" %}▤
+    {% elif service.slug == "post-operative-care-home-visits" %}♥
+    {% else %}✚
+    {% endif %}
+</div>
                     <h2>{{ service.title }}</h2>
                     <p>{{ service.short_description }}</p>
                     <a href="{% url 'services:service_detail' service.slug %}" class="about-link">
@@ -64,5 +87,7 @@
 {% include 'core/includes/floating_whatsapp.html' %}
 </body>
 </html>
+
+
 
 

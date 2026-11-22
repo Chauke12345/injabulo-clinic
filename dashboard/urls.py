@@ -69,8 +69,10 @@ urlpatterns = [
     path("corporate-quotations/<int:pk>/status/", views.corporate_quotation_update_status, name="corporate_quotation_update_status"),
 
     # Appointment management
+    path("notifications/<int:pk>/open/", views.notification_open, name="notification_open"),
     path("appointments/", views.appointment_list, name="appointment_list"),
     path("appointments/<int:pk>/update/", views.appointment_update, name="appointment_update"),
     path("appointments/<int:pk>/", views.appointment_detail, name="appointment_detail"),
     path("appointments/<int:pk>/mark-contacted/", views.appointment_mark_contacted, name="appointment_mark_contacted"),
 ]
+

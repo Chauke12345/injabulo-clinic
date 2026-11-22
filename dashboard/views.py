@@ -31,6 +31,7 @@ from events.models import Event
 from events.forms import EventForm
 
 from core.models import HomepageContent
+from .models import DashboardNotification
 from core.forms import HomepageContentForm
 
 from videos.models import Video
@@ -48,10 +49,18 @@ def staff_required(view_func):
 
 @staff_required
 def dashboard_home(request):
+    unread_notifications = DashboardNotification.objects.filter(is_read=False)
+    recent_notifications = DashboardNotification.objects.select_related(
+        "appointment",
+        "appointment__service",
+    )[:5]
+
     context = {
         "total_services": Service.objects.count(),
         "total_gallery": GalleryImage.objects.count(),
         "total_events": Event.objects.filter(is_published=True).count(),
+        "unread_notification_count": unread_notifications.count(),
+        "recent_notifications": recent_notifications,
     }
     return render(request, "dashboard/home.html", context)
 
@@ -1255,3 +1264,20 @@ def team_delete(request, pk):
     member.delete()
     messages.success(request, "Team member deleted.")
     return redirect("dashboard:team_list")
+
+
+
+@staff_required
+@require_POST
+def notification_open(request, pk):
+    notification = get_object_or_404(
+        DashboardNotification.objects.select_related("appointment"),
+        pk=pk,
+    )
+    notification.is_read = True
+    notification.save(update_fields=["is_read"])
+
+    return redirect(
+        "dashboard:appointment_detail",
+        pk=notification.appointment_id,
+    )

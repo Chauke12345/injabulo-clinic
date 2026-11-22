@@ -2960,3 +2960,487 @@ a {
         background: #e8eeee;
     }
 }
+
+/* ==========================================
+   INJABULO PREMIUM SERVICES PAGE REDESIGN
+   ========================================== */
+
+body:has(.services-page) {
+    background: #f7f4ee;
+}
+
+.services-page .services-section {
+    padding: 35px 5% 85px;
+    background: #f7f4ee;
+}
+
+.services-page .services-heading {
+    max-width: 100%;
+    min-height: 390px;
+    margin: 0 auto 65px;
+    padding: 85px 55px;
+    border-radius: 22px;
+    background:
+        linear-gradient(90deg, rgba(17, 67, 69, .88), rgba(25, 105, 108, .58)),
+        url("../images/injabulo-hero-background.jpeg") center/cover no-repeat;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    text-align: left;
+    box-shadow: 0 18px 45px rgba(24, 75, 76, .16);
+}
+
+.services-page .services-heading .hero-label {
+    color: #f4d99b;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    margin-bottom: 16px;
+}
+
+.services-page .services-heading h1 {
+    max-width: 680px;
+    color: #fff;
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(38px, 5vw, 60px);
+    line-height: 1.12;
+    margin-bottom: 18px;
+}
+
+.services-page .services-heading > p:last-child {
+    max-width: 590px;
+    color: rgba(255,255,255,.92);
+    font-size: 16px;
+    line-height: 1.8;
+}
+
+.services-page .services-grid {
+    max-width: 1250px;
+    gap: 25px;
+}
+
+.services-page .service-card {
+    background: #fff;
+    padding: 35px 30px;
+    min-height: 245px;
+    border-radius: 16px;
+    border: 1px solid #e8e3d9;
+    box-shadow: 0 8px 25px rgba(35, 80, 80, .06);
+    transition: transform .3s ease, box-shadow .3s ease;
+}
+
+.services-page .service-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 18px 35px rgba(35, 80, 80, .13);
+}
+
+.services-page .service-icon {
+    width: 54px;
+    height: 54px;
+    background: #e5f1ef;
+    color: #278b91;
+    font-size: 28px;
+}
+
+.services-page .service-card h2 {
+    color: #245e60;
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 22px;
+    margin-bottom: 13px;
+}
+
+.services-page .service-card p {
+    color: #707777;
+    font-size: 14px;
+    line-height: 1.8;
+    margin-bottom: 18px;
+}
+
+.services-page .service-card .about-link {
+    color: #278b91;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.services-page .service-card .about-link:hover {
+    color: #174f52;
+}
+
+.services-page .hero-actions {
+    justify-content: center;
+    margin-top: 55px;
+}
+
+.services-page .hero-actions .nav-button {
+    padding: 15px 30px;
+    border-radius: 8px;
+}
+
+@media (max-width: 650px) {
+    .services-page .services-section {
+        padding: 25px 16px 55px;
+    }
+
+    .services-page .services-heading {
+        min-height: 340px;
+        padding: 55px 25px;
+        border-radius: 14px;
+        margin-bottom: 40px;
+    }
+
+    .services-page .services-heading h1 {
+        font-size: 37px;
+    }
+
+    .services-page .service-card {
+        padding: 28px 24px;
+    }
+}
+
+
+/* ==========================================
+   INJABULO PREMIUM GALLERY BANNER
+   ========================================== */
+
+.gallery-page {
+    background: #f7f4ee;
+}
+
+.gallery-page .gallery-main {
+    max-width: 100%;
+    padding: 35px 5% 90px;
+}
+
+.gallery-page .gallery-intro {
+    max-width: 100%;
+    min-height: 390px;
+    margin: 0 auto 65px;
+    padding: 85px 55px;
+    border-radius: 22px;
+    background:
+        linear-gradient(90deg, rgba(17, 67, 69, .88), rgba(25, 105, 108, .58)),
+        url("../images/injabulo-hero-background.jpeg") center/cover no-repeat;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    text-align: left;
+    box-shadow: 0 18px 45px rgba(24, 75, 76, .16);
+}
+
+.gallery-page .gallery-eyebrow {
+    color: #f4d99b;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    margin-bottom: 16px;
+}
+
+.gallery-page .gallery-intro h1 {
+    color: #fff;
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(38px, 5vw, 60px);
+    line-height: 1.12;
+    margin-bottom: 18px;
+}
+
+.gallery-page .gallery-intro > p:last-child {
+    max-width: 590px;
+    color: rgba(255,255,255,.92);
+    font-size: 16px;
+    line-height: 1.8;
+}
+
+.gallery-page .gallery-grid {
+    max-width: 1250px;
+    margin: auto;
+    gap: 25px;
+}
+
+.gallery-page .gallery-card {
+    border-radius: 16px;
+    border: 1px solid #e8e3d9;
+    box-shadow: 0 8px 25px rgba(35, 80, 80, .06);
+    transition: transform .3s ease, box-shadow .3s ease;
+}
+
+.gallery-page .gallery-card:hover {
+    transform: translateY(-7px);
+    box-shadow: 0 18px 35px rgba(35, 80, 80, .13);
+}
+
+.gallery-page .gallery-image img {
+    transition: transform .4s ease;
+}
+
+.gallery-page .gallery-card:hover .gallery-image img {
+    transform: scale(1.04);
+}
+
+.gallery-page .gallery-card-content {
+    background: #fff;
+}
+
+@media (max-width: 650px) {
+    .gallery-page .gallery-main {
+        padding: 25px 16px 55px;
+    }
+
+    .gallery-page .gallery-intro {
+        min-height: 340px;
+        padding: 55px 25px;
+        border-radius: 14px;
+        margin-bottom: 40px;
+    }
+
+    .gallery-page .gallery-intro h1 {
+        font-size: 37px;
+    }
+}
+
+
+
+
+/* ==========================================
+   INJABULO PREMIUM EVENTS DESIGN
+   ========================================== */
+
+.events-page {
+    background: #f7f4ee;
+}
+
+.events-page .gallery-main {
+    max-width: 100%;
+    padding: 35px 5% 90px;
+}
+
+.events-page .gallery-intro {
+    max-width: 100%;
+    min-height: 390px;
+    margin: 0 auto 65px;
+    padding: 85px 55px;
+    border-radius: 22px;
+    background:
+        linear-gradient(90deg, rgba(17, 67, 69, .88), rgba(25, 105, 108, .58)),
+        url("../images/injabulo-hero-background.jpeg") center/cover no-repeat;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    text-align: left;
+    box-shadow: 0 18px 45px rgba(24, 75, 76, .16);
+}
+
+.events-page .gallery-eyebrow {
+    color: #f4d99b;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    margin-bottom: 16px;
+}
+
+.events-page .gallery-intro h1 {
+    color: #fff;
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(38px, 5vw, 60px);
+    line-height: 1.12;
+    margin-bottom: 18px;
+}
+
+.events-page .gallery-intro > p:last-child {
+    max-width: 650px;
+    color: rgba(255,255,255,.92);
+    font-size: 16px;
+    line-height: 1.8;
+}
+
+.events-page .gallery-grid {
+    max-width: 1250px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+}
+
+.events-page .gallery-card {
+    overflow: hidden;
+    background: #fff;
+    border-radius: 16px;
+    border: 1px solid #e8e3d9;
+    box-shadow: 0 8px 25px rgba(35, 80, 80, .06);
+    transition: transform .3s ease, box-shadow .3s ease;
+}
+
+.events-page .gallery-card:hover {
+    transform: translateY(-7px);
+    box-shadow: 0 18px 35px rgba(35, 80, 80, .13);
+}
+
+.events-page .gallery-image {
+    overflow: hidden;
+    background: #e5f1ef;
+}
+
+.events-page .gallery-image img {
+    display: block;
+    width: 100%;
+    height: 235px;
+    object-fit: cover;
+    transition: transform .4s ease;
+}
+
+.events-page .gallery-card:hover .gallery-image img {
+    transform: scale(1.04);
+}
+
+.events-page .gallery-card-content {
+    background: #fff;
+    padding: 25px;
+}
+
+.events-page .gallery-category {
+    display: inline-block;
+    margin-bottom: 12px;
+    padding: 7px 12px;
+    border-radius: 30px;
+    background: #e5f1ef;
+    color: #206f74;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.events-page .gallery-card-content h2 {
+    margin: 0 0 12px;
+    color: #245e60;
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 23px;
+    line-height: 1.35;
+}
+
+.events-page .gallery-card-content small {
+    display: inline-block;
+    margin-bottom: 12px;
+    color: #a47b32;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.events-page .gallery-card-content p {
+    color: #707777;
+    font-size: 14px;
+    line-height: 1.8;
+    margin-bottom: 12px;
+}
+
+.events-page .gallery-empty {
+    max-width: 850px;
+    margin: 0 auto;
+    padding: 55px 35px;
+    border: 1px solid #e8e3d9;
+    border-radius: 18px;
+    background: #fff;
+    text-align: center;
+    box-shadow: 0 8px 25px rgba(35, 80, 80, .06);
+}
+
+.events-page .gallery-empty h2 {
+    color: #245e60;
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 28px;
+}
+
+.events-page .gallery-empty p {
+    color: #707777;
+    line-height: 1.8;
+}
+
+.events-page .gallery-footer {
+    background: #174f52;
+    color: #fff;
+}
+
+@media (max-width: 650px) {
+    .events-page .gallery-main {
+        padding: 25px 16px 55px;
+    }
+
+    .events-page .gallery-intro {
+        min-height: 340px;
+        padding: 55px 25px;
+        border-radius: 14px;
+        margin-bottom: 40px;
+    }
+
+    .events-page .gallery-intro h1 {
+        font-size: 37px;
+    }
+
+    .events-page .gallery-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .events-page .gallery-image img {
+        height: 220px;
+    }
+
+    .events-page .gallery-card-content {
+        padding: 22px;
+    }
+}
+
+/* CONTACT PAGE - MATCH EVENTS HERO BANNER */
+.contact-page .services-heading {
+    max-width: 100%;
+    min-height: 390px;
+    margin: 0 auto 65px;
+    padding: 85px 55px;
+    border-radius: 22px;
+    background:
+        linear-gradient(90deg, rgba(17, 67, 69, .88), rgba(25, 105, 108, .58)),
+        url("../images/injabulo-hero-background.jpeg") center/cover no-repeat;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    text-align: left;
+    box-sizing: border-box;
+}
+
+.contact-page .services-heading h1 {
+    color: #fff;
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(38px, 5vw, 60px);
+    line-height: 1.12;
+    margin: 14px 0 18px;
+}
+
+.contact-page .services-heading > p:last-child {
+    max-width: 650px;
+    color: rgba(255,255,255,.92);
+    font-size: 16px;
+    line-height: 1.8;
+}
+
+.contact-page .services-heading .hero-label {
+    color: #e5c98b;
+}
+
+@media (max-width: 600px) {
+    .contact-page .services-heading {
+        min-height: 340px;
+        padding: 55px 25px;
+        border-radius: 14px;
+        margin-bottom: 40px;
+    }
+
+    .contact-page .services-heading h1 {
+        font-size: 37px;
+    }
+}
+
+/* END CONTACT HERO BANNER */
+

@@ -7,9 +7,16 @@ from gallery.models import GalleryImage
 from blog.models import BlogPost
 from team.models import TeamMember
 from services.models import Service
+from events.models import Event
+from django.utils import timezone
 
 
 def home(request):
+    upcoming_event = Event.objects.filter(
+        is_published=True,
+        event_date__gte=timezone.localdate()
+    ).order_by("event_date", "event_time", "display_order").first()
+
     homepage_content = HomepageContent.objects.filter(pk=1).first()
     homepage_services = Service.objects.filter(is_active=True, show_on_homepage=True)[:6]
     latest_videos = Video.objects.filter(is_published=True)[:3]
@@ -27,6 +34,7 @@ def home(request):
 
     return render(request, "core/home.html", {
         "homepage_content": homepage_content,
+        "upcoming_event": upcoming_event,
         "homepage_services": homepage_services,
         "latest_videos": latest_videos,
         "featured_gallery_images": featured_gallery_images,
@@ -45,6 +53,17 @@ def appointment(request):
 
         if form.is_valid():
             appointment_request = form.save()
+
+            from dashboard.models import DashboardNotification
+
+            DashboardNotification.objects.create(
+                appointment=appointment_request,
+                message=(
+                    f"New online appointment booking received "
+                    f"(Reference #{appointment_request.pk}). "
+                    f"Please log in to the Injabulo Clinic dashboard to view and manage it."
+                ),
+            )
 
             messages.success(
                 request,
@@ -86,3 +105,4 @@ def service_worker(request):
     response["Cache-Control"] = "no-cache"
     response["Service-Worker-Allowed"] = "/"
     return response
+

@@ -96,6 +96,77 @@
             font-size: 13px;
         }
 
+        .notification-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .notification-bell {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 44px;
+            height: 44px;
+            border: 1px solid #e9e4dc;
+            border-radius: 50%;
+            background: var(--white);
+            color: var(--teal);
+            text-decoration: none;
+            font-size: 22px;
+        }
+
+        .notification-count {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            min-width: 19px;
+            height: 19px;
+            padding: 2px 5px;
+            border-radius: 20px;
+            background: #d93636;
+            color: white;
+            font-size: 11px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .notification-panel {
+            background: var(--white);
+            border: 1px solid #e9e4dc;
+            border-radius: 10px;
+            padding: 22px;
+            margin-bottom: 30px;
+        }
+
+        .notification-panel h2 {
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+
+        .notification-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            padding: 14px 0;
+            border-top: 1px solid #eee9e2;
+        }
+
+        .notification-item p {
+            color: var(--dark);
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .notification-item a {
+            color: var(--teal);
+            font-weight: bold;
+            text-decoration: none;
+            font-size: 13px;
+            white-space: nowrap;
+        }
         .section-title {
             font-size: 18px;
             margin-bottom: 18px;
@@ -237,9 +308,37 @@
                 <p>Manage your Injabulo Clinic website from one place.</p>
             </div>
 
-            <a href="/" class="view-site" target="_blank">View Website</a>
+            <div class="notification-area">
+                <a href="#notifications" class="notification-bell" aria-label="View notifications">
+                    &#128276;
+                    {% if unread_notification_count > 0 %}
+                    <span class="notification-count">{{ unread_notification_count }}</span>
+                    {% endif %}
+                </a>
+                <a href="/" class="view-site" target="_blank">View Website</a>
+            </div>
         </header>
 
+        <section class="notification-panel" id="notifications">
+            <h2>Notifications ({{ unread_notification_count }} unread)</h2>
+
+            {% for notification in recent_notifications %}
+            <div class="notification-item">
+                <div>
+                    <p>{{ notification.message }}</p>
+                    <small>{% if notification.is_read %}Read{% else %}New{% endif %}</small>
+                </div>
+                <form method="post" action="{% url 'dashboard:notification_open' notification.pk %}">
+                    {% csrf_token %}
+                    <button type="submit" style="border:0;background:none;color:var(--teal);font-weight:bold;cursor:pointer;">
+                        Open Appointment
+                    </button>
+                </form>
+            </div>
+            {% empty %}
+            <p>No appointment notifications yet.</p>
+            {% endfor %}
+        </section>
         <h2 class="section-title">Website Overview</h2>
 
         <section class="stats">
@@ -331,6 +430,8 @@
 
 </body>
 </html>
+
+
 
 
 
