@@ -5,6 +5,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>{{ post.title }} | Injabulo Clinic</title>
+<meta name="description" content="{{ post.excerpt|striptags|truncatechars:155 }}">
+<meta name="robots" content="index, follow">
+{% url 'blog:post_detail' post.slug as post_url %}
+<link rel="canonical" href="https://injabulo-clinic-website-production.up.railway.app{{ post_url }}">
+
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Injabulo Clinic">
+<meta property="og:title" content="{{ post.title }} | Injabulo Clinic">
+<meta property="og:description" content="{{ post.excerpt|striptags|truncatechars:155 }}">
+<meta property="og:url" content="https://injabulo-clinic-website-production.up.railway.app{{ post_url }}">
+<meta property="og:image" content="{% if post.featured_image %}https://injabulo-clinic-website-production.up.railway.app{{ post.featured_image.url }}{% else %}https://injabulo-clinic-website-production.up.railway.app/static/core/images/injabulo-clinic-logo.png{% endif %}">
 <link rel="stylesheet" href="{% static 'core/css/style.css' %}">
 <style>
 * { box-sizing:border-box; }
@@ -58,4 +69,5 @@
 {% include 'core/includes/floating_whatsapp.html' %}
 </body>
 </html>
+
 

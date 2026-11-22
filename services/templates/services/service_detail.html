@@ -1,10 +1,21 @@
-﻿{% load static %}
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ service.title }} | Injabulo Clinic</title>
+    <meta name="description" content="{{ service.short_description|striptags|truncatechars:155 }}">
+    <meta name="robots" content="index, follow">
+    {% url 'services:service_detail' service.slug as service_url %}
+    <link rel="canonical" href="https://injabulo-clinic-website-production.up.railway.app{{ service_url }}">
+
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Injabulo Clinic">
+    <meta property="og:title" content="{{ service.title }} | Injabulo Clinic">
+    <meta property="og:description" content="{{ service.short_description|striptags|truncatechars:155 }}">
+    <meta property="og:url" content="https://injabulo-clinic-website-production.up.railway.app{{ service_url }}">
+    <meta property="og:image" content="https://injabulo-clinic-website-production.up.railway.app/static/core/images/injabulo-clinic-logo.png">
     <link rel="stylesheet" href="{% static 'core/css/style.css' %}">
 </head>
 <body>
