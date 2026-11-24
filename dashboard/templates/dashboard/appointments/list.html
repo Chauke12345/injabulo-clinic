@@ -1,4 +1,4 @@
-﻿{% load static %}
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -507,34 +507,98 @@
                 grid-template-columns: 1fr 1fr;
             }
         }
-    </style>
+    
+/* INJABULO APPOINTMENT LAYOUT FIX */
+.table-wrap {
+    overflow: visible !important;
+    overflow-x: visible !important;
+    overflow-y: visible !important;
+    width: 100%;
+}
+
+table {
+    width: 100% !important;
+    min-width: 0 !important;
+    table-layout: fixed;
+}
+
+th, td {
+    padding: 9px 5px !important;
+    font-size: 11px !important;
+    white-space: normal !important;
+    overflow-wrap: anywhere;
+    vertical-align: top;
+}
+
+th:nth-child(1), td:nth-child(1) { width: 5%; }
+th:nth-child(2), td:nth-child(2) { width: 10%; }
+th:nth-child(3), td:nth-child(3) { width: 8%; }
+th:nth-child(4), td:nth-child(4) { width: 8%; }
+th:nth-child(5), td:nth-child(5) { width: 12%; }
+th:nth-child(6), td:nth-child(6) { width: 8%; }
+th:nth-child(7), td:nth-child(7) { width: 8%; }
+th:nth-child(8), td:nth-child(8) { width: 6%; }
+th:nth-child(9), td:nth-child(9) { width: 10%; }
+th:nth-child(10), td:nth-child(10) { width: 7%; }
+th:nth-child(11), td:nth-child(11) { width: 18%; }
+
+.update-form {
+    min-width: 0 !important;
+    width: 100%;
+    padding: 7px !important;
+    gap: 6px !important;
+}
+
+.update-form label {
+    font-size: 10px !important;
+    margin: 0;
+}
+
+.update-form input,
+.update-form select {
+    width: 100% !important;
+    min-width: 0 !important;
+    padding: 7px 5px !important;
+    font-size: 11px !important;
+}
+
+.update-form button {
+    width: 100%;
+    min-height: 34px !important;
+    padding: 7px 4px !important;
+    font-size: 10px;
+    white-space: normal;
+}
+
+.action-links {
+    min-width: 0 !important;
+    gap: 4px;
+}
+
+.action-links a {
+    padding: 6px !important;
+    font-size: 10px !important;
+}
+
+@media (min-width: 761px) {
+    .main {
+        padding: 22px !important;
+    }
+
+    .panel {
+        padding: 16px !important;
+    }
+}
+/* END INJABULO APPOINTMENT LAYOUT FIX */
+
+</style>
 </head>
 
 <body>
 
 <div class="layout">
 
-    <aside class="sidebar">
-        <div class="brand">INJABULO CLINIC</div>
-
-        <nav>
-            <a href="{% url 'dashboard:home' %}">Dashboard</a>
-            <a href="{% url 'dashboard:service_list' %}">Services</a>
-            <a href="{% url 'dashboard:gallery_list' %}">Gallery</a>
-            <a href="{% url 'dashboard:event_list' %}">Events</a>
-            <a href="{% url 'dashboard:homepage_content_edit' %}">Homepage Content</a>
-            <a href="{% url 'dashboard:appointment_list' %}" class="active">Appointments</a>
-
-            <a href="/admin/">Administration</a>
-
-            <form method="post" action="{% url 'dashboard:logout' %}">
-                {% csrf_token %}
-                <button type="submit" style="width:100%; margin-top:20px;">
-                    Sign Out
-                </button>
-            </form>
-        </nav>
-    </aside>
+    {% include "dashboard/partials/sidebar.html" %}
 
     <main class="main">
 

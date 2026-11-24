@@ -16,7 +16,7 @@ urlpatterns = [
 
     path(
         "login/",
-        auth_views.LoginView.as_view(
+        views.RoleBasedLoginView.as_view(
             template_name="dashboard/login.html"
         ),
         name="login",
@@ -71,8 +71,13 @@ urlpatterns = [
     # Appointment management
     path("notifications/<int:pk>/open/", views.notification_open, name="notification_open"),
     path("appointments/", views.appointment_list, name="appointment_list"),
+    path("appointments/history/", views.appointment_history, name="appointment_history"),
+    path("appointments/monthly-report/", views.appointment_monthly_report, name="appointment_monthly_report"),
+    path("appointments/monthly-report/pdf/", views.appointment_monthly_report_pdf, name="appointment_monthly_report_pdf"),
     path("appointments/<int:pk>/update/", views.appointment_update, name="appointment_update"),
     path("appointments/<int:pk>/", views.appointment_detail, name="appointment_detail"),
     path("appointments/<int:pk>/mark-contacted/", views.appointment_mark_contacted, name="appointment_mark_contacted"),
 ]
+
+
 

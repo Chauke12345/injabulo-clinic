@@ -77,9 +77,26 @@
             margin-bottom: 35px;
         }
 
+        .topbar > div:first-child {
+            background: linear-gradient(110deg, #E5F2F0, #F0F7F5);
+            border-left: 5px solid #278B91;
+            border-radius: 12px;
+            padding: 20px 25px;
+            flex: 1;
+        }
+
         .topbar h1 {
-            font-size: 27px;
-            margin-bottom: 8px;
+            font-size: clamp(24px, 2.3vw, 31px);
+            font-weight: 800;
+            letter-spacing: -.6px;
+            color: #206F74;
+            margin-bottom: 9px;
+        }
+
+        .topbar p {
+            color: #527477;
+            font-size: 14px;
+            line-height: 1.6;
         }
 
         .topbar p {
@@ -269,43 +286,266 @@
                 grid-template-columns: 1fr;
             }
         }
-    </style>
+    
+        /* Injabulo Clinic dashboard refinements */
+        .sidebar {
+            position: sticky;
+            top: 0;
+            align-self: flex-start;
+            height: 100vh;
+            overflow-y: auto;
+            padding: 25px 16px;
+            box-shadow: 3px 0 18px rgba(30,70,70,.035);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            color: var(--teal);
+            margin-bottom: 35px;
+            padding: 5px 3px 22px;
+            border-bottom: 1px solid #eee9e2;
+        }
+
+        .brand img {
+            width: 48px;
+            height: 48px;
+            object-fit: contain;
+            border-radius: 10px;
+        }
+
+        .brand strong {
+            display: block;
+            font-size: 15px;
+            letter-spacing: .3px;
+        }
+
+        .brand small {
+            display: block;
+            margin-top: 5px;
+            color: var(--muted);
+            font-size: 11px;
+            font-weight: normal;
+        }
+
+        .sidebar nav a {
+            display: flex;
+            align-items: center;
+            min-height: 44px;
+            padding: 11px 13px;
+            margin-bottom: 5px;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: background .2s, color .2s, transform .2s;
+        }
+
+        .sidebar nav a:hover {
+            transform: translateX(2px);
+        }
+
+        .sidebar nav a.active {
+            background: var(--teal);
+            color: white;
+            font-weight: 700;
+            box-shadow: 0 4px 10px rgba(39,139,145,.18);
+        }
+
+        .main {
+            padding: 34px clamp(18px, 3vw, 42px);
+        }
+
+        .topbar {
+            margin-bottom: 28px;
+        }
+
+        .topbar h1 {
+            font-size: clamp(23px, 2.2vw, 30px);
+            letter-spacing: -.5px;
+        }
+
+        .notification-panel,
+        .stat-card,
+        .management-card {
+            border-radius: 13px;
+            box-shadow: 0 3px 12px rgba(40,50,40,.025);
+            transition: transform .2s, box-shadow .2s;
+        }
+
+        .stat-card {
+            position: relative;
+            min-height: 150px;
+            padding: 22px;
+        }
+
+        .stat-card:hover,
+        .management-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 9px 22px rgba(40,70,70,.08);
+        }
+
+        .stat-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 38px;
+            height: 38px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            background: #eaf5f4;
+            color: var(--teal);
+            font-size: 23px;
+        }
+
+        .stat-card span {
+            margin-bottom: 8px;
+        }
+
+        .stat-card strong {
+            font-size: 29px;
+        }
+
+        .stat-card .account-name {
+            font-size: 16px;
+            overflow-wrap: anywhere;
+        }
+
+        .account-role {
+            display: block;
+            color: var(--muted);
+            font-size: 11px;
+            margin-top: 6px;
+        }
+
+        .section-title {
+            margin-bottom: 16px;
+        }
+
+        .management-card {
+            padding: 25px;
+            min-height: 175px;
+        }
+
+        .management-card h3 {
+            color: #253c3d;
+        }
+
+        .management-card a {
+            display: inline-block;
+        }
+
+        .notification-panel {
+            scroll-margin-top: 20px;
+        }
+
+        .notification-panel > p {
+            color: var(--muted);
+            font-size: 13px;
+            padding: 12px 0 3px;
+        }
+
+        .view-site {
+            border-radius: 8px;
+            font-weight: 700;
+            transition: background .2s;
+        }
+
+        .view-site:hover {
+            background: var(--green);
+        }
+
+        @media (max-width: 1000px) {
+            .sidebar {
+                width: 220px;
+            }
+        }
+
+        @media (max-width: 650px) {
+            .sidebar {
+                position: relative;
+                height: auto;
+                width: 100%;
+                padding: 17px;
+            }
+
+            .brand {
+                margin-bottom: 16px;
+            }
+
+            .sidebar nav {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 4px;
+            }
+
+            .sidebar nav a {
+                display: inline-flex;
+                margin: 0;
+                min-height: 38px;
+                font-size: 12px;
+            }
+
+            .sidebar nav form {
+                width: 100%;
+            }
+
+            .main {
+                padding: 22px 15px;
+            }
+
+            .topbar {
+                align-items: flex-start;
+            }
+
+            .notification-area {
+                width: 100%;
+                justify-content: flex-end;
+            }
+
+            .stats,
+            .management-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 12px;
+            }
+
+            .stat-card,
+            .management-card {
+                padding: 17px;
+                min-height: auto;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .stats,
+            .management-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+    
+        .stat-icon svg {
+            width: 23px;
+            height: 23px;
+            fill: none;
+            stroke: var(--teal);
+            stroke-width: 1.8;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+\n    </style>
 </head>
 <body>
 
 <div class="layout">
 
-    <aside class="sidebar">
-        <div class="brand">INJABULO CLINIC</div>
-
-        <nav>
-            <a href="{% url 'dashboard:home' %}" class="active">Dashboard</a>
-            <a href="{% url 'dashboard:service_list' %}">Services</a>
-            <a href="{% url 'dashboard:gallery_list' %}">Gallery</a>
-            <a href="{% url 'dashboard:video_list' %}">Health Videos</a>
-            <a href="{% url 'dashboard:event_list' %}">Events</a>
-            <a href="{% url 'dashboard:homepage_content_edit' %}">Homepage Content</a>
-            <a href="{% url 'dashboard:appointment_list' %}">Appointment Management</a>
-              <a href="{% url 'dashboard:corporate_enquiry_list' %}">Corporate Enquiries</a>
-            <a href="{% url 'dashboard:blog_list' %}">Health & Wellness Blog</a>
-            
-            <a href="{% url 'dashboard:team_list' %}">Meet Our Team</a>
-            {% if request.user.is_superuser %}<a href="/admin/">Administration</a>{% endif %}
-                    <form method="post" action="{% url 'dashboard:logout' %}" style="margin-top: 25px;">
-                {% csrf_token %}
-                <button type="submit" name="logout" style="width:100%; padding:13px; border:0; border-radius:7px; background:#f7f2e9; color:#292929; font-weight:700; cursor:pointer;">
-                    Sign Out
-                </button>
-            </form>
-        </nav>
-    </aside>
+    {% include "dashboard/partials/sidebar.html" %}
 
     <main class="main">
 
         <header class="topbar">
             <div>
-                <h1>Welcome to your dashboard</h1>
-                <p>Manage your Injabulo Clinic website from one place.</p>
+                <h1>Welcome back, {{ request.user.username }}</h1>
+                <p>Here is your Injabulo Clinic management overview.</p>
             </div>
 
             <div class="notification-area">
@@ -343,23 +583,30 @@
 
         <section class="stats">
             <article class="stat-card">
+                <div class="stat-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h4l3-8 4 16 3-8h4"/></svg></div>
                 <span>Clinic Services</span>
                 <strong>{{ total_services }}</strong>
             </article>
 
             <article class="stat-card">
+                <div class="stat-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8.5" cy="9" r="1.5"/><path d="m21 15-5-5L5 20"/></svg></div>
                 <span>Gallery Images</span>
                 <strong>{{ total_gallery }}</strong>
             </article>
 
             <article class="stat-card">
+                <div class="stat-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18M8 14h2M14 14h2"/></svg></div>
                 <span>Published Events</span>
                 <strong>{{ total_events }}</strong>
             </article>
 
             <article class="stat-card">
-                <span>Administrator</span>
-                <strong style="font-size: 16px;">{{ request.user.username }}</strong>
+                <div class="stat-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></div>
+                <span>Signed-in Account</span>
+                <strong class="account-name">{{ request.user.username }}</strong>
+                <small class="account-role">
+                    {% if request.user.is_superuser %}Administrator{% else %}Clinic Staff{% endif %}
+                </small>
             </article>
         </section>
 
@@ -370,13 +617,13 @@
             <article class="management-card">
                 <h3>Manage Services</h3>
                 <p>Add, edit and update the healthcare services displayed on your website.</p>
-                <a href="{% url 'dashboard:service_list' %}">Manage Services ?</a>
+                <a href="{% url 'dashboard:service_list' %}">Manage Services</a>
             </article>
 
             <article class="management-card">
                 <h3>Manage Gallery</h3>
                 <p>Upload clinic photographs and control which images appear publicly.</p>
-                <a href="{% url 'dashboard:gallery_list' %}">Manage Gallery ?</a>
+                <a href="{% url 'dashboard:gallery_list' %}">Manage Gallery</a>
             </article>
 
             <article class="management-card">
@@ -388,7 +635,7 @@
             <article class="management-card">
                 <h3>Events & Announcements</h3>
                 <p>Publish clinic events, community outreach and health campaigns.</p>
-                <a href="{% url 'dashboard:event_list' %}">Manage Events ?</a>
+                <a href="{% url 'dashboard:event_list' %}">Manage Events</a>
             </article>
 
             <article class="management-card">
@@ -420,7 +667,7 @@
             <article class="management-card">
                 <h3>Public Website</h3>
                 <p>Preview the live-facing clinic website.</p>
-                <a href="/" target="_blank">Open Website ?</a>
+                <a href="/" target="_blank">Open Website</a>
             </article>
 
         </section>

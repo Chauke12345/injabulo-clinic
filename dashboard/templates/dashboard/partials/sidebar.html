@@ -1,0 +1,274 @@
+{% load static %}
+
+<style>
+    .clinic-sidebar {
+        box-sizing: border-box;
+        width: 260px;
+        min-width: 260px;
+        flex: 0 0 260px;
+        min-height: 100vh;
+        height: 100vh;
+        position: sticky;
+        top: 0;
+        align-self: flex-start;
+        overflow-y: auto;
+        background: #ffffff;
+        border-right: 1px solid #e5eeeb;
+        box-shadow: 3px 0 18px rgba(30,70,70,.035);
+        padding: 24px 16px;
+        display: flex;
+        flex-direction: column;
+        z-index: 20;
+    }
+
+    .clinic-sidebar-brand {
+        display: flex;
+        align-items: center;
+        gap: 11px;
+        padding: 0 5px 24px;
+        margin-bottom: 18px;
+        border-bottom: 1px solid #edf1ef;
+    }
+
+    .clinic-sidebar-brand img {
+        width: 52px;
+        height: 52px;
+        object-fit: contain;
+        flex-shrink: 0;
+    }
+
+    .clinic-sidebar-brand strong {
+        display: block;
+        color: #278B91;
+        font-size: 15px;
+        letter-spacing: .4px;
+    }
+
+    .clinic-sidebar-brand small {
+        display: block;
+        margin-top: 4px;
+        color: #82918c;
+        font-size: 11px;
+    }
+
+    .clinic-sidebar-label {
+        padding: 10px 12px 7px;
+        color: #91a09a;
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 1.2px;
+        text-transform: uppercase;
+    }
+
+    .clinic-sidebar nav {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .clinic-sidebar nav a {
+        display: flex;
+        align-items: center;
+        min-height: 43px;
+        padding: 10px 12px;
+        border-radius: 8px;
+        color: #465650;
+        text-decoration: none;
+        font-size: 13px;
+        font-weight: 500;
+        transition: background .2s, color .2s;
+    }
+
+    .clinic-sidebar nav a:hover {
+        background: #edf7f6;
+        color: #278B91;
+    }
+
+    .clinic-sidebar nav a.active {
+        background: #278B91;
+        color: #ffffff;
+        font-weight: 700;
+        box-shadow: 0 4px 10px rgba(39,139,145,.15);
+    }
+
+    .clinic-sidebar-bottom {
+        margin-top: auto;
+        padding-top: 18px;
+        border-top: 1px solid #edf1ef;
+    }
+
+    .clinic-sidebar-bottom form {
+        margin: 0;
+    }
+
+    .clinic-sidebar-logout {
+        width: 100%;
+        padding: 12px;
+        border: 0;
+        border-radius: 8px;
+        background: #fff1f0;
+        color: #b54d46;
+        font-size: 13px;
+        font-weight: 700;
+        cursor: pointer;
+    }
+
+    .clinic-sidebar-logout:hover {
+        background: #fce2df;
+    }
+
+    @media (max-width: 760px) {
+        .clinic-sidebar {
+            width: 100%;
+            min-width: 0;
+            min-height: auto;
+            height: auto;
+            position: relative;
+            padding: 14px;
+            overflow: visible;
+        }
+
+        .clinic-sidebar-brand {
+            padding-bottom: 12px;
+            margin-bottom: 8px;
+        }
+
+        .clinic-sidebar-brand img {
+            width: 42px;
+            height: 42px;
+        }
+
+        .clinic-sidebar nav {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 5px;
+        }
+
+        .clinic-sidebar nav a {
+            min-height: 40px;
+            padding: 9px;
+            font-size: 12px;
+        }
+
+        .clinic-sidebar-label {
+            padding-left: 4px;
+        }
+
+        .clinic-sidebar-bottom {
+            margin-top: 12px;
+            padding-top: 10px;
+        }
+    }
+
+/* INJABULO SIDEBAR SCROLLBAR FIX */
+@media (min-width: 761px) {
+    .clinic-sidebar {
+        height: auto !important;
+        min-height: 100vh;
+        position: relative !important;
+        top: auto !important;
+        align-self: stretch;
+        overflow: visible !important;
+    }
+}
+/* END INJABULO SIDEBAR SCROLLBAR FIX */
+
+</style>
+
+<aside class="clinic-sidebar">
+    <div class="clinic-sidebar-brand">
+        <img src="{% static 'core/images/injabulo-clinic-logo.png' %}"
+             alt="Injabulo Clinic Logo">
+        <div>
+            <strong>INJABULO CLINIC</strong>
+            <small>Management Portal</small>
+        </div>
+    </div>
+
+    <div class="clinic-sidebar-label">Main Menu</div>
+
+    <nav>
+        <a href="{% url 'dashboard:home' %}"
+           class="{% if request.resolver_match.url_name == 'home' %}active{% endif %}">
+            Dashboard
+        </a>
+
+        <a href="{% url 'dashboard:service_list' %}"
+           class="{% if request.resolver_match.url_name == 'service_list' or request.resolver_match.url_name == 'service_create' or request.resolver_match.url_name == 'service_edit' %}active{% endif %}">
+            Services
+        </a>
+
+        <a href="{% url 'dashboard:gallery_list' %}"
+           class="{% if request.resolver_match.url_name == 'gallery_list' or request.resolver_match.url_name == 'gallery_create' or request.resolver_match.url_name == 'gallery_edit' %}active{% endif %}">
+            Gallery
+        </a>
+
+        <a href="{% url 'dashboard:event_list' %}"
+           class="{% if request.resolver_match.url_name == 'event_list' or request.resolver_match.url_name == 'event_create' or request.resolver_match.url_name == 'event_edit' %}active{% endif %}">
+            Events
+        </a>
+
+        <a href="{% url 'dashboard:video_list' %}"
+           class="{% if request.resolver_match.url_name == 'video_list' or request.resolver_match.url_name == 'video_create' or request.resolver_match.url_name == 'video_edit' %}active{% endif %}">
+            Health Videos
+        </a>
+
+        <a href="{% url 'dashboard:homepage_content_edit' %}"
+           class="{% if request.resolver_match.url_name == 'homepage_content_edit' %}active{% endif %}">
+            Homepage Content
+        </a>
+
+        <div class="clinic-sidebar-label">Patient Management</div>
+
+        <a href="{% url 'dashboard:appointment_list' %}"
+           class="{% if request.resolver_match.url_name == 'appointment_list' or request.resolver_match.url_name == 'appointment_detail' or request.resolver_match.url_name == 'appointment_update' or request.resolver_match.url_name == 'appointment_mark_contacted' %}active{% endif %}">
+            Appointments
+        </a>
+
+        <a href="{% url 'dashboard:appointment_history' %}"
+           class="{% if request.resolver_match.url_name == 'appointment_history' %}active{% endif %}">
+            Appointment History
+        </a>
+
+        <a href="{% url 'dashboard:appointment_monthly_report' %}"
+           class="{% if request.resolver_match.url_name == 'appointment_monthly_report' or request.resolver_match.url_name == 'appointment_monthly_report_pdf' %}active{% endif %}">
+            Monthly Reports
+        </a>
+
+        <div class="clinic-sidebar-label">Business Management</div>
+
+        <a href="{% url 'dashboard:corporate_enquiry_list' %}"
+           class="{% if request.resolver_match.url_name == 'corporate_enquiry_list' or request.resolver_match.url_name == 'corporate_enquiry_update' %}active{% endif %}">
+            Corporate Enquiries
+        </a>
+
+        <a href="{% url 'dashboard:corporate_quotation_list' %}"
+           class="{% if request.resolver_match.url_name == 'corporate_quotation_list' or request.resolver_match.url_name == 'corporate_quotation_create' or request.resolver_match.url_name == 'corporate_quotation_pdf' or request.resolver_match.url_name == 'corporate_quotation_update_status' %}active{% endif %}">
+            Corporate Quotations
+        </a>
+
+        <a href="{% url 'dashboard:blog_list' %}"
+           class="{% if request.resolver_match.url_name == 'blog_list' or request.resolver_match.url_name == 'blog_create' or request.resolver_match.url_name == 'blog_edit' %}active{% endif %}">
+            Health & Wellness Blog
+        </a>
+
+        <a href="{% url 'dashboard:team_list' %}"
+           class="{% if request.resolver_match.url_name == 'team_list' or request.resolver_match.url_name == 'team_create' or request.resolver_match.url_name == 'team_edit' %}active{% endif %}">
+            Meet Our Team
+        </a>
+
+        {% if request.user.is_superuser %}
+        <div class="clinic-sidebar-label">Administration</div>
+        <a href="/admin/">Administration</a>
+        {% endif %}
+    </nav>
+
+    <div class="clinic-sidebar-bottom">
+        <form method="post" action="{% url 'dashboard:logout' %}">
+            {% csrf_token %}
+            <button type="submit" class="clinic-sidebar-logout">
+                Sign Out
+            </button>
+        </form>
+    </div>
+</aside>

@@ -1,65 +1,118 @@
+﻿{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Owner Login | Injabulo Clinic</title>
+    <title>Staff & Administrator Login | Injabulo Clinic</title>
+
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
         body {
             min-height: 100vh;
-            display: grid;
-            place-items: center;
-            padding: 20px;
             background: #F7F2E9;
             font-family: Arial, sans-serif;
             color: #292929;
         }
 
-        .login-card {
+        .top-bar {
             width: 100%;
-            max-width: 430px;
-            padding: 42px;
-            background: #fff;
-            border-radius: 12px;
-            box-shadow: 0 12px 40px rgba(0,0,0,.07);
+            min-height: 115px;
+            background: #278B91;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 18px 25px;
+            text-align: center;
+            box-shadow: 0 3px 12px rgba(0,0,0,.12);
         }
 
         .brand {
-            color: #278B91;
-            font-size: 22px;
-            font-weight: 700;
-            text-align: center;
-            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 18px;
         }
 
-        h1 {
+        .brand img {
+            width: 76px;
+            height: 76px;
+            object-fit: contain;
+            background: white;
+            border-radius: 50%;
+            padding: 5px;
+        }
+
+        .brand-text {
+            color: white;
+            text-align: left;
+        }
+
+        .brand-text h1 {
+            font-size: 23px;
+            letter-spacing: 1px;
+            margin-bottom: 7px;
+        }
+
+        .brand-text p {
+            font-size: 13px;
+            letter-spacing: 1.5px;
+        }
+
+        .page-content {
+            min-height: calc(100vh - 115px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 45px 20px;
+        }
+
+        .login-card {
+            width: 100%;
+            max-width: 440px;
+            padding: 42px;
+            background: white;
+            border-radius: 13px;
+            box-shadow: 0 12px 40px rgba(0,0,0,.08);
+        }
+
+        .login-heading {
             text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .login-heading h2 {
             font-size: 25px;
             margin-bottom: 10px;
+            color: #292929;
         }
 
-        .intro {
-            color: #777;
-            text-align: center;
+        .login-heading p {
             font-size: 14px;
-            margin-bottom: 30px;
+            line-height: 1.6;
+            color: #777;
         }
 
         label {
             display: block;
             font-size: 13px;
             font-weight: 700;
-            margin: 18px 0 8px;
+            margin: 19px 0 8px;
         }
 
         input {
             width: 100%;
             padding: 14px;
             border: 1px solid #D8DEDE;
-            border-radius: 6px;
+            border-radius: 7px;
             font-size: 15px;
+            background: #fff;
         }
 
         input:focus {
@@ -69,18 +122,21 @@
 
         button {
             width: 100%;
-            margin-top: 25px;
+            margin-top: 27px;
             padding: 15px;
-            border: 0;
-            border-radius: 6px;
+            border: none;
+            border-radius: 7px;
             background: #278B91;
             color: white;
             font-size: 15px;
             font-weight: 700;
             cursor: pointer;
+            transition: background .2s;
         }
 
-        button:hover { background: #206F74; }
+        button:hover {
+            background: #206F74;
+        }
 
         .error {
             margin-top: 15px;
@@ -99,47 +155,126 @@
             text-decoration: none;
             font-size: 13px;
         }
+
+        .back:hover {
+            text-decoration: underline;
+        }
+
+        .footer {
+            margin-top: 30px;
+            text-align: center;
+            color: #888;
+            font-size: 12px;
+        }
+
+        @media (max-width: 480px) {
+            .top-bar {
+                min-height: 100px;
+                padding: 14px;
+            }
+
+            .brand {
+                gap: 12px;
+            }
+
+            .brand img {
+                width: 60px;
+                height: 60px;
+            }
+
+            .brand-text h1 {
+                font-size: 17px;
+            }
+
+            .brand-text p {
+                font-size: 10px;
+            }
+
+            .login-card {
+                padding: 30px 23px;
+            }
+
+            .login-heading h2 {
+                font-size: 22px;
+            }
+        }
     </style>
 </head>
+
 <body>
-    <main class="login-card">
-        <div class="brand">INJABULO CLINIC</div>
-        <h1>Owner Login</h1>
-        <p class="intro">Sign in to manage your clinic website.</p>
 
-        <form method="post">
-            {% csrf_token %}
-            <input type="hidden" name="next" value="{{ next }}">
-
-            <label for="id_username">Username</label>
-            <input
-                type="text"
-                name="username"
-                id="id_username"
-                autocomplete="username"
-                required
-                autofocus
+    <header class="top-bar">
+        <div class="brand">
+            <img
+                src="{% static 'core/images/injabulo-clinic-logo.png' %}"
+                alt="Injabulo Clinic Logo"
             >
+            <div class="brand-text">
+                <h1>INJABULO CLINIC</h1>
+                <p>STAFF & ADMINISTRATOR PORTAL</p>
+            </div>
+        </div>
+    </header>
 
-            <label for="id_password">Password</label>
-            <input
-                type="password"
-                name="password"
-                id="id_password"
-                autocomplete="current-password"
-                required
-            >
+    <main class="page-content">
 
-            {% if form.errors %}
-                <div class="error">
-                    The username or password is incorrect. Please try again.
-                </div>
-            {% endif %}
+        <section class="login-card">
 
-            <button type="submit">Sign In</button>
-        </form>
+            <div class="login-heading">
+                <h2>Welcome Back</h2>
+                <p>
+                    Sign in securely to access your
+                    Injabulo Clinic dashboard.
+                </p>
+            </div>
 
-        <a class="back" href="/">Return to public website</a>
+            <form method="post">
+                {% csrf_token %}
+
+                <input type="hidden" name="next" value="{{ next }}">
+
+                <label for="id_username">Username</label>
+                <input
+                    type="text"
+                    name="username"
+                    id="id_username"
+                    autocomplete="username"
+                    placeholder="Enter your username"
+                    required
+                    autofocus
+                >
+
+                <label for="id_password">Password</label>
+                <input
+                    type="password"
+                    name="password"
+                    id="id_password"
+                    autocomplete="current-password"
+                    placeholder="Enter your password"
+                    required
+                >
+
+                {% if form.errors %}
+                    <div class="error">
+                        The username or password is incorrect.
+                        Please try again.
+                    </div>
+                {% endif %}
+
+                <button type="submit">SIGN IN</button>
+            </form>
+
+            <a class="back" href="/">
+                Return to Public Website
+            </a>
+
+        </section>
+
+        <div class="footer">
+            © {{ now|date:"Y" }} Injabulo Clinic. All rights reserved.
+        </div>
+
     </main>
+
 </body>
 </html>

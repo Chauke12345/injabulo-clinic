@@ -1,4 +1,5 @@
 ﻿from django.contrib import messages
+from django.contrib.auth.views import LoginView
 
 from blog.models import BlogPost, BlogCategory
 from blog.forms import BlogPostForm, BlogCategoryForm
@@ -38,6 +39,13 @@ from videos.models import Video
 from videos.forms import VideoForm
 from corporate.models import CorporateEnquiry, CorporateQuotation, CorporateQuotationItem
 from corporate.forms import CorporateQuotationForm, CorporateQuotationItemForm
+
+
+class RoleBasedLoginView(LoginView):
+    def get_success_url(self):
+        if self.request.user.is_superuser:
+            return "/admin/"
+        return "/dashboard/"
 
 
 def staff_required(view_func):
@@ -394,6 +402,68 @@ def homepage_content_edit(request):
 # APPOINTMENT MANAGEMENT
 # --------------------------------------------------
 
+def _appointment_whatsapp_url(appointment):
+    from urllib.parse import quote
+    from core.models import Appointment
+
+    phone = "".join(
+        character
+        for character in appointment.contact_number
+        if character.isdigit()
+    )
+
+    if phone.startswith("0"):
+        phone = "27" + phone[1:]
+
+    if len(phone) < 10:
+        return ""
+
+    flower = "\U0001F338"
+    calendar = "\U0001F4C5"
+    clock = "\U0001F552"
+    bookmark = "\U0001F516"
+    phone_icon = "\U0001F4DE"
+
+    if (
+        appointment.status in [
+            Appointment.Status.CONFIRMED,
+            Appointment.Status.RESCHEDULED,
+        ]
+        and appointment.confirmed_date
+        and appointment.confirmed_time
+    ):
+        message = (
+            f"Good day, {appointment.patient_name}! {flower}\n\n"
+            "Thank you for booking with Injabulo Clinic.\n\n"
+            "We are pleased to confirm that your appointment "
+            "has been successfully booked.\n\n"
+            f"{calendar} Appointment date: "
+            f"{appointment.confirmed_date.strftime('%d %b %Y')}\n"
+            f"{clock} Appointment time: "
+            f"{appointment.confirmed_time.strftime('%H:%M')}\n"
+            f"{bookmark} Booking reference: #{appointment.pk}\n\n"
+            "We look forward to welcoming you to our clinic "
+            "and providing you with quality care.\n\n"
+            "Thank you for choosing Injabulo Clinic.\n\n"
+            "Kind regards,\n"
+            "Injabulo Clinic Team\n"
+            f"{phone_icon} 012 800 1903"
+        )
+    else:
+        message = (
+            f"Good day, {appointment.patient_name}! {flower}\n\n"
+            "Thank you for booking with Injabulo Clinic.\n\n"
+            "We have successfully received your appointment request.\n"
+            f"Booking reference: #{appointment.pk}\n\n"
+            "Our team will review your booking and contact you "
+            "regarding your appointment confirmation.\n\n"
+            "Thank you for choosing Injabulo Clinic.\n"
+            f"{phone_icon} 012 800 1903"
+        )
+
+    return f"https://wa.me/{phone}?text={quote(message, safe='')}"
+
+
 @staff_required
 def appointment_list(request):
     from django.db.models import Q
@@ -432,47 +502,10 @@ def appointment_list(request):
             confirmed_date__gte=timezone.localdate(),
         )
 
-    from urllib.parse import quote
-
     appointments = appointments.order_by("-created_at")
 
     for appointment in appointments:
-        phone = "".join(
-            character
-            for character in appointment.contact_number
-            if character.isdigit()
-        )
-
-        if phone.startswith("0"):
-            phone = "27" + phone[1:]
-
-        if appointment.status in [
-            Appointment.Status.CONFIRMED,
-            Appointment.Status.RESCHEDULED,
-        ] and appointment.confirmed_date:
-            message = (
-                f"Hello. Regarding your clinic appointment "
-                f"reference #{appointment.pk}, your appointment "
-                f"is scheduled for {appointment.confirmed_date}."
-            )
-
-            if appointment.confirmed_time:
-                message += (
-                    f" Time: {appointment.confirmed_time.strftime('%H:%M')}."
-                )
-        else:
-            message = (
-                f"Hello. We are contacting you regarding "
-                f"your clinic appointment request "
-                f"reference #{appointment.pk}. Please contact "
-                f"the clinic when convenient."
-            )
-
-        appointment.whatsapp_url = (
-            f"https://wa.me/{phone}?text={quote(message)}"
-            if len(phone) >= 10
-            else ""
-        )
+        appointment.whatsapp_url = _appointment_whatsapp_url(appointment)
 
     context = {
         "appointments": appointments,
@@ -545,10 +578,10 @@ def appointment_update(request, pk):
     if status in [
         Appointment.Status.CONFIRMED,
         Appointment.Status.RESCHEDULED,
-    ] and not confirmed_date:
+    ] and (not confirmed_date or not confirmed_time):
         messages.error(
             request,
-            "A confirmed appointment date is required."
+            "Please enter both the confirmed appointment date and time."
         )
         return redirect("dashboard:appointment_list")
 
@@ -583,7 +616,10 @@ def appointment_detail(request, pk):
     return render(
         request,
         "dashboard/appointments/detail.html",
-        {"appointment": appointment}
+        {
+            "appointment": appointment,
+            "whatsapp_url": _appointment_whatsapp_url(appointment),
+        }
     )
 
 
@@ -1281,3 +1317,344 @@ def notification_open(request, pk):
         "dashboard:appointment_detail",
         pk=notification.appointment_id,
     )
+
+# --------------------------------------------------
+# APPOINTMENT HISTORY AND MONTHLY REPORTS
+# --------------------------------------------------
+
+from datetime import date
+from django.db.models import Count
+from django.utils import timezone
+
+
+
+
+@staff_required
+def appointment_monthly_report_pdf(request):
+    from core.models import Appointment
+    from xml.sax.saxutils import escape
+
+    today = timezone.localdate()
+
+    try:
+        year = int(request.GET.get("year", today.year))
+        month = int(request.GET.get("month", today.month))
+
+        if month < 1 or month > 12 or year < 2000 or year > today.year:
+            raise ValueError
+    except (TypeError, ValueError):
+        year = today.year
+        month = today.month
+
+    start_date = date(year, month, 1)
+
+    if month == 12:
+        next_month = date(year + 1, 1, 1)
+    else:
+        next_month = date(year, month + 1, 1)
+
+    appointments = Appointment.objects.filter(
+        preferred_date__gte=start_date,
+        preferred_date__lt=next_month,
+    )
+
+    status_counts = {
+        value: appointments.filter(status=value).count()
+        for value, label in Appointment.Status.choices
+    }
+
+    contacted = appointments.filter(
+        communication_status=Appointment.CommunicationStatus.CONTACTED
+    ).count()
+
+    not_contacted = appointments.filter(
+        communication_status=Appointment.CommunicationStatus.NOT_CONTACTED
+    ).count()
+
+    service_counts = (
+        appointments
+        .values("service__title")
+        .annotate(total=Count("id"))
+        .order_by("-total", "service__title")
+    )
+
+    response = HttpResponse(content_type="application/pdf")
+    response["Content-Disposition"] = (
+        f'attachment; filename="Injabulo_Appointment_Report_{year}_{month:02d}.pdf"'
+    )
+
+    buffer = BytesIO()
+
+    document = SimpleDocTemplate(
+        buffer,
+        pagesize=A4,
+        rightMargin=18 * mm,
+        leftMargin=18 * mm,
+        topMargin=15 * mm,
+        bottomMargin=18 * mm,
+    )
+
+    styles = getSampleStyleSheet()
+    teal = colors.HexColor("#278B91")
+    dark = colors.HexColor("#292929")
+    muted = colors.HexColor("#666666")
+
+    styles.add(ParagraphStyle(
+        name="AppointmentClinicTitle",
+        parent=styles["Title"],
+        textColor=teal,
+        fontSize=22,
+        leading=27,
+        alignment=0,
+        spaceAfter=5,
+    ))
+
+    styles.add(ParagraphStyle(
+        name="AppointmentSmall",
+        parent=styles["Normal"],
+        fontSize=8.5,
+        leading=12,
+        textColor=muted,
+    ))
+
+    story = []
+
+    logo_path = (
+        Path(settings.BASE_DIR)
+        / "core" / "static" / "core" / "images"
+        / "injabulo-clinic-logo.png"
+    )
+
+    if logo_path.exists():
+        logo = Image(str(logo_path), width=38 * mm, height=25 * mm)
+        logo.hAlign = "LEFT"
+        story.append(logo)
+
+    story.append(Paragraph(
+        "INJABULO CLINIC",
+        styles["AppointmentClinicTitle"]
+    ))
+
+    story.append(Paragraph(
+        "18 Stapelberg Ave, East Lynne, Pretoria, 0186<br/>"
+        "Telephone: 012 800 1903 | WhatsApp: 079 399 6635<br/>"
+        "Email: injabuloclinics@gmail.com",
+        styles["AppointmentSmall"],
+    ))
+
+    story.append(Spacer(1, 8 * mm))
+
+    story.append(Paragraph(
+        "MONTHLY APPOINTMENT REPORT",
+        styles["Heading1"]
+    ))
+
+    story.append(Paragraph(
+        f"Reporting period: {start_date.strftime('%B %Y')}",
+        styles["Heading2"]
+    ))
+
+    story.append(Paragraph(
+        f"Generated: {timezone.localtime().strftime('%d %B %Y, %H:%M')}",
+        styles["AppointmentSmall"]
+    ))
+
+    story.append(Spacer(1, 6 * mm))
+
+    summary = [
+        ["APPOINTMENT STATISTICS", "TOTAL"],
+        ["Total Requests", appointments.count()],
+        ["Pending", status_counts.get("pending", 0)],
+        ["Confirmed", status_counts.get("confirmed", 0)],
+        ["Rescheduled", status_counts.get("rescheduled", 0)],
+        ["Completed", status_counts.get("completed", 0)],
+        ["Declined", status_counts.get("declined", 0)],
+        ["Patients Contacted", contacted],
+        ["Not Contacted", not_contacted],
+    ]
+
+    summary_table = Table(summary, colWidths=[115 * mm, 45 * mm])
+
+    summary_table.setStyle(TableStyle([
+        ("BACKGROUND", (0, 0), (-1, 0), teal),
+        ("TEXTCOLOR", (0, 0), (-1, 0), colors.white),
+        ("FONTNAME", (0, 0), (-1, 0), "Helvetica-Bold"),
+        ("FONTNAME", (0, 1), (-1, -1), "Helvetica"),
+        ("TEXTCOLOR", (0, 1), (-1, -1), dark),
+        ("FONTSIZE", (0, 0), (-1, -1), 9),
+        ("GRID", (0, 0), (-1, -1), 0.4, colors.HexColor("#DDDDDD")),
+        ("ROWBACKGROUNDS", (0, 1), (-1, -1),
+         [colors.white, colors.HexColor("#F3F7F5")]),
+        ("TOPPADDING", (0, 0), (-1, -1), 8),
+        ("BOTTOMPADDING", (0, 0), (-1, -1), 8),
+        ("ALIGN", (1, 1), (1, -1), "CENTER"),
+    ]))
+
+    story.append(summary_table)
+    story.append(Spacer(1, 10 * mm))
+
+    story.append(Paragraph("SERVICES BOOKED", styles["Heading2"]))
+
+    service_data = [["Clinic Service", "Appointment Requests"]]
+
+    for item in service_counts:
+        service_name = escape(item["service__title"] or "Unspecified")
+        service_data.append([service_name, item["total"]])
+
+    if len(service_data) == 1:
+        service_data.append(["No service bookings recorded", 0])
+
+    service_table = Table(
+        service_data,
+        colWidths=[115 * mm, 45 * mm],
+        repeatRows=1,
+    )
+
+    service_table.setStyle(TableStyle([
+        ("BACKGROUND", (0, 0), (-1, 0), teal),
+        ("TEXTCOLOR", (0, 0), (-1, 0), colors.white),
+        ("FONTNAME", (0, 0), (-1, 0), "Helvetica-Bold"),
+        ("FONTSIZE", (0, 0), (-1, -1), 9),
+        ("GRID", (0, 0), (-1, -1), 0.4, colors.HexColor("#DDDDDD")),
+        ("ROWBACKGROUNDS", (0, 1), (-1, -1),
+         [colors.white, colors.HexColor("#F3F7F5")]),
+        ("TOPPADDING", (0, 0), (-1, -1), 8),
+        ("BOTTOMPADDING", (0, 0), (-1, -1), 8),
+    ]))
+
+    story.append(service_table)
+    story.append(Spacer(1, 10 * mm))
+
+    story.append(Paragraph(
+        "Confidential clinic management report.",
+        styles["AppointmentSmall"]
+    ))
+
+    document.build(story)
+
+    pdf = buffer.getvalue()
+    buffer.close()
+
+    response.write(pdf)
+    return response
+
+
+@staff_required
+def appointment_history(request):
+    from core.models import Appointment
+
+    appointments = Appointment.objects.select_related("service").all()
+
+    search = request.GET.get("q", "").strip()
+    status = request.GET.get("status", "").strip()
+
+    if search:
+        appointments = appointments.filter(
+            patient_name__icontains=search
+        ) | appointments.filter(
+            contact_number__icontains=search
+        ) | appointments.filter(
+            service__title__icontains=search
+        )
+
+    valid_statuses = dict(Appointment.Status.choices)
+    if status in valid_statuses:
+        appointments = appointments.filter(status=status)
+    else:
+        status = ""
+
+    appointments = appointments.order_by(
+        "-preferred_date", "-preferred_time", "-created_at"
+    )
+
+    return render(
+        request,
+        "dashboard/appointments/history.html",
+        {
+            "appointments": appointments,
+            "search": search,
+            "selected_status": status,
+            "history_count": appointments.count(),
+        },
+    )
+
+
+@staff_required
+def appointment_monthly_report(request):
+    from core.models import Appointment
+
+    today = timezone.localdate()
+
+    try:
+        year = int(request.GET.get("year", today.year))
+        month = int(request.GET.get("month", today.month))
+
+        if month < 1 or month > 12 or year < 2000 or year > today.year:
+            raise ValueError
+
+    except (TypeError, ValueError):
+        year = today.year
+        month = today.month
+
+    start_date = date(year, month, 1)
+
+    if month == 12:
+        next_month = date(year + 1, 1, 1)
+    else:
+        next_month = date(year, month + 1, 1)
+
+    monthly_appointments = Appointment.objects.filter(
+        preferred_date__gte=start_date,
+        preferred_date__lt=next_month,
+    )
+
+    status_counts = {
+        value: monthly_appointments.filter(status=value).count()
+        for value, label in Appointment.Status.choices
+    }
+
+    service_counts = (
+        monthly_appointments
+        .values("service__title")
+        .annotate(total=Count("id"))
+        .order_by("-total", "service__title")
+    )
+
+    month_choices = [
+        (number, date(2000, number, 1).strftime("%B"))
+        for number in range(1, 13)
+    ]
+
+    context = {
+        "selected_year": year,
+        "selected_month": month,
+        "month_name": start_date.strftime("%B"),
+        "month_choices": month_choices,
+        "total_appointments": monthly_appointments.count(),
+        "pending_appointments": status_counts.get("pending", 0),
+        "confirmed_appointments": status_counts.get("confirmed", 0),
+        "rescheduled_appointments": status_counts.get("rescheduled", 0),
+        "declined_appointments": status_counts.get("declined", 0),
+        "completed_appointments": status_counts.get("completed", 0),
+        "contacted_appointments": monthly_appointments.filter(
+            communication_status=Appointment.CommunicationStatus.CONTACTED
+        ).count(),
+        "not_contacted_appointments": monthly_appointments.filter(
+            communication_status=Appointment.CommunicationStatus.NOT_CONTACTED
+        ).count(),
+        "service_counts": service_counts,
+        "available_years": range(
+            today.year, max(2000, today.year - 10) - 1, -1
+        ),
+    }
+
+    return render(
+        request,
+        "dashboard/appointments/monthly_report.html",
+        context,
+    )
+
+
+from datetime import date
+from django.db.models import Count
+from django.utils import timezone

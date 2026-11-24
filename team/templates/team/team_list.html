@@ -1,4 +1,4 @@
-{% load static %}
+﻿{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,39 +7,264 @@
 <title>Meet a Few of Our Team Members | Injabulo Clinic</title>
 <link rel="stylesheet" href="{% static 'core/css/style.css' %}">
 <style>
-* { box-sizing:border-box; }
-body { margin:0; background:#F7F2E9; color:#444; }
-.team-page { min-height:75vh; padding:65px 20px; }
-.team-container { max-width:1150px; margin:auto; }
-.team-heading { text-align:center; margin-bottom:42px; }
-.team-heading h1 { color:#206F74; font-size:clamp(30px,5vw,44px); margin-bottom:12px; }
-.team-heading p { max-width:680px; margin:auto; line-height:1.8; }
-.team-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:28px; }
-.team-card { background:white; border-radius:15px; overflow:hidden; box-shadow:0 5px 20px rgba(0,0,0,.07); }
-.team-photo { width:100%; height:280px; object-fit:cover; display:block; background:#e8eeee; }
-.team-placeholder { height:280px; display:flex; align-items:center; justify-content:center; background:#e8eeee; color:#206F74; font-size:55px; }
-.team-details { padding:24px; }
-.team-details h2 { color:#206F74; font-size:22px; margin:0 0 8px; }
-.team-role { color:#278B91; font-weight:bold; margin-bottom:12px; }
-.team-qualifications { font-size:14px; font-weight:600; color:#666; margin-bottom:12px; }
-.team-biography { line-height:1.75; font-size:15px; white-space:pre-line; }
-.team-empty { text-align:center; background:white; padding:45px 20px; border-radius:14px; }
-@media (max-width: 600px) {
-    .team-page {
-        padding: 40px 15px;
-    }
+.team-directory-page {
+    background: #fbfaf7;
+    color: #444;
+}
 
-    .team-photo {
-        width: 100%;
-        height: 220px;
-        object-fit: contain;
-        object-position: center;
-        background: #e8eeee;
+.team-directory-page .team-page {
+    padding: 65px 25px 85px;
+}
+
+.team-directory-page .team-container {
+    max-width: 1250px;
+    margin: auto;
+}
+
+.team-directory-page .team-heading {
+    min-height: 390px;
+    margin: 0 0 65px;
+    padding: 85px 55px;
+    border-radius: 22px;
+    background:
+        linear-gradient(90deg, rgba(17,67,69,.88), rgba(25,105,108,.58)),
+        url("{% static 'core/images/injabulo-hero-background.jpeg' %}") center/cover no-repeat;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    text-align: left;
+}
+
+.team-directory-page .team-heading::before {
+    content: "THE PEOPLE BEHIND INJABULO";
+    color: #e5c98b;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    margin-bottom: 15px;
+}
+
+.team-directory-page .team-heading h1 {
+    color: #fff;
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(38px, 5vw, 60px);
+    line-height: 1.12;
+    margin: 0 0 18px;
+}
+
+.team-directory-page .team-heading p {
+    max-width: 650px;
+    margin: 0;
+    color: rgba(255,255,255,.94);
+    font-size: 16px;
+    line-height: 1.8;
+}
+
+.team-directory-page .team-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 28px;
+}
+
+.team-directory-page .team-card {
+    background: #fff;
+    border: 1px solid rgba(39,139,145,.15);
+    border-radius: 17px;
+    overflow: hidden;
+    box-shadow: 0 8px 25px rgba(25,60,60,.07);
+    transition: transform .25s ease, box-shadow .25s ease;
+}
+
+.team-directory-page .team-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 15px 35px rgba(25,60,60,.13);
+}
+
+.team-directory-page .team-photo {
+    width: 100%;
+    height: 290px;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    background: #e8f0ed;
+}
+
+.team-directory-page .team-placeholder {
+    height: 290px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #e8f0ed;
+    color: #278b91;
+    font-size: 55px;
+}
+
+.team-directory-page .team-details {
+    padding: 27px;
+}
+
+.team-directory-page .team-details h2 {
+    color: #206f74;
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 23px;
+    line-height: 1.35;
+    margin: 0 0 9px;
+}
+
+.team-directory-page .team-role {
+    color: #278b91;
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 13px;
+}
+
+.team-directory-page .team-qualifications {
+    color: #777;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.7;
+    margin-bottom: 13px;
+}
+
+.team-directory-page .team-biography {
+    color: #666;
+    font-size: 14px;
+    line-height: 1.85;
+    white-space: pre-line;
+    margin-bottom: 0;
+}
+
+.team-directory-page .team-empty {
+    text-align: center;
+    background: #fff;
+    padding: 50px 25px;
+    border: 1px solid rgba(39,139,145,.15);
+    border-radius: 16px;
+    box-shadow: 0 8px 25px rgba(25,60,60,.06);
+}
+
+.team-directory-page .team-empty h2 {
+    color: #206f74;
+    font-family: 'Playfair Display', Georgia, serif;
+}
+
+@media (max-width: 950px) {
+    .team-directory-page .team-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 }
+
+@media (max-width: 600px) {
+    .team-directory-page .team-page {
+        padding: 40px 16px 60px;
+    }
+
+    .team-directory-page .team-heading {
+        min-height: 340px;
+        padding: 55px 25px;
+        border-radius: 14px;
+        margin-bottom: 40px;
+    }
+
+    .team-directory-page .team-heading h1 {
+        font-size: 37px;
+    }
+
+    .team-directory-page .team-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .team-directory-page .team-photo {
+        height: 280px;
+        object-fit: contain;
+    }
+
+    .team-directory-page .team-details {
+        padding: 23px;
+    }
+}
+
+/* Team page: prevent WhatsApp from covering profile content */
+.team-directory-page .floating-whatsapp {
+    position: relative;
+    right: auto;
+    bottom: auto;
+    margin: 25px 30px 30px auto;
+    width: 54px;
+    height: 54px;
+    z-index: 2;
+}
+
+.team-directory-page .floating-whatsapp img {
+    width: 36px;
+    height: 36px;
+}
+
+.team-directory-page .team-page {
+    padding-bottom: 35px;
+}
+
+
+/* Expandable team biographies */
+.team-directory-page .team-bio-expand {
+    margin-top: 10px;
+}
+
+.team-directory-page .team-bio-expand summary {
+    display: block;
+    cursor: pointer;
+    list-style: none;
+    color: #666;
+    font-size: 14px;
+    line-height: 1.85;
+}
+
+.team-directory-page .team-bio-expand summary::-webkit-details-marker {
+    display: none;
+}
+
+.team-directory-page .bio-preview {
+    display: block;
+    color: #666;
+    margin-bottom: 7px;
+}
+
+.team-directory-page .read-more-label,
+.team-directory-page .show-less-label {
+    display: inline-block;
+    color: #278b91;
+    font-weight: 700;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.team-directory-page .show-less-label {
+    display: none;
+}
+
+.team-directory-page .team-bio-expand[open] .bio-preview,
+.team-directory-page .team-bio-expand[open] .read-more-label {
+    display: none;
+}
+
+.team-directory-page .team-bio-expand[open] .show-less-label {
+    display: inline-block;
+    margin-top: 10px;
+}
+
+.team-directory-page .team-bio-expand .team-biography {
+    margin-top: 8px;
+    color: #666;
+    font-size: 14px;
+    line-height: 1.85;
+    white-space: pre-line;
+}
+
 </style>
 </head>
-<body>
+<body class="team-directory-page">
 <header class="site-header">
 <div class="nav-container">
 <a href="/" class="logo">
@@ -81,7 +306,14 @@ body { margin:0; background:#F7F2E9; color:#444; }
 <div class="team-qualifications">{{ member.qualifications }}</div>
 {% endif %}
 {% if member.biography %}
-<p class="team-biography">{{ member.biography }}</p>
+<details class="team-bio-expand">
+    <summary>
+        <span class="bio-preview">{{ member.biography|truncatewords:30 }}</span>
+        <span class="read-more-label">Read More</span>
+        <span class="show-less-label">Show Less</span>
+    </summary>
+    <p class="team-biography">{{ member.biography }}</p>
+</details>
 {% endif %}
 </div>
 </article>
@@ -98,3 +330,4 @@ body { margin:0; background:#F7F2E9; color:#444; }
 {% include 'core/includes/floating_whatsapp.html' %}
 </body>
 </html>
+

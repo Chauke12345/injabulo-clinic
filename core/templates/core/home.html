@@ -595,7 +595,14 @@
                     <div class="home-team-qualifications">{{ member.qualifications }}</div>
                     {% endif %}
                     {% if member.biography %}
-                    <p class="home-team-biography">{{ member.biography }}</p>
+                    <details class="home-team-bio-expand">
+                        <summary>
+                            <span class="home-bio-preview">{{ member.biography|truncatewords:30 }}</span>
+                            <span class="home-read-more">Read More</span>
+                            <span class="home-show-less">Show Less</span>
+                        </summary>
+                        <p class="home-team-biography">{{ member.biography }}</p>
+                    </details>
                     {% endif %}
                 </div>
             </article>

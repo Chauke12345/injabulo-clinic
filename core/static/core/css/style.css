@@ -3444,3 +3444,79 @@ body:has(.services-page) {
 
 /* END CONTACT HERO BANNER */
 
+
+
+
+/* HOMEPAGE TEAM - READ MORE / SHOW LESS */
+.home-team-card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.home-team-details {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.home-team-bio-expand {
+    margin-top: 8px;
+}
+
+.home-team-bio-expand summary {
+    display: block;
+    cursor: pointer;
+    list-style: none;
+    color: #666;
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+.home-team-bio-expand summary::-webkit-details-marker {
+    display: none;
+}
+
+.home-bio-preview {
+    display: block;
+    margin-bottom: 8px;
+    color: #666;
+}
+
+.home-read-more,
+.home-show-less {
+    display: inline-block;
+    color: #278B91;
+    font-weight: 700;
+    font-size: 13px;
+    transition: color .2s ease;
+}
+
+.home-read-more:hover,
+.home-show-less:hover {
+    color: #206F74;
+    text-decoration: underline;
+}
+
+.home-show-less {
+    display: none;
+}
+
+.home-team-bio-expand[open] .home-bio-preview,
+.home-team-bio-expand[open] .home-read-more {
+    display: none;
+}
+
+.home-team-bio-expand[open] .home-show-less {
+    display: inline-block;
+    margin-top: 8px;
+}
+
+.home-team-bio-expand .home-team-biography {
+    margin: 10px 0 0;
+    color: #666;
+    font-size: 14px;
+    line-height: 1.8;
+    white-space: pre-line;
+}
+

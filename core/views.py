@@ -1,4 +1,4 @@
-﻿from django.contrib import messages
+from django.contrib import messages
 from django.shortcuts import render, redirect
 from .models import HomepageContent, Appointment
 from .forms import AppointmentForm
@@ -106,3 +106,70 @@ def service_worker(request):
     response["Service-Worker-Allowed"] = "/"
     return response
 
+
+
+def booking_app(request):
+    if request.method == "POST":
+        form = AppointmentForm(request.POST)
+
+        if form.is_valid():
+            appointment_request = form.save()
+
+            from dashboard.models import DashboardNotification
+
+            DashboardNotification.objects.create(
+                appointment=appointment_request,
+                message=(
+                    f"New Booking App appointment received "
+                    f"(Reference #{appointment_request.pk}). "
+                    f"Please log in to the Injabulo Clinic dashboard to view and manage it."
+                ),
+            )
+
+            messages.success(
+                request,
+                f"Your appointment request was received successfully! "
+                f"Your booking reference is #{appointment_request.pk}. "
+                f"Thank you for choosing Injabulo Clinic. "
+                f"Our team will contact you to confirm your appointment."
+            )
+
+            return redirect("booking_app")
+
+    else:
+        form = AppointmentForm(
+            initial={
+                "service": request.GET.get("service")
+            }
+        )
+
+    return render(request, "core/booking_app.html", {
+        "form": form,
+    })
+
+def booking_app_preview(request):
+    form = AppointmentForm()
+    messages.success(
+        request,
+        "DEMO ONLY — Your sample booking reference is DEMO-001. "
+        "No appointment has been saved and no clinic notification has been sent."
+    )
+    return render(request, "core/booking_app.html", {
+        "form": form,
+        "preview_mode": True,
+    })
+
+from django.http import HttpResponse
+
+
+def robots_txt(request):
+    content = """User-agent: *
+Allow: /
+
+Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /booking-app/preview/
+
+Sitemap: https://injabulo-clinic-website-production.up.railway.app/sitemap.xml
+"""
+    return HttpResponse(content, content_type="text/plain")
